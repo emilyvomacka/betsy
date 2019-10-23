@@ -1,0 +1,40 @@
+baguette:
+  name: Flagship Baguette
+  description: So delicious we named our site after it.
+  price: 0.395e1
+  photo_URL: https://flic.kr/p/6hQm3a
+  stock: 18
+  merchant: sea_wolf
+  categories: started, best
+sourdough:
+  name: Sourdough Loaf
+  description: You think you've had better, you have not.
+  price: 0.595e1
+  photo_URL: https://flic.kr/p/2dH8ZwL
+  stock: 18
+  merchant: besalu
+  categories: started
+croissant:
+  name: Thousand-layer Croissant
+  description: Like an onion.
+  price: 0.325e1
+  photo_URL: https://flic.kr/p/2gjNUvW
+  stock: 24
+  merchant: besalu
+  categories: crazy
+seedy:
+  name: Seedy Multigrain Bread
+  description: Seeds seeds whoa seeds.
+   price: 0.525e1
+  photo_URL: https://flic.kr/p/c4w5oq
+  stock: 24
+  merchant: macrina, fresh
+  categories: crazy
+daily_baguette:
+  name: Daily Baguette Subscription
+  description: The only morning routine.
+  price: 0.9995e2
+  photo_URL: https://flic.kr/p/6DYNFH
+  stock: 40
+  merchant: sea_wolf
+  category: serious, best
