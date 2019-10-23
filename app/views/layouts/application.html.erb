@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Betsy</title>
+    <title>Baguettsy</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,46 @@
   </head>
 
   <body>
+
+    <header class="app-header__header">
+      <h1>
+        <%= link_to "Baguettsy", root_path %>
+        <small>we love baguettes</small>
+      </h1>
+
+      <nav class="app-header__nav">
+        <ul class="nav app-header__site-nav-container">
+          <li class="nav-item app-header__nav_item">
+            <%= link_to "View All Products", , class: "nav-link" %>
+          </li>
+          <li class="nav-item app-header__nav_item">
+            <%= link_to "Browse by Category", , class: "nav-link" %>
+          </li>
+          <li class="nav-item app-header__nav_item">
+            <%= link_to "Browse by Merchant", , class: "nav-link" %>
+          </li>
+        </ul>
+        <ul class="nav app-header__user-nav-container">
+          <% if @current_merchant %>
+
+          <li class="nav-item app-header__nav_item">
+            <%= link_to "Logged in as ___", , class: "btn btn-primary" %>
+          </li>
+          <li class="nav-item app-header__nav_item">
+            <%= link_to "Log out", , class: "btn btn-primary" %>
+          </li>
+
+          <% else %>
+
+          <li class="nav-item app-header__nav_item">
+            <%= link_to "Login with GitHub", , class: "btn btn-primary" %>
+          </li>
+          <% end %>
+
+        </ul>
+      </nav>
+    </header>
+
     <%= yield %>
   </body>
 </html>
