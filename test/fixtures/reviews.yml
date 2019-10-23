@@ -1,0 +1,20 @@
+one:
+  text: "tastes like heaven"
+  rating: 5
+  product: seedy
+two:
+  text: "tastes like birdseed"
+  rating: 2
+  product: seedy
+three:
+  text: "I love my daily baguette"
+  rating: 5
+  product: daily_baguette
+four:
+  text: "My freezer is full of baguettes"
+  rating: 1
+  product: daily_baguette
+five:
+  text: "pretty ok"
+  rating: 3
+  product: croissant

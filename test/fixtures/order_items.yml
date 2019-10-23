@@ -1,0 +1,20 @@
+one:
+  quantity: 1
+  product: daily_baguette
+  order: a
+two:
+  quantity: 4
+  product: baguette
+  order: a
+three:
+  quantity: 2
+  product: sourdough
+  order: b
+four:
+  quantity: 10
+  product: croissant
+  order: b 
+five:
+  quantity: 2
+  product: seedy
+  order: c
