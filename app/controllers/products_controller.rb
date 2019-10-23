@@ -50,9 +50,19 @@ class ProductsController < ApplicationController
       
   end
   
-  # def retire
   
-  # end
+  def retire
+    @product = Product.find_by(id: params[:id])
+    if @product.retire
+      flash[:status] = :success
+      flash[:success] = "Successfully retired product #{@product.name}."
+      redirect_to product_path(@product.id)
+    else @product.nil?
+      flash[:status] = :failure
+      flash[:error] = "Unable to retire #{@product.name}."
+      render :edit, status: :bad_request
+    end
+  end
   
   private
     
