@@ -5,7 +5,7 @@ baguette:
   photo_URL: https://flic.kr/p/6hQm3a
   stock: 18
   merchant: sea_wolf
-  categories: started
+  categories: started, best
 sourdough:
   name: Sourdough Loaf
   description: You think you've had better, you have not.
@@ -28,7 +28,7 @@ seedy:
    price: 0.525e1
   photo_URL: https://flic.kr/p/c4w5oq
   stock: 24
-  merchant: macrina
+  merchant: macrina, fresh
   categories: crazy
 daily_baguette:
   name: Daily Baguette Subscription
@@ -37,4 +37,4 @@ daily_baguette:
   photo_URL: https://flic.kr/p/6DYNFH
   stock: 40
   merchant: sea_wolf
-  category: serious 
+  category: serious, best

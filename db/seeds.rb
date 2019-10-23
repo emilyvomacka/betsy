@@ -11,6 +11,8 @@ input_categories = [
   { name: "Baguettin Crazy" },
   { name: "Baguettin Serious" },
   { name: "Beyond Baguettes" },
+  { name: "Best Bread" },
+  { name: "Fresh Baked" }
 ]
 
 input_merchants = [
@@ -28,7 +30,7 @@ input_products = [
     photo_URL: "https://flic.kr/p/6hQm3a",
     stock: 18,
     merchant: "Sea Wolf Bakers",
-    category: "Baguettin Started"
+    categories: ["Baguettin Started", "Best Bread"]
   },
   {
     name: "Sourdough Loaf",
@@ -37,7 +39,7 @@ input_products = [
     photo_URL: "https://flic.kr/p/2dH8ZwL",
     stock: 18,
     merchant: "Cafe Besalu",
-    category: "Baguettin Started"
+    categories: ["Baguettin Started"]
   },
 
   {
@@ -47,7 +49,7 @@ input_products = [
     photo_URL: "https://flic.kr/p/2gjNUvW",
     stock: 24,
     merchant: "Cafe Besalu",
-    category: "Baguettin Started"
+    categories: ["Baguettin Started", "Best Bread"]
 
   },
   {
@@ -57,7 +59,7 @@ input_products = [
     photo_URL: "https://flic.kr/p/c4w5oq",
     stock: 24,
     merchant: "Macrina Bakery",
-    category: "Baguettin Crazy"
+    categories: ["Baguettin Crazy", "Fresh Baked"]
   },
   {
     name: "Rye Bread",
@@ -66,7 +68,7 @@ input_products = [
     photo_URL: "https://flic.kr/p/RziS2m",
     stock: 12,
     merchant: "Sea Wolf Bakers",
-    category: "Baguettin Crazy"
+    categories: ["Baguettin Crazy", "Fresh Baked"]
   },
   {
     name: "Honey Oat Bread",
@@ -75,7 +77,7 @@ input_products = [
     photo_URL: "https://flic.kr/p/26HVUyc",
     stock: 15,
     merchant: "Macrina Bakery",
-    category: "Baguettin Crazy"
+    categories: ["Baguettin Crazy"]
   },
   {
     name: "Bread Loafers",
@@ -84,7 +86,7 @@ input_products = [
     photo_URL: "https://flic.kr/p/4fj4jg",
     stock: 5,
     merchant: "Cafe Besalu",
-    category: "Beyond Baguettes"
+    categories: ["Beyond Baguettes", "Best Bread"]
   },
   {
     name: "Loaf Cat",
@@ -93,7 +95,7 @@ input_products = [
     photo_URL: "https://flic.kr/p/nCyCR",
     stock: 2,
     merchant: "Bakery Nouveau",
-    category: "Beyond Baguettes"
+    categories: ["Beyond Baguettes", "Fresh Baked"]
   },
   {
     name: "Daily Baguette Subscription",
@@ -102,7 +104,7 @@ input_products = [
     photo_URL: "https://flic.kr/p/6DYNFH",
     stock: 40,
     merchant: "Sea Wolf Bakers",
-    category: "Baguettin Serious"
+    categories: ["Baguettin Serious", "Best Bread"]
   },
   {
     name: "Weekend Croissant Subscription",
@@ -111,7 +113,7 @@ input_products = [
     photo_URL: "https://flic.kr/p/3ZFxkg",
     stock: 40,
     merchant: "Cafe Besalu",
-    category: "Baguettin Serious"
+    categories: ["Baguettin Serious", "Fresh Baked"]
   }
 ]
 
@@ -155,7 +157,10 @@ input_products.each do |input_product|
   product.photo_URL = input_product[:photo_URL]
   product.stock = input_product[:stock]
   product.merchant = Merchant.find_by(username: input_product[:merchant])
-  product.categories << Category.find_by(name: input_product[:category])
+  category_array = input_product[:categories]
+  category_array.each do |input_category|
+    product.categories << Category.find_by(name: input_category)
+  end 
   successful = product.save
   if successful
     puts "Created product: #{product.inspect}"
