@@ -37,7 +37,7 @@ describe "custom methods" do
   #   expect(:orders(:a).determine_status).must_equal "complete"
   # end 
   # end 
-end 
+  # end 
 end 
 
 
