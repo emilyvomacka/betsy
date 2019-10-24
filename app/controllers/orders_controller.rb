@@ -12,39 +12,47 @@ class OrdersController < ApplicationController
     end
   end
   
-  def create
-    order_params = { 
-    order: {
-    email_address: nil,
-    mailing_address: nil,
-    customer_name: nil,
-    cc_number: nil, 
-    cc_expiration: nil,
-    cc_security_code: nil,
-    zip_code: nil,
-    cart_status: "pending"
-      }
-    }
-    @order = Order.new(order_params)
-    if @order.save # save returns true if the database insert succeeds
-      flash[:success] = "Item added to carb. Um, cart."
-      session[:order_id] = @order.id
-      redirect_to root_path # go to the index so we can see the order in the list
-      return
-    else # save failed :(
-      flash.now[:failure] = "There is a problem. Sorry for the crumby UX."
-      redirect_to root_path
-    end
-  end
+  # def create
+  #   order_params = { 
+  #   order: {
+  #   email_address: nil,
+  #   mailing_address: nil,
+  #   customer_name: nil,
+  #   cc_number: nil, 
+  #   cc_expiration: nil,
+  #   cc_security_code: nil,
+  #   zip_code: nil,
+  #   cart_status: "pending"
+  #     }
+  #   }
+  #   @order = Order.new(order_params)
+  #   if @order.save # save returns true if the database insert succeeds
+  #     flash[:success] = "Item added to carb. Um, cart."
+  #     session[:order_id] = @order.id
+  #     redirect_to root_path # go to the index so we can see the order in the list
+  #     return
+  #   else # save failed :(
+  #     flash.now[:failure] = "There is a problem. Sorry for the crumby UX."
+  #     redirect_to root_path
+  #   end
+  # end
 
 #adding a product item to the cart 
   def add_to_cart
-    Order.create if session[:order_id].nil?
-    new_order_item = OrderItem.create(
-    quantity: params["quantity"],
-    product_id: params["product_id"],
-    order_id: session[:order_id] )
-    Order.find_by(id: session[:order_id]).order_items << new_order_item
+    if session[:order_id].nil?
+      @order = Order.create(cart_status: "pending")
+      session[:order_id] = @order.id
+    end   
+      new_order_item = OrderItem.create(
+      quantity: params["quantity"],
+      product_id: params["product_id"],
+      order_id: session[:order_id] )
+      if Order.find_by(id: session[:order_id]).order_items << new_order_item
+        flash[:success] = "Item added to carb. Um, cart."
+        redirect_to product_path(params["product_id"])
+      else 
+        flash.now[:failure] = "There is a problem. Sorry for the crumby UX."
+      end 
     end 
   end 
 
