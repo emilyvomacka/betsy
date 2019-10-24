@@ -47,7 +47,7 @@ class ProductsController < ApplicationController
   end
   
   def create_review
-      
+      puts 'create_review'
   end
   
   
