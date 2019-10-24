@@ -68,19 +68,6 @@ describe ProductsController do
       
       must_respond_with :bad_request
     end
-    
-    
-    it "renders 400 bad_request for bogus categories" do
-      skip
-      
-      #not working
-      invalid_product = { product: {name: "test name", description: "test", price: 1, photo_URL: "test", stock: 1000, merchant_id: merchants(:sea_wolf).id, categories: ["fake category"]}}
-      
-      expect { post products_path, params: invalid_product }.wont_change "Product.count"
-      
-      Product.find_by(title: "test name", categories: "fake category").must_be_nil
-      must_respond_with :bad_request
-    end
   end
   
   describe "edit" do

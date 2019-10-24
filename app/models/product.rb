@@ -3,7 +3,7 @@ class Product < ApplicationRecord
   belongs_to :merchant 
   has_many :order_items, dependent: :destroy
   has_and_belongs_to_many :categories
-
+  
   validates :name, presence: true
   validates :description, presence: true
   validates :price, presence: true
@@ -20,8 +20,9 @@ class Product < ApplicationRecord
       errors.add(:categories, "must have at least one category")
       return false
     end 
-  end 
-
+    return true
+  end
+  
   def retire
     if self.active
       return self.update(active: false)
