@@ -83,6 +83,56 @@ describe ProductsController do
     end
   end
   
+  describe "edit" do
+    it "succeeds for an extant product ID" do
+      get edit_product_path(existing_product.id)
+      
+      must_respond_with :success
+    end
+    
+    it "renders 404 not_found for a bogus work ID" do
+      bogus_id = existing_product.id
+      existing_product.destroy
+      
+      get edit_product_path(bogus_id)
+      
+      must_respond_with :not_found
+    end
+  end
+  
+  describe "update" do
+    it "succeeds for valid data and an extant product ID" do
+      updates = { product: { name: "new name" } }
+      
+      expect {put product_path(existing_product), params: updates}.wont_change "Product.count"
+      updated_product = Product.find_by(id: existing_product.id)
+      
+      updated_product.name.must_equal updates[:product][:name]
+      must_respond_with :redirect
+      must_redirect_to product_path(existing_product.id)
+    end
+    
+    it "renders bad_request for bogus data" do
+      updates = { product: { name: nil } }
+      
+      expect {put product_path(existing_product), params: updates}.wont_change "Product.count"
+      
+      product = Product.find_by(id: existing_product.id)
+      
+      must_respond_with :not_found
+    end
+    
+    it "renders 404 not_found for a bogus product ID" do
+      bogus_id = existing_product.id
+      existing_product.destroy
+      
+      put product_path(bogus_id), params: { product: { name: "test name" } }
+      
+      must_respond_with :not_found
+    end
+    
+  end
+  
   
 end
 
