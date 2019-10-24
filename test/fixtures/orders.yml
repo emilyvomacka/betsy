@@ -8,7 +8,7 @@ a:
   cart_status: pending
 b:
   customer_name: Mr. Besalu
-  mailing_address: 1234 Sad Town, Seattle, WA
+  mailing_address: 1234 Sad Town, Seattle, WA 
   cc_number: 1111111111111112
   cc_expiration: 12/21
   cc_security_code: 111
