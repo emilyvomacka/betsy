@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
     end
   end
   
-
+  
   def edit
     require_login
     render_404 unless @product
@@ -53,7 +53,7 @@ class ProductsController < ApplicationController
       return
     end
   end
-    
+  
   def retire
     @product = Product.find_by(id: params[:id])
     if @product.retire
@@ -76,3 +76,4 @@ class ProductsController < ApplicationController
   def find_product
     @product = Product.find_by(id: params[:id])
   end
+end
