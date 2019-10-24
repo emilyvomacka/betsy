@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2019_10_22_223634) do
     t.bigint "merchant_id"
     t.index ["merchant_id"], name: "index_orders_on_merchant_id"
   end
-  
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "description"
