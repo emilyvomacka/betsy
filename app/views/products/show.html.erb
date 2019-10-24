@@ -1,0 +1,9 @@
+Name: <p><%= @product.name %></p>
+Description: <p><%= @product.description %></p>
+Price: <p><%= @product.price %></p>
+photo url: <p><%= @product.photo_URL %></p>
+stock: <p><%= @product.stock %></p>
+merchant id: <p><%= @product.merchant.id %></p>
+categories: <p><% @product.categories.each do |category| %>
+<%= category.name %></p>
+<%end%>
