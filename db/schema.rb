@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_22_223634) do
+ActiveRecord::Schema.define(version: 2019_10_24_051359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2019_10_22_223634) do
     t.bigint "merchant_id"
     t.index ["merchant_id"], name: "index_orders_on_merchant_id"
   end
-  
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 2019_10_22_223634) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "merchant_id"
+    t.boolean "active"
     t.index ["merchant_id"], name: "index_products_on_merchant_id"
   end
 
