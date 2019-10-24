@@ -30,34 +30,13 @@ class OrdersController < ApplicationController
     #update stock of products on site once order items have been purchased. 
   end
 
-  def edit
-    @order = Order.find_by(id: session[:order_id])
-    if @order.nil?
-      flash[:warning] = "Order was not found. Add more bread to your carb please."
-      redirect_to root_path 
-      return
-    end
-  end
+  #merchant method to update status from paid to completed
+  def status_complete
+  end 
 
-  def update
-   
-  end
-
-  def destroy 
-    @order = Order.find_by(id: session[:order_id])
-    if @order.nil?
-      flash[:warning] = "Order was not found."
-      redirect_to root_path 
-      return
-    elsif @order.status != "paid"
-      flash[:warning] = "Unable to cancel order. Enjoy!"
-      redirect_to root_path
-      return 
-    end 
-    @order.destroy
-    redirect_to root_path
-    flash[:success] = "Order successfully cancelled."
-  end
+  #merchant method
+  def status_cancelled
+  end 
 
   private
 
