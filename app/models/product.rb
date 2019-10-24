@@ -19,13 +19,14 @@ class Product < ApplicationRecord
     if categories.count < 1
       errors.add(:categories, "must have at least one category")
       return false
+    end 
+  end 
 
   def retire
     if self.active
       return self.update(active: false)
     else
       return self.update(active: true)
-
     end
   end
   
