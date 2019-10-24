@@ -9,7 +9,6 @@
           <th scope="col">Price</th>
           <th scope="col">Photo_URL</th>
           <th scope="col">Stock</th>
-          <th scope="col">Merchant ID</th>
           <th scope="col">Categories</th>
         </tr>
       </thead>
@@ -21,7 +20,6 @@
             <td><%= product.price %></td>
             <td><%= product.photo_URL %></td>
             <td><%= product.stock %></td>
-            <td><%= product.merchant.id %></td>
             <td><% product.categories.each do |category| %>
             <li><%= category.name %></i>
             <% end %></td>

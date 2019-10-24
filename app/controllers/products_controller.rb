@@ -1,10 +1,16 @@
 class ProductsController < ApplicationController 
   before_action :find_product, only: [:show, :edit]
+  
   def index
     @products = Product.all
   end
   
-  def show; end
+  def show
+    if @product.nil?
+      head :not_found
+      return
+    end
+  end
   
   def new
     @product = Product.new
@@ -12,7 +18,7 @@ class ProductsController < ApplicationController
   
   def create
     @product = Product.new(product_params)
-    @product.merchant_id = @current_merchant.id
+    # @product.merchant_id = @current_merchant.id
     
     if @product.save
       flash[:status] = :success
