@@ -7,12 +7,13 @@ describe Order do
 
   describe "custom methods" do
     describe "total_cost" do
-
-
+      it "adds up total costs of an order" do 
+      
+      end 
     end 
 
     describe "determine_status" do
-
+      
 
     end 
   end 

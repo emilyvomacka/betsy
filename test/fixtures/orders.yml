@@ -1,6 +1,24 @@
 a:
-  merchant: sea_wolf
+  customer_name: Sea Wolf
+  mailing_address: 1234 Happy Town, Seattle, WA
+  cc_number: 1111111111111111
+  cc_expiration: 12/20
+  cc_security_code: 123
+  zip_code: 99999
+  cart_status: pending
 b:
-  merchant: besalu
+  customer_name: Mr. Besalu
+  mailing_address: 1234 Sad Town, Seattle, WA
+  cc_number: 1111111111111112
+  cc_expiration: 12/21
+  cc_security_code: 111
+  zip_code: 55555
+  cart_status: paid
 c:
-  merchant: macrina
+  customer_name: Ms. Macrina
+  mailing_address: 1222 Golden Place, Seattle, WA
+  cc_number: 1111111111111113
+  cc_expiration: 12/22
+  cc_security_code: 124
+  zip_code: 88888
+  cart_status: cancelled
