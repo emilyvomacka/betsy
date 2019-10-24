@@ -31,6 +31,7 @@ class ProductsController < ApplicationController
     end
   end
   
+
   def edit
     require_login
     render_404 unless @product
@@ -52,7 +53,19 @@ class ProductsController < ApplicationController
       return
     end
   end
-  
+    
+  def retire
+    @product = Product.find_by(id: params[:id])
+    if @product.retire
+      # flash[:status] = :success
+      # flash[:success] = "Successfully retired product #{@product.name}."
+      redirect_to product_path(@product.id)
+    else @product.nil?
+      # flash[:status] = :failure
+      # flash[:error] = "Unable to retire #{@product.name}."
+      # render :edit, status: :bad_request
+    end
+  end
   
   private
   
@@ -63,4 +76,3 @@ class ProductsController < ApplicationController
   def find_product
     @product = Product.find_by(id: params[:id])
   end
-end
