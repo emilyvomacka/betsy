@@ -45,10 +45,21 @@
                 <button type="button" class="btn btn-primary"><li><%= link_to "Log out" %></li></button>
               </li>
           <%end%>
+            <% if session[:order_id] %>
+              <li>
+                <button type="button" class="btn btn-primary"><li><%= link_to "View Carb", order_path(session[:order_id]) %></li></button>
+              </li>
+            <% end %>
 
           </ul>
         </div>
       </nav>
+    </section>
+
+    <section class="flash">
+    <% flash.each do |name, message| %>
+      <div class="alert alert-<%= name %>"><%= message %></div>
+    <% end %>
     </section>
 
     <%= yield %>
