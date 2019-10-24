@@ -37,4 +37,4 @@ daily_baguette:
   photo_URL: https://flic.kr/p/6DYNFH
   stock: 40
   merchant: sea_wolf
-  # category: serious, best
+  categories: serious, best

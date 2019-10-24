@@ -1,15 +1,24 @@
 class ProductsController < ApplicationController 
+  before_action :find_product, only: [:show, :edit]
+  
   def index
     @products = Product.all
   end
   
   def show
-    @product = Product.find_by(id: params[:id])
+    if @product.nil?
+      head :not_found
+      return
+    end
+  end
+  
+  def new
+    @product = Product.new
   end
   
   def create
     @product = Product.new(product_params)
-    @product.merchant_id = @current_merchant.id
+    # @product.merchant_id = @current_merchant.id
     
     if @product.save
       flash[:status] = :success
@@ -22,12 +31,29 @@ class ProductsController < ApplicationController
     end
   end
   
-  # def edit
-  #   require_login
-  #   @product = Product.find_by(id: params[:id])
-  #   render_404 unless @product
-  # end
+
+  def edit
+    require_login
+    render_404 unless @product
+  end
   
+  def update
+    require_login
+    #check if user is authorized
+    
+    if @product.update(product_params)
+      flash[:status] = :success
+      flash[:result_text] = "Successfully updated #{@product.name}."
+      redirect_to product_path(@product)
+      return
+    else 
+      flash.now[:status] = :failure
+      flash.now[:result_text] = "Unable to update #{@product.name}."
+      render :edit, status: :not_found
+      return
+    end
+  end
+    
   def retire
     @product = Product.find_by(id: params[:id])
     if @product.retire
@@ -41,28 +67,12 @@ class ProductsController < ApplicationController
     end
   end
   
-  # def update
-  #   require_login
-  #   #check if user is authorized
-  #   @product.update_attributes(product_params)
-  #   if @product.save
-  #     flash[:status] = :success
-  #     flash[:result_text] = "Successfully updated #{@product.name}."
-  #     redirect_to product_path(@product)
-  #   else
-  #     flash.now[:status] = :failure
-  #     flash.now[:result_text] = "Could not update #{@product.name}."
-  #     flash.now[:messages] = @product.errors.messages
-  #     render :edit, status: :not_found
-  #   end
-  #       
-  # end
+  private
   
-  # def create_review
-  #     
-  # end
+  def product_params
+    return params.require(:product).permit(:name, :description, :price, :photo_URL, :stock, :merchant_id, :categories)
+  end
   
-  # def retire
-  
-  # end
-end
+  def find_product
+    @product = Product.find_by(id: params[:id])
+  end

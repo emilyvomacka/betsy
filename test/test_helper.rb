@@ -5,6 +5,10 @@ require 'minitest/rails'
 require 'minitest/autorun'
 require 'minitest/reporters'
 
+require 'minitest/rails'
+require 'minitest/autorun'
+require 'minitest/reporters'
+
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
