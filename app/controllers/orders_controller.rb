@@ -12,29 +12,22 @@ class OrdersController < ApplicationController
     end
   end
   
+  def new 
+    @order = Order.new
+  end 
+
   def create
-    order_params = { 
-    order: {
-    email_address: nil,
-    mailing_address: nil,
-    customer_name: nil,
-    cc_number: nil, 
-    cc_expiration: nil,
-    cc_security_code: nil,
-    zip_code: nil,
-    cart_status: "pending"
-      }
-    }
     @order = Order.new(order_params)
-    if @order.save # save returns true if the database insert succeeds
-      flash[:success] = "First item added to carb. Um, cart."
+    if @order.save 
+      flash[:success] = "The Bread Express has left the station."
       session[:order_id] = @order.id
-      redirect_to root_path # go to the index so we can see the order in the list
+      redirect_to order_path(@order.id) 
       return
     else # save failed :(
       flash.now[:failure] = "Order failed to save. Sorry for the crumby UX."
       redirect_to root_path
     end
+    #update stock of products on site once order items have been purchased. 
   end
 
   def edit
@@ -47,15 +40,7 @@ class OrdersController < ApplicationController
   end
 
   def update
-    if @order.update(order_params) 
-      #not sure how to add validations here (did customer fill in all fields?)
-      @order.status = "paid"
-      redirect_to root_path
-      return
-    else
-      render :edit 
-      return
-    end
+   
   end
 
   def destroy 

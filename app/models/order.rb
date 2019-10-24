@@ -8,7 +8,7 @@ class Order < ApplicationRecord
     else #if all fields are complete and order was made more than 24 hours ago
       self.status = "complete"
     end 
-  end 
+  end  
   
   def total_cost
     total_cost = 0
