@@ -1,6 +1,6 @@
 a:
   customer_name: Sea Wolf
-  mailing_address: 1234 Happy Town, Seattle, WA 
+  mailing_address: 1234 Happy Town, Seattle, WA
   cc_number: 1111111111111111
   cc_expiration: 12/20
   cc_security_code: 123
@@ -16,7 +16,7 @@ b:
   cart_status: paid
 c:
   customer_name: Ms. Macrina
-  mailing_address: 1222 Golden Place, Seattle, WA 
+  mailing_address: 1222 Golden Place, Seattle, WA
   cc_number: 1111111111111113
   cc_expiration: 12/22
   cc_security_code: 124
