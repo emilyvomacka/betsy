@@ -51,14 +51,20 @@ describe ProductsController do
   
   describe "create" do
     it "creates a product with valid data for a real category" do
-      new_product = { product: {name: "test name", description: "test", price: 1, photo_URL: "test", stock: 1000, merchant_id: merchants(:sea_wolf).id, categories: [categories(:started)]}}
+      new_product_hash = { product: {name: "test name", description: "test", price: 1, photo_URL: "test", stock: 1000, merchant_id: merchants(:sea_wolf).id}}
       
-      expect {post products_path, params: new_product}.must_change "Product.count", 1
+      expect {post products_path, params: new_product_hash}.must_change "Product.count", 1
       
-      new_product_id = Product.find_by(name: "test name").id
+      new_product = Product.find_by(name: "test name")
       
       must_respond_with :redirect
-      must_redirect_to product_path(new_product_id)
+      expect(new_product.name).must_equal new_product_hash[:product][:name]
+      expect(new_product.description).must_equal new_product_hash[:product][:description]
+      expect(new_product.price).must_equal new_product_hash[:product][:price]
+      expect(new_product.photo_URL).must_equal new_product_hash[:product][:photo_URL]
+      expect(new_product.stock).must_equal new_product_hash[:product][:stock]
+      expect(new_product.merchant_id).must_equal new_product_hash[:product][:merchant_id]
+      must_redirect_to product_path(new_product.id)
     end
     
     it "renders bad_request and does not update the DB for bogus data" do
