@@ -1,9 +1,21 @@
 require "test_helper"
 
 describe Product do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+  describe "relations" do
+    let (:product) {products(:baguette)}
+    
+    it "has one or many categories" do
+      product.must_respond_to :categories
+      product.categories.each do |category|
+        category.must_be_kind_of Category
+      end
+    end
+    
+    it "can have a single merchant" do
+      product.must_respond_to :merchant_id
+      product.merchant.must_be_kind_of Merchant
+    end
+  end
   
   describe "custom methods" do 
     describe "retire method" do
