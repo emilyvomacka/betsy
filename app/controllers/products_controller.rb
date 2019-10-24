@@ -1,16 +1,11 @@
 class ProductsController < ApplicationController 
-  before_action :find_product, only: [:show, :edit]
+  before_action :find_product, only: [:show, :edit, :update]
   
   def index
-    @products = Product.all
+    @products = Product.where(active: true)
   end
   
-  def show
-    if @product.nil?
-      head :not_found
-      return
-    end
-  end
+  def show; end
   
   def new
     @product = Product.new
@@ -31,16 +26,12 @@ class ProductsController < ApplicationController
     end
   end
   
-
-  def edit
-    require_login
-    render_404 unless @product
-  end
+  
+  def edit; end
   
   def update
-    require_login
+    #require login
     #check if user is authorized
-    
     if @product.update(product_params)
       flash[:status] = :success
       flash[:result_text] = "Successfully updated #{@product.name}."
@@ -53,7 +44,7 @@ class ProductsController < ApplicationController
       return
     end
   end
-    
+  
   def retire
     @product = Product.find_by(id: params[:id])
     if @product.retire
@@ -75,4 +66,11 @@ class ProductsController < ApplicationController
   
   def find_product
     @product = Product.find_by(id: params[:id])
+    
+    if @product.nil?
+      head :not_found
+      return
+    end
   end
+  
+end
