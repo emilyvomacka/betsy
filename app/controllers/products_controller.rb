@@ -12,12 +12,10 @@ class ProductsController < ApplicationController
     @product.merchant_id = @current_merchant.id
     
     if @product.save
-      session[:product_id] = product.id
       flash[:status] = :success
       flash[:success] = "Successfully created product #{@product.name}."
       redirect_to product_path(@product)
     else
-      session[:product_id] = product.id
       flash[:status] = :failure
       flash[:error] = "Unable to create product #{@product.name}."
       render :new, status: :bad_request
