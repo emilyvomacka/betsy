@@ -4,6 +4,12 @@ class OrdersController < ApplicationController
   end
   
   def show
+    @order = Order.find(params[:id])
+    
+    if @order.nil?
+      head :not_found
+      return
+    end
   end
   
   def new

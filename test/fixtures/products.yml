@@ -25,7 +25,7 @@ croissant:
 seedy:
   name: Seedy Multigrain Bread
   description: Seeds seeds whoa seeds.
-   price: 0.525e1
+  price: 0.525e1
   photo_URL: https://flic.kr/p/c4w5oq
   stock: 24
   merchant: macrina, fresh
@@ -37,4 +37,4 @@ daily_baguette:
   photo_URL: https://flic.kr/p/6DYNFH
   stock: 40
   merchant: sea_wolf
-  category: serious, best
+  categories: serious, best
