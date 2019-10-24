@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Betsy</title>
+    <title>Baguettsy</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,47 @@
   </head>
 
   <body>
+
+    <section>
+      <h2 class="toptitle font-weight-bold"><%= link_to "Baguettsy" %></h2>
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <%= link_to "View All Products", products_path %></li>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Browse by Category"  %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Browse by Merchant" %>
+            </li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            
+            <% if @current_merchant.nil? %>
+              <li>
+                <button type="button" class="btn btn-primary"><li><%= link_to("Login with GitHub" ) %></li></button>
+              </li>
+            <%else%>
+              <li>
+                <button type="button" class="btn btn-primary"><li><%= link_to "Logged in as ____" %></li></button>
+              </li>
+              <li>
+                <button type="button" class="btn btn-primary"><li><%= link_to "Log out" %></li></button>
+              </li>
+          <%end%>
+
+          </ul>
+        </div>
+      </nav>
+    </section>
+
     <%= yield %>
   </body>
 </html>
