@@ -5,6 +5,10 @@ class ProductsController < ApplicationController
     @products = Product.where(active: true)
   end
   
+  def main
+    @products = Product.where(active: true)
+  end
+  
   def show; end
   
   def new
