@@ -16,7 +16,7 @@ class OrdersController < ApplicationController
   def add_to_cart
     if params["quantity"].to_i > Product.find(params["product_id"]).stock
       redirect_to product_path(params["product_id"])
-      flash[:danger] = "Please order less bread. We're baking as fast as we can!"
+      flash[:danger] = "Error: excessive carb-loading. Please order less bread!"
       return 
     end 
     if session[:order_id] == nil
@@ -51,7 +51,7 @@ class OrdersController < ApplicationController
       @order.cart_status = "paid"
       @order.save 
       redirect_to products_path
-      flash[:success] = "Order submitted, let's get that bread!"
+      flash[:success] = "Order submitted! Bread ahead."
       session[:order_id] = nil
       @order.order_items.each do |item|
         item.product.stock -= item.quantity 
