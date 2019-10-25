@@ -24,16 +24,16 @@ class OrdersController < ApplicationController
       session[:order_id] = @order.id
     end   
     new_order_item = OrderItem.create(
-      quantity: params["quantity"],
-      product_id: params["product_id"],
-      order_id: session[:order_id] )
-      if Order.find_by(id: session[:order_id]).order_items << new_order_item
-        flash[:success] = "Item added to carb. Um, cart."
-        redirect_to product_path(params["product_id"])
-      else 
-        flash.now[:danger] = "There is a problem. Sorry for the crumby UX."
-      end 
+    quantity: params["quantity"],
+    product_id: params["product_id"],
+    order_id: session[:order_id] )
+    if Order.find_by(id: session[:order_id]).order_items << new_order_item
+      flash[:success] = "Item added to carb. Um, cart."
+      redirect_to product_path(params["product_id"])
+    else 
+      flash.now[:danger] = "There is a problem. Sorry for the crumby UX."
     end 
+    
   end
   
   def edit #customers add check-out info
@@ -70,4 +70,5 @@ class OrdersController < ApplicationController
   def order_params
     return params.require(:order).permit(:mailing_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, :cart_status) 
   end
-end 
+  
+end
