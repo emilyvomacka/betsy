@@ -32,7 +32,7 @@ describe ProductsController do
       must_respond_with :success
     end
     
-    it "renders 404 if the work doesn't exist" do
+    it "renders 404 if the product doesn't exist" do
       destroyed_id = existing_product.id
       existing_product.destroy
       

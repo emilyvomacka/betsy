@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  root "products#index"
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  root 'products#main'
   resources :orders
   resources :products, except: [:destroy]
   resources :merchants, only: [:index, :show]
+  resources :categories, only: [:index, :show, :new, :create]
   
   
   # get "/login", to: "merchants#login_form", as: "login"
@@ -14,3 +15,4 @@ Rails.application.routes.draw do
   delete "/logout", to: "merchants#destroy", as: "logout"
   
 end
+
