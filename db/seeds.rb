@@ -16,10 +16,10 @@ input_categories = [
 ]
 
 input_merchants = [
-{ username: "Sea Wolf Bakers" },
-{ username: "Cafe Besalu" },
-{ username: "Macrina Bakery" },
-{ username: "Bakery Nouveau" },
+{ name: "Sea Wolf Bakers" },
+{ name: "Cafe Besalu" },
+{ name: "Macrina Bakery" },
+{ name: "Bakery Nouveau" },
 ]
 
 input_products = [
@@ -135,7 +135,7 @@ puts "#{category_failures.length} categories failed to save"
 
 merchant_failures = []
 input_merchants.each do |input_merchant|
-  merchant = Merchant.new(username: input_merchant[:username])
+  merchant = Merchant.new(name: input_merchant[:name])
   successful = merchant.save
   if successful
     puts "Created merchant: #{merchant.inspect}"
@@ -156,7 +156,7 @@ input_products.each do |input_product|
   product.price = input_product[:price]
   product.photo_URL = input_product[:photo_URL]
   product.stock = input_product[:stock]
-  product.merchant = Merchant.find_by(username: input_product[:merchant])
+  product.merchant = Merchant.find_by(name: input_product[:merchant])
   product.active = :true 
   category_array = input_product[:categories]
   category_array.each do |input_category|
