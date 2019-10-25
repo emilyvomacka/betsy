@@ -12,7 +12,7 @@ class Product < ApplicationRecord
   validates :merchant_id, presence: true
   
   after_save :validate_minimum_number_of_categories
-
+  
   def retire
     if self.active
       return self.update(active: false)
@@ -28,6 +28,7 @@ class Product < ApplicationRecord
       return false
     end 
     return true
-  end 
+  end
+  
 end
 
