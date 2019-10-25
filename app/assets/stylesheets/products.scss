@@ -1,3 +1,31 @@
 // Place all the styles related to the Products controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+.parallax {
+  /* The image used */
+  background-image: url("https://images.unsplash.com/photo-1507638940746-7b17d6b55b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80");
+  /* Set a specific height */
+  width: 100%;
+ 
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+
+}
+
+p {
+  color: white;
+  padding: 50px;
+  text-align: center;
+  font-family: 'Annie Use Your Telescope', cursive;
+  font-size: 40px
+}
