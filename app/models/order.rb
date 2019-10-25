@@ -24,19 +24,19 @@ class Order < ApplicationRecord
   
   private 
   
-  def order_status_pending
-    if cart_status :pending
-      attributes = [email_address, mailing_address, customer_name, cc_number,  cc_expiration,  cc_security_code, zip_code] 
-      attributes.each do |attribute|
-        if attribute.presence == nil?
-          errors.add(:email_address, :mailing_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, "Field cannot be empty!")
-        end
-      end
-      if cc_number.length < 16 && cc_number.length > 16
-        errors.add(:cc_number, "Credit card number must be 16 numbers")
-      end
-    end
+  # def order_status_pending
+  #   if cart_status :pending
+  #     attributes = [email_address, mailing_address, customer_name, cc_number,  cc_expiration,  cc_security_code, zip_code] 
+  #     attributes.each do |attribute|
+  #       if attribute.presence == nil?
+  #         errors.add(:email_address, :mailing_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, "Field cannot be empty!")
+  #       end
+  #     end
+  #     if cc_number.length < 16 && cc_number.length > 16
+  #       errors.add(:cc_number, "Credit card number must be 16 numbers")
+  #     end
+  #   end
     
-  end 
+  # end 
 end
 
