@@ -1,0 +1,12 @@
+<h3> Order Show Page </h3>
+
+<% @order.order_items.each do |item| %>
+<p>Product: <%= item.product.name %></p>
+<p>Quantity: <%= item.quantity %><p>
+<% end %>
+
+<p>Total Cost: <%= @order.total_cost %>
+
+<div>
+<%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-primary" %>
+</div>

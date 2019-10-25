@@ -1,14 +1,18 @@
 class Order < ApplicationRecord
   has_many :order_items
   
-  #I think this method should only be used when we want to determine whether an order is paid or complete. Paid orders will still be able to be edited or cancelled, but complete orders will not display those options. "Pending" will be set by Order.create, and "Cancelled" will be set by the user.
-  def determine_status 
-    if Datetime.now.to_date - self.created_at.to_date < 1
-      self.status = "paid"
-    else #if all fields are complete and order was made more than 24 hours ago
-      self.status = "complete"
-    end 
-  end 
+  
+  # validates_presence_of :email_address, :mailing_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, :cart_status
+  # validates :cc_number, length: { is: 16 }  
+  # validates :cc_security_code, length: { is: 3 }  
+  # validates :zip_code, length: { is: 5 }  
+  
+  
+  validates :cart_status, presence: true
+  
+  
+  
+  
   
   def total_cost
     total_cost = 0
@@ -17,5 +21,22 @@ class Order < ApplicationRecord
     end 
     return total_cost
   end 
-end 
+  
+  private 
+  
+  # def order_status_pending
+  #   if cart_status :pending
+  #     attributes = [email_address, mailing_address, customer_name, cc_number,  cc_expiration,  cc_security_code, zip_code] 
+  #     attributes.each do |attribute|
+  #       if attribute.presence == nil?
+  #         errors.add(:email_address, :mailing_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, "Field cannot be empty!")
+  #       end
+  #     end
+  #     if cc_number.length < 16 && cc_number.length > 16
+  #       errors.add(:cc_number, "Credit card number must be 16 numbers")
+  #     end
+  #   end
+    
+  # end 
+end
 
