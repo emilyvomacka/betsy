@@ -31,5 +31,5 @@ class Product < ApplicationRecord
     return true
   end
   
-  
 end
+
