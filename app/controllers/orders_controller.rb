@@ -16,7 +16,7 @@ class OrdersController < ApplicationController
   def add_to_cart
     if params["quantity"].to_i > Product.find(params["product_id"]).stock
       redirect_to product_path(params["product_id"])
-      flash[:warning] = "Please order less bread. We're baking as fast as we can!"
+      flash[:danger] = "Please order less bread. We're baking as fast as we can!"
       return 
     end 
     if session[:order_id] == nil
@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
       flash[:success] = "Item added to carb. Um, cart."
       redirect_to product_path(params["product_id"])
     else 
-      flash.now[:failure] = "There is a problem. Sorry for the crumby UX."
+      flash.now[:danger] = "There is a problem. Sorry for the crumby UX."
     end 
   end 
   
