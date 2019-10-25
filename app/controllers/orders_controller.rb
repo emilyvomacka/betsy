@@ -11,31 +11,6 @@ class OrdersController < ApplicationController
       return
     end
   end
-  
-  # def create
-  #   order_params = { 
-  #   order: {
-  #   email_address: nil,
-  #   mailing_address: nil,
-  #   customer_name: nil,
-  #   cc_number: nil, 
-  #   cc_expiration: nil,
-  #   cc_security_code: nil,
-  #   zip_code: nil,
-  #   cart_status: "pending"
-  #     }
-  #   }
-  #   @order = Order.new(order_params)
-  #   if @order.save # save returns true if the database insert succeeds
-  #     flash[:success] = "Item added to carb. Um, cart."
-  #     session[:order_id] = @order.id
-  #     redirect_to root_path # go to the index so we can see the order in the list
-  #     return
-  #   else # save failed :(
-  #     flash.now[:failure] = "There is a problem. Sorry for the crumby UX."
-  #     redirect_to root_path
-  #   end
-  # end
 
 #adding a product item to the cart 
   def add_to_cart
