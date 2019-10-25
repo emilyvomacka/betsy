@@ -12,7 +12,7 @@ class Product < ApplicationRecord
   validates :merchant_id, presence: true
   
   after_save :validate_minimum_number_of_categories
- 
+
   def retire
     if self.active
       return self.update(active: false)
@@ -20,14 +20,14 @@ class Product < ApplicationRecord
       return self.update(active: true)
     end
   end
- 
-  private
   
+  private
   def validate_minimum_number_of_categories
     if categories.count < 1
       errors.add(:categories, "must have at least one category")
       return false
     end 
+    return true
   end 
 end
 
