@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "products#root"
+  root "products#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :orders
   resources :products, except: [:destroy]
@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   get "/auth/github", as: "github_login"
   get '/products/retire/:id', to: 'products#retire', as: "retire"
   get "/auth/:provider/callback", to: "merchants#create"
+  delete "/logout", to: "merchants#destroy", as: "logout"
   
 end
