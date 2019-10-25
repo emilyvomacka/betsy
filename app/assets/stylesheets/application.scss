@@ -11,8 +11,20 @@
  * It is generally better to create a new file per style scope.
  *
  */
-    
-    /* Custom bootstrap variables must be set or imported *before* bootstrap. */
-    @import "bootstrap";
-    /* Import scss content */
-    @import "**/*";
+
+/* Custom bootstrap variables must be set or imported *before* bootstrap. */
+@import "bootstrap";
+/* Import scss content */
+@import "**/*";
+
+
+.title {
+   background-color: #F7BF82;
+   padding: 3rem; 
+   
+   h1{
+   font-family: 'Annie Use Your Telescope', cursive;
+   font-size: 6rem;
+   text-align: center;
+   }
+}
