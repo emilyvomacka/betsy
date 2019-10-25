@@ -13,7 +13,15 @@ class MerchantsController < ApplicationController
     end
   end
   
+  def login
+  end
   
+  def logout
+  end
+  
+  # def dashboard
+  #   @merchant =  Merchant.find_by(id: params[:id])
+  # end
   
   
   

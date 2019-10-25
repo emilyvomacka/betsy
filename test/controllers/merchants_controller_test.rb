@@ -28,7 +28,7 @@ describe MerchantsController do
       must_respond_with :success
     end
     
-    it "renders 404 if the work doesn't exist" do
+    it "renders 404 if the merchant doesn't exist" do
       destroyed_id = existing_merchant.id
       existing_merchant.destroy
       
