@@ -90,3 +90,5 @@ end
 
 gem "omniauth"
 gem "omniauth-github"
+
+gem 'simplecov', require: false, group: :test
