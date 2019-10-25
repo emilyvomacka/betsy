@@ -26,7 +26,6 @@ class ProductsController < ApplicationController
     end
   end
   
-  
   def edit; end
   
   def update
@@ -72,5 +71,4 @@ class ProductsController < ApplicationController
       return
     end
   end
-  
 end
