@@ -43,17 +43,17 @@ class MerchantsController < ApplicationController
   end
   
   def login
-    username = params[:username]
-    if username and merchant = Merchant.find_by(username: username)
+    name = params[:name]
+    if name and merchant = Merchant.find_by(name: name)
       session[:merchant_id] = merchant.id
       flash[:status] = :success
-      flash[:result_text] = "Successfully logged in as existing merchant #{merchant.username}"
+      flash[:result_text] = "Successfully logged in as existing merchant #{merchant.name}"
     else
-      merchant = Merchant.new(username: username)
+      merchant = Merchant.new(name: name)
       if merchant.save
         session[:merchant_id] = merchant.id
         flash[:status] = :success
-        flash[:result_text] = "Successfully created new merchant #{merchant.username} with ID #{merchant.id}"
+        flash[:result_text] = "Successfully created new merchant #{merchant.name} with ID #{merchant.id}"
       else
         flash.now[:status] = :failure
         flash.now[:result_text] = "Could not log in"
