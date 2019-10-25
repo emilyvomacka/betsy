@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :orders
   resources :products, except: [:destroy]
   resources :merchants, only: [:index, :show]
+  resources :categories, only: [:index, :show, :new, :create]
   
   get '/products/retire/:id', to: 'products#retire', as: "retire"
   

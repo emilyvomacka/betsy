@@ -17,6 +17,7 @@ describe Product do
     end
     
   end
+  
   describe "custom methods" do 
     describe "retire method" do
       before do
