@@ -13,6 +13,14 @@ class Product < ApplicationRecord
   
   after_save :validate_minimum_number_of_categories
   
+  def retire
+    if self.active
+      return self.update(active: false)
+    else
+      return self.update(active: true)
+    end
+  end
+  
   private
   
   def validate_minimum_number_of_categories
@@ -23,12 +31,5 @@ class Product < ApplicationRecord
     return true
   end
   
-  def retire
-    if self.active
-      return self.update(active: false)
-    else
-      return self.update(active: true)
-    end
-  end
   
 end
