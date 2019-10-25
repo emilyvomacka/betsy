@@ -11,14 +11,14 @@ class OrdersController < ApplicationController
       return
     end
   end
-
-#adding a product item to the cart 
+  
+  #adding a product item to the cart 
   def add_to_cart
     if session[:order_id].nil?
       @order = Order.create(cart_status: "pending")
       session[:order_id] = @order.id
     end   
-      new_order_item = OrderItem.create(
+    new_order_item = OrderItem.create(
       quantity: params["quantity"],
       product_id: params["product_id"],
       order_id: session[:order_id] )
@@ -30,7 +30,8 @@ class OrdersController < ApplicationController
       end 
     end 
   end 
-
+  
+  
   def edit #customers add check-out info
     @order = Order.find_by(id: session[:order_id])
     if @order.nil?
@@ -39,7 +40,7 @@ class OrdersController < ApplicationController
       return
     end
   end
-
+  
   def update
     if @order.update(order_params) 
       #not sure how to add validations here (did customer fill in all fields?)
@@ -51,9 +52,19 @@ class OrdersController < ApplicationController
       return
     end
   end
-
+  
+  def destroy
+    
+    return
+  end
+  
+  
   private
-
+  
   def order_params
     return params.require(:order).permit(:mailing_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, :cart_status) 
   end
+  
+  
+  
+  

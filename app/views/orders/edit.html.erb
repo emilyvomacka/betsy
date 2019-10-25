@@ -1,17 +1,3 @@
-<% if @book.errors.any? %>
-    <section class="alert alert-danger">
-      <h1>Errors</h1>
-      <ul>
-        <% @book.errors.each do |column, message| %>
-          <li>
-            <strong><%= column.capitalize %></strong> <%= message %>
-          </li>
-        <% end %>
-      </ul>
-      </section>
-  <% end %>
-
-
 <p>Please provide the following information to complete your order, and hey, don't give us your real credit card. This is a student project and our data security is less than upper-crust. </p>
 mailing_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, :cart_status
 
