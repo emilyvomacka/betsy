@@ -22,7 +22,6 @@ class Product < ApplicationRecord
   end
   
   private
-  
   def validate_minimum_number_of_categories
     if categories.count < 1
       errors.add(:categories, "must have at least one category")
