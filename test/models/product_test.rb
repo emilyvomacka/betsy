@@ -39,7 +39,6 @@ describe Product do
     describe "validations" do 
       it "must have a name" do 
         product.name = nil 
-        
         expect(product.valid?).must_equal false
         expect(product.errors.messages).must_include :name
         expect(product.errors.messages[:name]).must_equal ["can't be blank"]
@@ -70,8 +69,7 @@ describe Product do
         product.stock = nil 
         expect(product.valid?).must_equal false
         expect(product.errors.messages).must_include :stock
-        expect(product.errors.messages[:stock]).must_equal ["can't be blank"]
-        
+        expect(product.errors.messages[:stock]).must_equal ["can't be blank"] 
       end
       
       it "must have a merchant_id associated" do
@@ -81,6 +79,5 @@ describe Product do
         expect(product.errors.messages[:merchant_id]).must_equal ["can't be blank"]
       end
     end
-    
   end
 end 
