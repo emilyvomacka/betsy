@@ -3,7 +3,7 @@ class Product < ApplicationRecord
   belongs_to :merchant 
   has_many :order_items, dependent: :destroy
   has_and_belongs_to_many :categories
-
+  
   validates :name, presence: true
   validates :description, presence: true
   validates :price, presence: true
@@ -13,15 +13,6 @@ class Product < ApplicationRecord
   
   after_save :validate_minimum_number_of_categories
   
-  private
-  
-  def validate_minimum_number_of_categories
-    if categories.count < 1
-      errors.add(:categories, "must have at least one category")
-      return false
-    end 
-  end 
-
   def retire
     if self.active
       return self.update(active: false)
@@ -30,4 +21,14 @@ class Product < ApplicationRecord
     end
   end
   
+  private
+  def validate_minimum_number_of_categories
+    if categories.count < 1
+      errors.add(:categories, "must have at least one category")
+      return false
+    end 
+    return true
+  end
+  
 end
+

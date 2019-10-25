@@ -11,8 +11,50 @@
  * It is generally better to create a new file per style scope.
  *
  */
-    
-    /* Custom bootstrap variables must be set or imported *before* bootstrap. */
-    @import "bootstrap";
-    /* Import scss content */
-    @import "**/*";
+
+/* Custom bootstrap variables must be set or imported *before* bootstrap. */
+@import "bootstrap";
+/* Import scss content */
+@import "**/*";
+
+
+.toptitle a{
+   font-family: 'Annie Use Your Telescope', cursive;
+   font-size: 6rem;
+}
+
+.product-filter {
+   display: flex;
+}
+
+.product-filter h1 {
+   flex-grow: 1;
+}
+
+.sort {
+   display: flex;
+}
+.collection-sort {
+   margin: 1rem;
+   display: flex;
+   flex-direction: column;
+}
+
+.products {
+   margin: 2rem;
+   display: flex;
+   flex-wrap: wrap;
+}
+
+.product-card {
+   padding: 2%;
+   // flex-grow: 1;
+   flex-basis: 16%;
+}
+.product-image img {
+   display: block;
+   max-width: 100%;
+}
+.product-info {
+   margin-top: auto;
+}
