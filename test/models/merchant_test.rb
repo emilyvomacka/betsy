@@ -5,22 +5,22 @@ describe Merchant do
   
   describe "validations" do
     
-    it "is valid with a username" do
+    it "is valid with a name" do
       expect(merchant.valid?).must_equal true
     end
     
-    it "is invalid without a username" do
-      merchant.username = nil
+    it "is invalid without a name" do
+      merchant.name = nil
       
       expect(merchant.valid?).must_equal false
-      expect(merchant.errors.messages).must_include :username
+      expect(merchant.errors.messages).must_include :name
     end
     
-    it 'is invalid without a unique username' do
-      invalid_merchant = Merchant.create(username: "Sea Wolf Bakers")
+    it 'is invalid without a unique name' do
+      invalid_merchant = Merchant.create(name: "Sea Wolf Bakers")
       
       expect(invalid_merchant.valid?).must_equal false
-      expect(invalid_merchant.errors.messages).must_include :username
+      expect(invalid_merchant.errors.messages).must_include :name
     end
   end
   
