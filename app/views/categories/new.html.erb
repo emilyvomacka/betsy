@@ -1,0 +1,12 @@
+<p>Please provide the following information to add a category. Must be a bread pun. </p>
+
+
+<%= form_with model: @category, method: :post do |f| %>
+  <div>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  </div>
+
+  <%= f.submit "Create Category" %>
+
+<% end %>
