@@ -1,0 +1,6 @@
+<h3>Name: <%= @merchant.username %></h3>
+<p> Products: 
+  <%@merchant.products.each do |product|%>
+    <li><%= link_to product.name, product_path(product) %></li>
+  <%end%>
+</p>
