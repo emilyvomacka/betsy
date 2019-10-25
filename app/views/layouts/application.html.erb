@@ -33,18 +33,12 @@
 
           <ul class="nav navbar-nav navbar-right">
             
-            <% if @current_merchant.nil? %>
-              <li>
-                <button type="button" class="btn btn-primary"><li><%= link_to("Login with GitHub" ) %></li></button>
-              </li>
-            <%else%>
-              <li>
-                <button type="button" class="btn btn-primary"><li><%= link_to "Logged in as ____" %></li></button>
-              </li>
-              <li>
-                <button type="button" class="btn btn-primary"><li><%= link_to "Log out" %></li></button>
-              </li>
-          <%end%>
+           <% if session[:merchant_id] %>
+            Welcome, <%= session[:merchant_name] %>!
+            <%= link_to "Log out", logout_path, method: "delete" %>
+          <% else %>
+            <%= link_to "Login with Github", github_login_path %>
+          <% end %>
 
           </ul>
         </div>
