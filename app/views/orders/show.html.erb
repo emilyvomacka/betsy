@@ -6,3 +6,7 @@
 <% end %>
 
 <p>Total Cost: <%= @order.total_cost %>
+
+<div>
+<%= link_to "Complete Order", edit_order_path(@order), class: "btn btn-primary" %>
+</div>
