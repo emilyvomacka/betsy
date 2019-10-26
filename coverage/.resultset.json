@@ -1,27 +1,27 @@
 {
   "MiniTest": {
     "coverage": {
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/helpers/application_helper.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/helpers/application_helper.rb": [
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/helpers/categories_helper.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/helpers/categories_helper.rb": [
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/helpers/merchants_helper.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/helpers/merchants_helper.rb": [
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/helpers/orders_helper.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/helpers/orders_helper.rb": [
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/helpers/products_helper.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/helpers/products_helper.rb": [
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/controllers/categories_controller.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/controllers/categories_controller.rb": [
         1,
         null,
         1,
@@ -64,7 +64,7 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/controllers/application_controller.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/controllers/application_controller.rb": [
         1,
         1,
         null,
@@ -81,7 +81,7 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/controllers/merchants_controller.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/controllers/merchants_controller.rb": [
         1,
         null,
         1,
@@ -164,7 +164,7 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/controllers/orders_controller.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/controllers/orders_controller.rb": [
         1,
         null,
         1,
@@ -240,7 +240,7 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/controllers/products_controller.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/controllers/products_controller.rb": [
         1,
         1,
         null,
@@ -320,19 +320,20 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/category.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/models/category.rb": [
         1,
         1,
         null,
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/application_record.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/models/application_record.rb": [
         1,
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/merchant.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/models/merchant.rb": [
+        1,
         1,
         1,
         1,
@@ -344,19 +345,47 @@
         0,
         0,
         0,
+        null,
+        null,
+        1,
+        2,
+        null,
+        2,
+        2,
+        null,
+        null,
+        2,
+        null,
+        null,
+        1,
+        3,
+        null,
+        3,
+        6,
+        4,
+        null,
+        null,
+        null,
+        3,
+        null,
         null,
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/order_item.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/models/order_item.rb": [
         1,
         1,
         1,
         null,
         1,
+        null,
+        1,
+        8,
+        null,
+        null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/order.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/models/order.rb": [
         1,
         1,
         null,
@@ -400,7 +429,7 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/product.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/models/product.rb": [
         1,
         1,
         1,
@@ -436,12 +465,12 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/review.rb": [
+      "/Users/alicesun/ada/week12/betsy/app/models/review.rb": [
         1,
         1,
         null
       ]
     },
-    "timestamp": 1572042299
+    "timestamp": 1572050772
   }
 }
