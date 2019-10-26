@@ -14,27 +14,31 @@ class OrdersController < ApplicationController
   
   #adding a product item to the cart 
   def add_to_cart
-    if params["quantity"].to_i > Product.find(params["product_id"]).stock
-      redirect_to product_path(params["product_id"])
+    new_quantity = params["quantity"]
+    new_product_id = params["product_id"]
+    if new_quantity.to_i > Product.find(new_product_id).stock
+      redirect_to product_path(new_product_id)
       flash[:danger] = "Error: excessive carb-loading. Please order less bread!"
       return 
     end 
-    if session[:order_id] == nil
+    if session[:order_id] == nil || session[:order_id] == false
       @order = Order.create(cart_status: "pending")
       session[:order_id] = @order.id
-    end   
-    new_order_item = OrderItem.create(
-    quantity: params["quantity"],
-    product_id: params["product_id"],
-    order_id: session[:order_id] )
-    if Order.find_by(id: session[:order_id]).order_items << new_order_item
-      flash[:success] = "Item added to carb. Um, cart."
-      redirect_to product_path(params["product_id"])
     else 
-      flash.now[:danger] = "There is a problem. Sorry for the crumby UX."
+      @order = Order.find_by(id: session[:order_id])
     end 
-    
-  end
+    #if @order.consolidate_order_items returns error, 
+    #flash[:danger] = "Error: excessive carb-loading. Please order less bread!"
+    if @order.consolidate_order_items(new_product_id, new_quantity) == false 
+      @order.order_items << OrderItem.create(
+      quantity: new_quantity,
+      product_id: new_product_id,
+      order_id: @order.id)
+    end 
+    flash[:success] = "Item added to shopping carb."
+    redirect_to product_path(params["product_id"])
+  end   
+  
   
   def edit #customers add check-out info
     @order = Order.find_by(id: params[:id])
@@ -47,8 +51,14 @@ class OrdersController < ApplicationController
   
   def update
     @order = Order.find_by(id: params[:id])
+    @order.order_items.each do |item|
+      if item.quantity > item.product.stock
+        flash.now[:error] = "#{item.product.name} running low! We currently only have #{item.product.stock} left. Please adjust your order."
+        render :edit
+        return 
+      end 
+    end 
     if @order.update(order_params) 
-      #not sure how to add validations here (did customer fill in all fields?)
       @order.cart_status = "paid"
       @order.save 
       redirect_to products_path

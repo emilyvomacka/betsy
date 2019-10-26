@@ -1,27 +1,27 @@
 {
   "MiniTest": {
     "coverage": {
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/helpers/application_helper.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/helpers/application_helper.rb": [
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/helpers/categories_helper.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/helpers/categories_helper.rb": [
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/helpers/merchants_helper.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/helpers/merchants_helper.rb": [
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/helpers/orders_helper.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/helpers/orders_helper.rb": [
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/helpers/products_helper.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/helpers/products_helper.rb": [
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/controllers/categories_controller.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/controllers/categories_controller.rb": [
         1,
         null,
         1,
@@ -64,7 +64,7 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/controllers/application_controller.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/controllers/application_controller.rb": [
         1,
         1,
         null,
@@ -81,7 +81,7 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/controllers/merchants_controller.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/controllers/merchants_controller.rb": [
         1,
         null,
         1,
@@ -164,7 +164,7 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/controllers/orders_controller.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/controllers/orders_controller.rb": [
         1,
         null,
         1,
@@ -240,7 +240,7 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/controllers/products_controller.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/controllers/products_controller.rb": [
         1,
         1,
         null,
@@ -320,19 +320,19 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/category.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/models/category.rb": [
         1,
         1,
         null,
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/application_record.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/models/application_record.rb": [
         1,
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/merchant.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/models/merchant.rb": [
         1,
         1,
         1,
@@ -348,7 +348,7 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/order_item.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/models/order_item.rb": [
         1,
         1,
         1,
@@ -356,7 +356,7 @@
         1,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/order.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/models/order.rb": [
         1,
         1,
         null,
@@ -400,7 +400,7 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/product.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/models/product.rb": [
         1,
         1,
         1,
@@ -436,12 +436,12 @@
         null,
         null
       ],
-      "/Users/bri/Documents/ada-hw/week-12/betsy/app/models/review.rb": [
+      "/Users/emilyvomacka/Documents/Ada/week-twelve/betsy/app/models/review.rb": [
         1,
         1,
         null
       ]
     },
-    "timestamp": 1572042299
+    "timestamp": 1572043040
   }
 }

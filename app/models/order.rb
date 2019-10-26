@@ -1,18 +1,12 @@
 class Order < ApplicationRecord
   has_many :order_items
   
-  
-  # validates_presence_of :email_address, :mailing_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, :cart_status
-  # validates :cc_number, length: { is: 16 }  
-  # validates :cc_security_code, length: { is: 3 }  
-  # validates :zip_code, length: { is: 5 }  
-  
+  validates_presence_of :email_address, :mailing_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, :cart_status, on: :update 
+  validates :cc_number, length: { is: 16 }, on: :update
+  validates :cc_security_code, length: { is: 3 }, on: :update 
+  validates :zip_code, length: { is: 5 }, on: :update
   
   validates :cart_status, presence: true
-  
-  
-  
-  
   
   def total_cost
     total_cost = 0
@@ -20,6 +14,18 @@ class Order < ApplicationRecord
       total_cost += (item.product.price * item.quantity)
     end 
     return total_cost
+  end 
+  
+  def consolidate_order_items(new_item_id, new_item_quantity)
+    self.order_items.each do |item|
+      if item.product.id.to_s == new_item_id
+        puts "#{item.product.id} == #{new_item_id}"
+        item.quantity += new_item_quantity.to_i
+        item.save 
+        return true 
+      end
+    end 
+    return false
   end 
   
   private 
@@ -36,7 +42,7 @@ class Order < ApplicationRecord
   #       errors.add(:cc_number, "Credit card number must be 16 numbers")
   #     end
   #   end
-    
+  
   # end 
 end
 
