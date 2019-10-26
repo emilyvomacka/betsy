@@ -1,18 +1,19 @@
 <h3> Order Show Page </h3>
 <div class="order show container">
 <div class="order-item-container">
-<% @order.order_items.each do |item| %>
+<!-- if no logged-in user, or if logged-in user doesn't match order's merchant id -->
+<% %>
+<% @order.order_items.arrange_by_created_at.each do |item| %>
   <p>Product: <%= item.product.name %></p>
   <p>Quantity: <%= item.quantity %><p>
+    <p><%= form_tag edit_item_quantity_path, method: :patch do %>    
+    <%= hidden_field_tag :order_item_id, item.id %>
+    <%= text_field_tag :new_quantity %>
+    <%= submit_tag "Edit Quantity" %>
+    <% end %></p>
   <p><%= form_tag delete_from_cart_path, method: :delete do %>    
     <%= hidden_field_tag :order_item_id, item.id %>
     <%= submit_tag "Delete This Item" %>
-    <% end %></p>
-  <p><%= form_tag edit_item_quantity_path, method: :patch do %>    
-    <%= hidden_field_tag :order_item_id, item.id %>
-    <%= label_tag :new_quantity, "Quantity" %>
-    <%= text_field_tag :new_quantity %>
-    <%= submit_tag "Edit Quantity" %>
     <% end %></p>
 <% end %>
 </div>
@@ -23,3 +24,5 @@
 <%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-primary" %>
 </div>
 </div>
+
+<!--if logged-in user -->
