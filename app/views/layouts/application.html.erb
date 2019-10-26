@@ -7,7 +7,6 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAEzgAAAAAABE4YQAimuAAFlfHAHPa/wANRoIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERAAEREREREQAAABERERERAAAAARERERAEQAAAEREREFNEIgABEREQUzQiIAARERBVNEQiAAEREQUwBEIgABEREANERGYAAREQUzNERGAAEREFUzNERgABEQBVMARGAAEREQADM0QAAREREFVTM2AREREREFVWARERERERAAARHj/wAAgf8AAID/AAAAfwAAAD8AAAAfAAAADwAAgAcAAMADAADAAQAA4AAAAOAAAAD4AAAA/AEAAP8DAAD/hwAA" rel="icon" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Annie+Use+Your+Telescope&display=swap" rel="stylesheet">
   </head>
 
@@ -34,29 +33,30 @@
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-            <% if session[:order_id] %>
-              <li>
-                <button type="button" ><li><%= link_to "View Shopping Carb", order_path(session[:order_id]) %></li></button>
-              </li>
+            
+             <% if session[:order_id] %>	
+              <li>	
+                <button type="button" ><li><%= link_to "View Shopping Carb", order_path(session[:order_id]) %></li></button>	
+              </li>	
             <% end %>
-
+            
            <% if session[:merchant_id] %>
             Welcome, <%= session[:merchant_name] %> 
                  <%= link_to "Log out", logout_path, method: "delete" %>
                  <% else %>
              <%= link_to "Login with Github", github_login_path %>
           <% end %>
-
           </ul>
         </div>
       </nav>
     </section>
-
-    <section class="flash">
-    <% flash.each do |name, message| %>
-      <div class="alert alert-<%= name %>"><%= message %></div>
-    <% end %>
-    </section>
+  
+  
+    <section class="flash">	
+    <% flash.each do |name, message| %>	
+      <div class="alert alert-<%= name %>"><%= message %></div>	
+    <% end %>	
+    </section>	
 
     <%= yield %>
   </body>
