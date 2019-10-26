@@ -1,0 +1,19 @@
+<p>We don't want to be crumby - leave your feedback below!</p>
+
+<%= form_with model: @review, class: "rate-review" do |f| %>
+  Rate us!<br/>
+  <%= f.radio_button :rating, '1' %> 1 star <br/>
+  <%= f.radio_button :rating, '2' %> 2 star <br/>
+  <%= f.radio_button :rating, '3' %> 3 star <br/>
+  <%= f.radio_button :rating, '4' %> 4 star <br/>
+  <%= f.radio_button :rating, '5' %> 5 star <br/>
+
+<br/>
+You deserve butter. Tell us more:
+  <%= f.text_area :text %>
+<br/>
+Product ID:
+  <%= f.text_field :product_id %>
+  <%= f.submit "#{action_name} Review", class: "review-button" %>
+
+<% end %>
