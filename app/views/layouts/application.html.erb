@@ -25,14 +25,20 @@
               <%= link_to "View All Products", products_path %></li>
             </li>
             <li class="nav-item">
-              <%= link_to "Browse by Category"  %>
+              <%= link_to "Browse by Category", categories_path  %>
             </li>
             <li class="nav-item">
-              <%= link_to "Browse by Merchant" %>
+              <%= link_to "Browse by Merchant", merchants_path %>
             </li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
+            
+             <% if session[:order_id] %>	
+              <li>	
+                <button type="button" ><li><%= link_to "View Shopping Carb", order_path(session[:order_id]) %></li></button>	
+              </li>	
+            <% end %>
             
            <% if session[:merchant_id] %>
             Welcome, <%= session[:merchant_name] %> 
@@ -44,6 +50,14 @@
         </div>
       </nav>
     </section>
+  
+  
+    <section class="flash">	
+    <% flash.each do |name, message| %>	
+      <div class="alert alert-<%= name %>"><%= message %></div>	
+    <% end %>	
+    </section>	
+
     <%= yield %>
   </body>
 </html>
