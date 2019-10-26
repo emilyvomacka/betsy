@@ -16,12 +16,10 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "merchants#create"
   delete "/logout", to: "merchants#destroy", as: "logout" 
   
-  
   resources :products do
     resources :reviews, only: [:new, :create]
-    resources :reviews
-    
   end
+  
   resources :reviews
 end
 

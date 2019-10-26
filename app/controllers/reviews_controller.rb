@@ -1,7 +1,14 @@
 class ReviewsController < ApplicationController 
   
   def new
-    @review = Review.new
+    # @review = Review.new
+    if params[:product_id]
+      product = Product.find_by(id: params[:product_id])
+      @review = product.reviews.new 
+      
+    else
+      @review = Review.new
+    end
   end
   
   def create

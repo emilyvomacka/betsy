@@ -12,8 +12,7 @@
 You deserve butter. Tell us more:
   <%= f.text_area :text %>
 <br/>
-Product ID:
-  <%= f.text_field :product_id %>
+  <%= f.hidden_field :product_id %>
   <%= f.submit "#{action_name} Review", class: "review-button" %>
 
 <% end %>
