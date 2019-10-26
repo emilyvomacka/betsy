@@ -1,5 +1,6 @@
 class Merchant < ApplicationRecord
-  has_many :products 
+  has_many :products, dependent: :destroy
+  has_many :order_items, through: :products
   validates :name, presence: true, uniqueness: true
   
   def self.build_from_github(auth_hash)
@@ -10,5 +11,28 @@ class Merchant < ApplicationRecord
     merchant.email = auth_hash["info"]["email"]
     return merchant
   end
+  
+  def total_revenue
+    total_revenue = 0.0
+    
+    self.order_items.each do |order_item|
+      total_revenue += order_item.total
+    end
+    
+    return total_revenue
+  end
+  
+  def revenue_by_status(status)
+    total_revenue = 0.0
+    
+    self.order_items.each do |order_item|
+      if order_item.order.cart_status == status
+        total_revenue += order_item.total
+      end
+    end
+    
+    return total_revenue
+  end
+  
 end
 
