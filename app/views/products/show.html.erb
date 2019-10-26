@@ -13,4 +13,7 @@ categories: <p><% @product.categories.each do |category| %>
   <%= text_field_tag :quantity %>
   <%= hidden_field_tag :product_id, @product.id %>
   <%= submit_tag "Add To Carb" %>
+
+  <%= link_to "Review now", new_review_path(@product.id), class: "btn btn-secondary" %>
+
   <% end %> 
