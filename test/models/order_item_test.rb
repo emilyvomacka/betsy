@@ -57,6 +57,15 @@ describe OrderItem do
       one.order.must_be_kind_of Order
     end
   end
+  
+  describe "custom methods" do
+    describe "total" do
+      it "will return the total for an order item" do
+        expect(order_items(:one).total).must_equal order_items(:one).quantity*order_items(:one).product.price
+        expect(order_items(:two).total).must_equal order_items(:two).quantity*order_items(:two).product.price
+      end
+    end
+  end
 end
 
 
