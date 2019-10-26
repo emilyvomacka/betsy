@@ -39,7 +39,42 @@ class OrdersController < ApplicationController
     redirect_to product_path(params["product_id"])
   end   
   
-  
+  def delete_from_cart
+    @order_item = OrderItem.find_by(id: params[:order_item_id])
+    if @order_item.nil?
+      flash[:error] = "Bread is missing"
+      redirect_to order_path(session[:order_id])
+    end 
+    @order_item.destroy
+    flash[:success] = "Item deleted from carb."
+    if session[:order_id]
+      redirect_to order_path(session[:order_id])
+    else 
+      redirect_to root_path
+    end 
+  end 
+
+  def edit_item_quantity
+    @order_item = OrderItem.find_by(id: params[:order_item_id])
+    if @order_item.nil?
+      flash[:danger] = "Bread is missing"
+      redirect_to order_path(session[:order_id])
+    end 
+    if params[:new_quantity].to_i > @order_item.product.stock
+      flash[:danger] = "Bread overload. Please order less bread."
+      redirect_to order_path(session[:order_id])
+    else
+      @order_item.quantity = params[:new_quantity]
+      @order_item.save 
+      flash[:success] = "Quantity adjusted"
+      if session[:order_id]
+        redirect_to order_path(session[:order_id])
+      else 
+        redirect_to root_path
+      end 
+    end 
+  end 
+
   def edit #customers add check-out info
     @order = Order.find_by(id: params[:id])
     if @order.nil?

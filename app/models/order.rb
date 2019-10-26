@@ -18,8 +18,7 @@ class Order < ApplicationRecord
   
   def consolidate_order_items(new_item_id, new_item_quantity)
     self.order_items.each do |item|
-      if item.product.id.to_s == new_item_id
-        puts "#{item.product.id} == #{new_item_id}"
+      if item.product.id.to_s == new_item_id 
         item.quantity += new_item_quantity.to_i
         item.save 
         return true 
