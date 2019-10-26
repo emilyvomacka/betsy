@@ -28,8 +28,8 @@ seedy:
   price: 0.525e1
   photo_URL: https://flic.kr/p/c4w5oq
   stock: 24
-  merchant: macrina, fresh
-  categories: crazy
+  merchant: macrina
+  categories: crazy, fresh
 daily_baguette:
   name: Daily Baguette Subscription
   description: The only morning routine.
