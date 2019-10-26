@@ -9,12 +9,19 @@ Rails.application.routes.draw do
   
   resources :merchants, only: [:index, :show]
   resources :categories, only: [:index, :show, :new, :create]
-  resources :reviews, only: [:new, :create]
   
   # get "/login", to: "merchants#login_form", as: "login"
   # post "/login", to: "merchants#login"
   get "/auth/github", as: "github_login"
   get "/auth/:provider/callback", to: "merchants#create"
   delete "/logout", to: "merchants#destroy", as: "logout" 
+  
+  
+  resources :products do
+    resources :reviews, only: [:new, :create]
+    resources :reviews
+    
+  end
+  resources :reviews
 end
 
