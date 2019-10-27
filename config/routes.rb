@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get '/products/retire/:id', to: 'products#retire', as: "retire"
   
   resources :merchants, only: [:index, :show]
+  get '/merchants/dashboard/:id', to: 'merchants#dashboard', as: "dashboard"
+  
   resources :categories, only: [:index, :show, :new, :create]
   
   # get "/login", to: "merchants#login_form", as: "login"

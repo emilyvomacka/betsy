@@ -72,9 +72,11 @@ class MerchantsController < ApplicationController
     redirect_to root_path
   end
   
-  # def dashboard
-  #   @merchant =  Merchant.find_by(id: params[:id])
-  # end
+  def dashboard
+    #will change to @current_merchant after, right now just able to see every merchant's dashboard
+    @merchant = Merchant.find_by(id: params[:id])
+    # require_login
+  end
   
   
   

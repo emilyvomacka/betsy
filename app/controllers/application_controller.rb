@@ -3,11 +3,11 @@ class ApplicationController < ActionController::Base
   
   
   def current_merchant
-    @current_merchant = Merchant.find_by(id: session[:user_id])
+    @current_merchant = Merchant.find_by(id: session[:merchant_id])
   end
   
   def require_login
-    if session[:user_id].nil?
+    if session[:merchant_id].nil?
       flash[:error] = "You must be logged in to perform this action."
       redirect_to root_path
     end
