@@ -2,6 +2,7 @@ class Merchant < ApplicationRecord
   has_many :products, dependent: :destroy
   has_many :order_items, through: :products
   validates :name, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
   
   def self.build_from_github(auth_hash)
     merchant = Merchant.new

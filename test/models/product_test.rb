@@ -38,11 +38,23 @@ describe Product do
     end
     
     describe "validations" do 
+      
+      it "is valid with all fields present and valid" do
+        expect(product.valid?).must_equal true
+      end
+      
       it "must have a name" do 
         product.name = nil 
         expect(product.valid?).must_equal false
         expect(product.errors.messages).must_include :name
         expect(product.errors.messages[:name]).must_equal ["can't be blank"]
+      end
+      
+      it 'is invalid without a unique name' do
+        product.name = products(:sourdough).name
+        
+        expect(product.valid?).must_equal false
+        expect(product.errors.messages).must_include :name
       end
       
       it "must have a description" do 
@@ -56,7 +68,22 @@ describe Product do
         product.price = nil 
         expect(product.valid?).must_equal false 
         expect(product.errors.messages).must_include :price
-        expect(product.errors.messages[:price]).must_equal ["can't be blank"]
+      end
+      
+      it "must have a numerical price" do 
+        product.price = "yeet" 
+        expect(product.valid?).must_equal false 
+        expect(product.errors.messages).must_include :price
+      end
+      
+      it "must have a price greater than 0" do 
+        product.price = 0
+        expect(product.valid?).must_equal false 
+        expect(product.errors.messages).must_include :price
+        
+        product.price = -2
+        expect(product.valid?).must_equal false 
+        expect(product.errors.messages).must_include :price
       end
       
       it "must include photo_URL" do 
