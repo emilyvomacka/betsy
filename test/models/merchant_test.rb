@@ -56,6 +56,16 @@ describe Merchant do
       end
     end
     
+    describe "num_orders" do
+      it "calculates the total amount of order items for a certain status" do
+        expect(merchants(:besalu).num_orders("paid")).must_equal 2
+      end
+      
+      it "will return 0 if there are no order items" do
+        expect(merchants(:nouveau).num_orders("paid")).must_equal 0
+      end
+      
+    end
   end
   
 end
