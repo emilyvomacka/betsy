@@ -8,9 +8,28 @@ categories: <p><% @product.categories.each do |category| %>
 <%= category.name %></p>
 <%end%>
 
+<div class="container">
+  <div class="row">
+    <div class="col">
+      1 of 2
+    </div>
+    <div class="col">
+      2 of 2
+    </div>
+  </div>
+</div>
+
+
+
+
+</section>
+
 <%= form_tag add_to_cart_path, method: :patch do %>    
   <%= label_tag :quantity, "Quantity" %>
   <%= text_field_tag :quantity %>
   <%= hidden_field_tag :product_id, @product.id %>
   <%= submit_tag "Add To Carb" %>
-  <% end %> 
+
+  <%= link_to "Review now", new_review_path(@product.id), class: "btn btn-secondary" %>
+
+<% end %> 

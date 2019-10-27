@@ -1,0 +1,85 @@
+<head>
+  <link href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css" rel="stylesheet">
+
+  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+</head>
+
+<body>
+  <section>
+    <button type="button" class="btn btn-outline-primary"><%= link_to "Add a Product" %></button>
+    <button type="button" class="btn btn-outline-primary"><%= link_to "View My Products" %></button>
+    <button type="button" class="btn btn-outline-primary"><%= link_to "Add a Category" %></button>
+  </section>
+
+  <h1><%= @merchant.name %>'s Dashboard</h1>
+
+  <p>Total Revenue: $<%= @merchant.total_revenue %></p>
+
+  <section>
+    <h2>Total Revenue Breakdown:</h2>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Order Status</th>
+          <th scope="col">Number of Orders</th>
+          <th scope="col">Total Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Pending</th>
+          <td><%= @merchant.num_orders("pending") %></td>
+          <td><%= @merchant.revenue_by_status("pending") %></td>
+        </tr>
+        <tr>
+          <th scope="row">Paid</th>
+          <td><%= @merchant.num_orders("paid") %></td>
+          <td><%= @merchant.revenue_by_status("paid") %></td>
+        </tr>
+        <tr>
+          <th scope="row">Complete</th>
+          <td><%= @merchant.num_orders("complete") %></td>
+          <td><%= @merchant.revenue_by_status("complete") %></td>
+        </tr>
+        <tr>
+          <th scope="row">Cancelled</th>
+          <td><%= @merchant.num_orders("cancelled") %></td>
+          <td><%= @merchant.revenue_by_status("cancelled") %></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <h2>Orders:</h2>
+    <table class="table" id="table" data-filter-control="true">
+      <thead>
+        <tr>
+          <th scope="col" data-field="order_num" data-filter-control="input">Order Number</th>
+          <th scope="col" data-field="status" data-filter-control="select">Order Status</th>
+          <th scope="col" data-field="product" data-filter-control="input">Product Sold</th>
+          <th scope="col" data-field="quantity" data-filter-control="input">Quantity</th>
+          <th scope="col" data-field="date" data-filter-control="input">Order Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @merchant.order_items.each do |order_item| %>
+        <tr>
+          <th scope="row"><%= link_to order_item.order.number %></th>
+          <td><%= order_item.order.cart_status %></td>
+          <td><%= link_to order_item.product.name, product_path(order_item.product_id) %></td>
+          <td><%= order_item.product.quantity %></td>
+          <td><%= order_item.created_at.strftime("%B %d, %Y") %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <script>
+      $(function() {
+        $('#table').bootstrapTable()
+      })
+    </script>
+
+</body>
