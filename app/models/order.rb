@@ -47,30 +47,11 @@ class Order < ApplicationRecord
 
   def existing_quantity(new_product_id)
     self.order_items.each do |current_item|
-      puts "I am in an existing item"
       if current_item.product.id == new_product_id.to_i
         return current_item.quantity.to_i
-        puts "I have returned quantity #{current_item.quantity}"
       end 
     end 
     return 0
   end 
-
-  private 
-  
-  # def order_status_pending
-  #   if cart_status :pending
-  #     attributes = [email_address, mailing_address, customer_name, cc_number,  cc_expiration,  cc_security_code, zip_code] 
-  #     attributes.each do |attribute|
-  #       if attribute.presence == nil?
-  #         errors.add(:email_address, :mailing_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, "Field cannot be empty!")
-  #       end
-  #     end
-  #     if cc_number.length < 16 && cc_number.length > 16
-  #       errors.add(:cc_number, "Credit card number must be 16 numbers")
-  #     end
-  #   end
-  
-  # end 
 end
 
