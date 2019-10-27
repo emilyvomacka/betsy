@@ -4,9 +4,9 @@ class Product < ApplicationRecord
   has_many :order_items, dependent: :destroy
   has_and_belongs_to_many :categories
   
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :description, presence: true
-  validates :price, presence: true
+  validates :price, presence: true, numericality: {greater_than: 0}
   validates :photo_URL, presence: true
   validates :stock, presence: true
   validates :merchant_id, presence: true
