@@ -1,8 +1,12 @@
 sea_wolf:
   name: Sea Wolf Bakers
+  email: seawolf@bakers.com
 besalu:
   name: Cafe Besalu
+  email: cafe@besalu.com
 macrina:
   name: Macrina Bakery
+  email: macrina@bakery.com
 nouveau: 
   name: Nouveau
+  email: nouveau@nouveau.com
