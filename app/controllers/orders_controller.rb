@@ -16,19 +16,17 @@ class OrdersController < ApplicationController
   def add_to_cart
     new_quantity = params["quantity"]
     new_product_id = params["product_id"]
-    if new_quantity.to_i > Product.find(new_product_id).stock
-      redirect_to product_path(new_product_id)
-      flash[:danger] = "Error: excessive carb-loading. Please order less bread!"
-      return 
-    end 
     if session[:order_id] == nil || session[:order_id] == false
       @order = Order.create(cart_status: "pending")
       session[:order_id] = @order.id
     else 
       @order = Order.find_by(id: session[:order_id])
     end 
-    #if @order.consolidate_order_items returns error, 
-    #flash[:danger] = "Error: excessive carb-loading. Please order less bread!"
+    if new_quantity.to_i + @order.existing_quantity(new_product_id) > Product.find(new_product_id).stock
+      redirect_to product_path(new_product_id)
+      flash[:danger] = "Error: excessive carb-loading. Please order less bread!"
+      return 
+    end 
     if @order.consolidate_order_items(new_product_id, new_quantity) == false 
       @order.order_items << OrderItem.create(
       quantity: new_quantity,
@@ -53,7 +51,7 @@ class OrdersController < ApplicationController
       redirect_to root_path
     end 
   end 
-
+  
   def edit_item_quantity
     @order_item = OrderItem.find_by(id: params[:order_item_id])
     if @order_item.nil?
@@ -74,7 +72,7 @@ class OrdersController < ApplicationController
       end 
     end 
   end 
-
+  
   def edit #customers add check-out info
     @order = Order.find_by(id: params[:id])
     if @order.nil?

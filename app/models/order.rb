@@ -44,7 +44,18 @@ class Order < ApplicationRecord
     end 
     return merchants 
   end 
-  
+
+  def existing_quantity(product_id)
+    self.order_items.each do |current_item|
+      puts "I am in an existing item"
+      if current_item.id == product_id
+        return current_item.quantity.to_i
+        puts "I have returned quantity #{current_item.quantity}"
+      end 
+    end 
+    return 0
+  end 
+
   private 
   
   # def order_status_pending
