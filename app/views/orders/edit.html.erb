@@ -1,7 +1,7 @@
 
 <% if @order.errors.any? %>
   <section class="alert alert-danger">
-    <h1>Errors</h1>
+    <h1>This seems half-baked:</h1>
     <ul>
       <% @order.errors.each do |column, message| %>
         <li>
@@ -19,6 +19,11 @@
   <div>
   <%= f.label :customer_name %>
   <%= f.text_field :customer_name %>
+  </div>
+
+  <div>
+  <%= f.label :email_address %>
+  <%= f.text_field :email_address %>
   </div>
 
   <div>
