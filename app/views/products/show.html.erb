@@ -3,8 +3,6 @@
   <div class="row">
     <div class="col">
     <%= image_tag("https://www.bakersdelight.com.au/wp-content/uploads/2018/10/9650.jpg",  alt: "bread", class: "baguette", style: 'width: 100%') %>
-    
-   
 
     </div>
     <div class="col">
@@ -24,10 +22,7 @@
           <%= label_tag :quantity, "Quantity" %>
           <%= text_field_tag :quantity %>
           <%= hidden_field_tag :product_id, @product.id %>
-          <%= submit_tag "Add To Carb" %>
-
-          <%= link_to "Review now", new_review_path(@product.id), class: "btn btn-secondary" %>
-
+          <%= submit_tag "Add To Carb", class: "btn btn-secondary"%>
         <% end %> 
 
         </section>
@@ -36,9 +31,12 @@
     <div class="w-100"></div>
 
     <div class="col">
-    <h3>Reviews (<%= @product.reviews.count %>)</h3>
+
+    <%= link_to "Add a Review", new_review_path(@product.id), class: "btn btn-secondary" %>
     
-    <% @product.reviews.each do |review| %>
+    <h3>Reviews (<%= @product.reviews.count %>)</h3>
+
+      <% @product.reviews.each do |review| %>
       <ul><%= review.rating %></ul>
       <ul><%= review.text %></ul>
     <% end %>
