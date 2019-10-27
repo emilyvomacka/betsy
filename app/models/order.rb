@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-  has_many :order_items
+  has_many :order_items, dependent: :destroy 
   
   validates_presence_of :email_address, :mailing_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, :cart_status, on: :update 
   validates :cc_number, length: { is: 16 }, on: :update
