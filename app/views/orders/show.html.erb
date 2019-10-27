@@ -3,6 +3,7 @@
 <% @order.order_items.each do |item| %>
 <p>Product: <%= item.product.name %></p>
 <p>Quantity: <%= item.quantity %><p>
+<%= link_to "Delete", order_item_path(new_order_item), method: :delete, data: {confirm: "Are you sure?"}%>
 <% end %>
 
 <p>Total Cost: <%= @order.total_cost %>
@@ -10,3 +11,4 @@
 <div>
 <%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-primary" %>
 </div>
+
