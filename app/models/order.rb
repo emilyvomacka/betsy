@@ -45,10 +45,10 @@ class Order < ApplicationRecord
     return merchants 
   end 
 
-  def existing_quantity(product_id)
+  def existing_quantity(new_product_id)
     self.order_items.each do |current_item|
       puts "I am in an existing item"
-      if current_item.id == product_id
+      if current_item.product.id == new_product_id.to_i
         return current_item.quantity.to_i
         puts "I have returned quantity #{current_item.quantity}"
       end 
