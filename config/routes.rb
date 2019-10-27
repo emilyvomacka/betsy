@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :orders 
   patch '/order/add_to_cart', to: 'orders#add_to_cart', as: 'add_to_cart'
   
+  resources :order_items, only: [:create, :destroy]
+  
   resources :products, except: [:destroy]
   get '/products/retire/:id', to: 'products#retire', as: "retire"
   
