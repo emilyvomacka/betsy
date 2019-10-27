@@ -1,21 +1,50 @@
-Name: <p><%= @product.name %></p>
-Description: <p><%= @product.description %></p>
-Price: <p><%= @product.price %></p>
-photo url: <p><%= @product.photo_URL %></p>
-stock: <p><%= @product.stock %></p>
-merchant id: <p><%= @product.merchant.id %></p>
-categories: <p><% @product.categories.each do |category| %>
-<%= category.name %></p>
-<%end%>
 
-<div class="container">
+<div class="container w-100">
   <div class="row">
     <div class="col">
-      1 of 2
+    <%= image_tag("https://www.bakersdelight.com.au/wp-content/uploads/2018/10/9650.jpg",  alt: "bread", class: "baguette", style: 'width: 100%') %>
+
     </div>
     <div class="col">
-      2 of 2
+      <section class="product-details">
+        <p>Name: <%= @product.name %></p>
+        <p>Description: <%= @product.description %></p>
+        <p>Price: <%= @product.price %></p>
+        <p>stock: <%= @product.stock %></p>
+        <p>Seller: <%= link_to @product.merchant.name, merchant_path(@product.merchant) %></p>
+        <p>categories: <p><% @product.categories.each do |category| %>
+        <li><%= link_to category.name, category_path(category) %></li>
+          <%end%>
+      </section>
+      <section class="product-buttons">
+
+        <%= form_tag add_to_cart_path, method: :patch do %>    
+          <%= label_tag :quantity, "Quantity" %>
+          <%= text_field_tag :quantity %>
+          <%= hidden_field_tag :product_id, @product.id %>
+          <%= submit_tag "Add To Carb", class: "btn btn-secondary"%>
+        <% end %> 
+
+        </section>
+
     </div>
+    <div class="w-100"></div>
+
+    <div class="col">
+
+    <%= link_to "Add a Review", new_review_path(@product.id), class: "btn btn-secondary" %>
+    
+    <h3>Reviews (<%= @product.reviews.count %>)</h3>
+
+      <% @product.reviews.each do |review| %>
+      <ul><%= review.rating %></ul>
+      <ul><%= review.text %></ul>
+    <% end %>
+    </div>
+
+    <div class="col">
+    </div>
+
   </div>
 </div>
 
@@ -24,12 +53,3 @@ categories: <p><% @product.categories.each do |category| %>
 
 </section>
 
-<%= form_tag add_to_cart_path, method: :patch do %>    
-  <%= label_tag :quantity, "Quantity" %>
-  <%= text_field_tag :quantity %>
-  <%= hidden_field_tag :product_id, @product.id %>
-  <%= submit_tag "Add To Carb" %>
-
-  <%= link_to "Review now", new_review_path(@product.id), class: "btn btn-secondary" %>
-
-<% end %> 
