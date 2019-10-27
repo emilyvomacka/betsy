@@ -1,0 +1,45 @@
+<section>
+  <%= form_with model: @product do |f| %>
+ 
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :description %>
+      <%= f.text_area :description, class: "form-control", :placeholder => 'Bread puns please.'%>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :price %>
+      <%= f.text_field :price, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :photo_URL %>
+      <%= f.text_area :photo_URL, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :stock %>
+      <%= f.number_field :stock, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :categories %><br>
+      <% @category_names.each do |name| %>
+      <%= f.check_box :categories, { multiple: true }, name, false %> <%= name %> <br>
+      <% end %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :active %>
+      <%= f.select :active, [['True', true], ['False', false]], class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</section>
