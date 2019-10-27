@@ -41,7 +41,7 @@
             <% end %>
             
            <% if session[:merchant_id] %>
-            Welcome, <%= link_to session[:merchant_name], dashboard_path %> 
+            Welcome, <%= link_to session[:merchant_name], dashboard_path(session[:merchant_id]) %> 
                  <%= link_to "Log out", logout_path, method: "delete" %>
                  <% else %>
              <%= link_to "Login with Github", github_login_path %>
