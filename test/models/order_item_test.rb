@@ -47,14 +47,14 @@ describe OrderItem do
   describe "relations" do
     it "has a product" do
       one = order_items(:one)
-      one.must_respond_to :product
-      one.product.must_be_kind_of Product
+      _(one).must_respond_to :product
+      _(one.product).must_be_kind_of Product
     end
     
     it "has an order" do
       one = order_items(:one)
-      one.must_respond_to :order
-      one.order.must_be_kind_of Order
+      _(one).must_respond_to :order
+      _(one.order).must_be_kind_of Order
     end
   end
   
@@ -65,6 +65,14 @@ describe OrderItem do
         expect(order_items(:two).total).must_equal order_items(:two).quantity*order_items(:two).product.price
       end
     end
+    
+    describe "arrange_by_created_at" do
+      it 'properly arranges the items by their created_at order' do
+        test_list = OrderItem.arrange_by_created_at 
+        expect( test_list[0]).must_equal order_items(:one)
+        expect( test_list[-1]).must_equal order_items(:five)
+      end
+    end 
   end
 end
 
