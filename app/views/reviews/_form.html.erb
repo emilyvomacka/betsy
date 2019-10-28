@@ -14,19 +14,28 @@
       </section>
   <% end %>
 
+    <div class="form-group">
+      <%= f.label :rating %>: <br>
+      
+      <%= f.radio_button :rating, '1' %> 1 star <br>
+      <%= f.radio_button :rating, '2' %> 2 star <br>
+      <%= f.radio_button :rating, '3' %> 3 star <br>
+      <%= f.radio_button :rating, '4' %> 4 star <br>
+      <%= f.radio_button :rating, '5' %> 5 star <br>
+    </div>
 
-  Rate us!<br/>
-  <%= f.radio_button :rating, '1' %> 1 star <br/>
-  <%= f.radio_button :rating, '2' %> 2 star <br/>
-  <%= f.radio_button :rating, '3' %> 3 star <br/>
-  <%= f.radio_button :rating, '4' %> 4 star <br/>
-  <%= f.radio_button :rating, '5' %> 5 star <br/>
 
-<br/>
-You deserve butter. Tell us more:
-  <%= f.text_area :text %>
-<br/>
-  <%= f.hidden_field :product_id %>
-  <%= f.submit "#{action_name} Review", class: "review-button", method: :patch %>
+    <div class="form-group">
+    <%= f.label :text %>
+    <%= f.text_area :text %>
+
+    <%= f.hidden_field :product_id %>
+
+    </div>
+
+    <div class="form-group">
+      <%= f.submit class: "btn btn-primary", method: :patch %>
+    </div>
+
 
 <% end %>
