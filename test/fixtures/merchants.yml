@@ -1,12 +1,18 @@
 sea_wolf:
   name: Sea Wolf Bakers
   email: seawolf@bakers.com
+  id: 1
 besalu:
   name: Cafe Besalu
   email: cafe@besalu.com
+  id: 2
 macrina:
   name: Macrina Bakery
   email: macrina@bakery.com
+  id: 3
 nouveau: 
   name: Nouveau
   email: nouveau@nouveau.com
+  id: 4
+  
+  

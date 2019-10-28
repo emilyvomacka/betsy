@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-  has_many :order_items
+  has_many :order_items, dependent: :destroy
   
   validates_presence_of :email_address, :mailing_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, :cart_status, on: :update 
   validates :cc_number, length: { is: 16 }, on: :update
@@ -10,28 +10,34 @@ class Order < ApplicationRecord
   
   def total_cost
     total_cost = 0
-    self.order_items.each do |item|
-      total_cost += (item.product.price * item.quantity)
+    if self.order_items.any? 
+      self.order_items.each do |item|
+        total_cost += item.total
+      end 
     end 
     return total_cost
   end 
   
-  def consolidate_order_items(new_item_id, new_item_quantity)
-    self.order_items.each do |item|
-      if item.product.id.to_s == new_item_id 
-        item.quantity += new_item_quantity.to_i
-        item.save 
-        return true 
-      end
+  def consolidate_order_items(new_product_id, new_quantity)
+    if self.order_items.any?
+      self.order_items.each do |item|
+        if item.product.id.to_s == new_product_id 
+          item.quantity += new_quantity.to_i
+          item.save 
+          return true 
+        end
+      end 
     end 
     return false
   end 
   
   def return_merchant_items(current_merchant_id)
     merchant_items = []
-    self.order_items.each do |current_item|
-      if current_item.product.merchant.id == current_merchant_id
-        merchant_items << current_item
+    if self.order_items.any? 
+      self.order_items.each do |current_item|
+        if current_item.product.merchant.id == current_merchant_id
+          merchant_items << current_item
+        end 
       end 
     end 
     return merchant_items
@@ -44,14 +50,16 @@ class Order < ApplicationRecord
     end 
     return merchants 
   end 
-
+  
   def existing_quantity(new_product_id)
-    self.order_items.each do |current_item|
-      if current_item.product.id == new_product_id.to_i
-        return current_item.quantity.to_i
+    if self.order_items.any?
+      self.order_items.each do |current_item|
+        if current_item.product.id == new_product_id.to_i
+          return current_item.quantity.to_i
+        end 
       end 
     end 
     return 0
-  end 
+  end
+  
 end
-

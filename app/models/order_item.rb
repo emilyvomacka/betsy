@@ -8,7 +8,6 @@ class OrderItem < ApplicationRecord
     return OrderItem.order(created_at: :asc)
   end
 
-  
   def total
     return self.quantity * self.product.price
   end
