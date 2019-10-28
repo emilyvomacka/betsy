@@ -1,6 +1,20 @@
 <p>We don't want to be crumby - leave your feedback below!</p>
 
 <%= form_for [@product, @review] do |f| %>
+
+  <% if @review.errors.any? %>  
+    <section class="alert alert-warning">
+      <ul>
+        <% @review.errors.each do |column, message| %>
+          <li>
+            <strong><%= column.capitalize %></strong> <%= message %>
+          </li>
+        <% end %>
+      </ul>
+      </section>
+  <% end %>
+
+
   Rate us!<br/>
   <%= f.radio_button :rating, '1' %> 1 star <br/>
   <%= f.radio_button :rating, '2' %> 2 star <br/>
