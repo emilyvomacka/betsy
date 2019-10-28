@@ -1,20 +1,38 @@
 require "test_helper"
 
 describe Review do
+  let (:review) {reviews(:one)}
+  
   describe "validations" do
     it "is valid with all fields present" do
+      result = review.valid?
+      expect(result).must_equal true
     end
     
-    it "is invalid without a rating" do
+    it  "is invalid without a rating" do
+      review.rating = nil
+      result = review.valid?.must_equal false
+      expect(review.errors.messages).must_include :rating
     end
     
-    it "is invalid without text" do
-    end 
+    it  "is invalid without text" do
+      # <- TODO
+      result = review.valid?.must_equal false
+      expect(review.errors.messages).must_include :rating
+    end
     
     it "is invalid with a rating that is not 1-5" do
-      #check if rating is 0
-      #check if rating is 6
-      #check if rating is non-integer, 100, other edge cases
+      review.rating = 0
+      result = review.valid?.must_equal false
+      expect(review.errors.messages).must_include :rating
+      
+      review.rating = 6
+      result = review.valid?.must_equal false
+      expect(review.errors.messages).must_include :rating
+      
+      review.rating = 101
+      result = review.valid?.must_equal false
+      expect(review.errors.messages).must_include :rating
     end
     
   end
