@@ -1,8 +1,12 @@
 sea_wolf:
   name: Sea Wolf Bakers
+  id: 1
 besalu:
   name: Cafe Besalu
+  id: 2
 macrina:
   name: Macrina Bakery
+  id: 3
 nouveau: 
   name: Nouveau
+  id: 4
