@@ -2,9 +2,9 @@ class OrdersController < ApplicationController
   before_action :find_order, only: [:show, :edit, :update]
   
   def show ; end
-
+  
   def edit ; end 
-
+  
   def update
     @order.order_items.each do |item|
       if item.quantity > item.product.stock
