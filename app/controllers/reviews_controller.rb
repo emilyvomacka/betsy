@@ -1,11 +1,9 @@
 class ReviewsController < ApplicationController 
   
   def new
-    # @review = Review.new
     if params[:product_id]
-      product = Product.find_by(id: params[:product_id])
-      @review = product.reviews.new 
-      
+      @product = Product.find_by(id: params[:product_id])
+      @review = @product.reviews.new 
     else
       @review = Review.new
     end
@@ -13,10 +11,15 @@ class ReviewsController < ApplicationController
   
   def create
     @review = Review.new(review_params)
+    
     if @review.save
-      redirect_to products_path
+      flash[:status] = :success
+      flash[:result_text] = "Successfully reviewed #{@review.product.name}."
+      redirect_to product_path(@review.product)
       return
     else
+      flash.now[:status] = :failure
+      flash.now[:result_text] = "Unable to save review for #{@review.product.name}."
       render :new
       return
     end

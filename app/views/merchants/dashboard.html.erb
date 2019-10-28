@@ -7,9 +7,9 @@
 
 <body>
   <section>
-    <button type="button" class="btn btn-outline-primary"><%= link_to "Add a Product" %></button>
+    <button type="button" class="btn btn-outline-primary"><%= link_to "Add a Product", new_product_path %></button>
     <button type="button" class="btn btn-outline-primary"><%= link_to "View My Products" %></button>
-    <button type="button" class="btn btn-outline-primary"><%= link_to "Add a Category" %></button>
+    <button type="button" class="btn btn-outline-primary"><%= link_to "Add a Category", new_category_path %></button>
   </section>
 
   <h1><%= @merchant.name %>'s Dashboard</h1>
@@ -66,10 +66,10 @@
       <tbody>
         <% @merchant.order_items.each do |order_item| %>
         <tr>
-          <th scope="row"><%= link_to order_item.order.number %></th>
+          <th scope="row"><%= link_to order_item.order.id %></th>
           <td><%= order_item.order.cart_status %></td>
           <td><%= link_to order_item.product.name, product_path(order_item.product_id) %></td>
-          <td><%= order_item.product.quantity %></td>
+          <td><%= order_item.quantity %></td>
           <td><%= order_item.created_at.strftime("%B %d, %Y") %></td>
         </tr>
         <% end %>

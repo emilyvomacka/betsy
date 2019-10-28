@@ -26,8 +26,8 @@ class CategoriesController < ApplicationController
       flash[:success] = "Successfully created category #{@category.name}."
       redirect_to categories_path
     else
-      flash[:status] = :failure
-      flash[:error] = "Unable to create category #{@category.name}."
+      flash.now[:status] = :failure
+      flash.now[:error] = "Unable to create category #{@category.name}."
       render :new, status: :bad_request
     end
   end
