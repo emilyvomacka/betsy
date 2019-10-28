@@ -18,11 +18,11 @@ class Order < ApplicationRecord
     return total_cost
   end 
   
-  def consolidate_order_items(new_item_product_id, new_item_quantity)
+  def consolidate_order_items(new_product_id, new_quantity)
     if self.order_items.any?
       self.order_items.each do |item|
-        if item.product.id.to_s == new_item_product_id 
-          item.quantity += new_item_quantity.to_i
+        if item.product.id.to_s == new_product_id 
+          item.quantity += new_quantity.to_i
           item.save 
           return true 
         end

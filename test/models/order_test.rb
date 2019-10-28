@@ -32,12 +32,11 @@ describe Order do
     end 
     
     describe "consolidate order items" do
-      it "returns false when a new order item cannot be consolidated with existing order items" do
-        new_order_item = OrderItem.new(quantity: 1, product: products(:seedy), order: existing_order)
+      it "returns false when a new order item does not share a product id with existing order items" do
         expect(existing_order.consolidate_order_items(products(:seedy).id, 1)).must_equal false 
       end 
       
-      it "returns true when a new order item can be consolidated with existing order items, and increments the existing order item's quantity accordingly" do 
+      it "returns true when a new order item shares a product id with existing order items, and +='s the existing order item's quantity accordingly" do 
         expect(existing_order.consolidate_order_items(products(:daily_baguette).id, 1)).must_equal true
         expect(order_items(:one).quantity).must_equal 2
       end 
