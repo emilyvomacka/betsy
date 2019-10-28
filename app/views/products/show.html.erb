@@ -32,7 +32,7 @@
 
     <div class="col">
 
-    <%= link_to "Add a Review", new_review_path(@product.id), class: "btn btn-secondary" %>
+    <%= link_to "Add a Review", new_product_review_path(@product), class: "btn btn-secondary" %>
     
     <h3>Reviews (<%= @product.reviews.count %>)</h3>
 
