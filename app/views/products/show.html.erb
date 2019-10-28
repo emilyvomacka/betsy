@@ -19,7 +19,7 @@
       </section>
       <section class="product-buttons">
 
-        <%= form_tag add_to_cart_path, method: :patch do %>    
+        <%= form_tag order_items_path, method: :post do %>    
           <%= label_tag :quantity, "Quantity" %>
           <%= text_field_tag :quantity %>
           <%= hidden_field_tag :product_id, @product.id %>
