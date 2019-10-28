@@ -16,9 +16,9 @@ describe Review do
     end
     
     it  "is invalid without text" do
-      # <- TODO
+      review.text = nil
       result = review.valid?.must_equal false
-      expect(review.errors.messages).must_include :rating
+      expect(review.errors.messages).must_include :text
     end
     
     it "is invalid with a rating that is not 1-5" do
@@ -34,12 +34,10 @@ describe Review do
       result = review.valid?.must_equal false
       expect(review.errors.messages).must_include :rating
     end
-    
   end
   
   describe "relations" do
     it "belongs to a product" do
     end
   end
-  
 end
