@@ -9,18 +9,18 @@ describe Merchant do
       expect(merchant.valid?).must_equal true
     end
     
-    it "is invalid without a name" do
-      merchant.name = nil
+    it "is invalid without a nickname" do
+      merchant.nickname = nil
       
       expect(merchant.valid?).must_equal false
-      expect(merchant.errors.messages).must_include :name
+      expect(merchant.errors.messages).must_include :nickname
     end
     
-    it 'is invalid without a unique name' do
-      invalid_merchant = Merchant.create(name: "Sea Wolf Bakers", email: "new email")
+    it 'is invalid without a unique nickname' do
+      invalid_merchant = Merchant.create(nickname: "wolfy", email: "new email")
       
       expect(invalid_merchant.valid?).must_equal false
-      expect(invalid_merchant.errors.messages).must_include :name
+      expect(invalid_merchant.errors.messages).must_include :nickname
     end
     
     it 'is invalid without an email address' do
