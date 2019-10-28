@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   # get "/login", to: "merchants#login_form", as: "login"
   # post "/login", to: "merchants#login"
   get "/auth/github", as: "github_login"
-  get "/auth/:provider/callback", to: "merchants#create"
+  get "/auth/:provider/callback", to: "merchants#create", as: "auth_callback"
   delete "/logout", to: "merchants#destroy", as: "logout" 
   
   resources :products do

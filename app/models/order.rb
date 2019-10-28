@@ -21,7 +21,7 @@ class Order < ApplicationRecord
   def consolidate_order_items(new_product_id, new_quantity)
     if self.order_items.any?
       self.order_items.each do |item|
-        if item.product.id.to_s == new_product_id 
+        if item.product.id.to_s == new_product_id.to_s
           item.quantity += new_quantity.to_i
           item.save 
           return true 
@@ -48,13 +48,13 @@ class Order < ApplicationRecord
     self.order_items.each do |current_item|
       merchants << Merchant.find_by(id: current_item.product.merchant_id)
     end 
-    return merchants 
+    return merchants.any? ? merchants.uniq : merchants
   end 
   
   def existing_quantity(new_product_id)
     if self.order_items.any?
       self.order_items.each do |current_item|
-        if current_item.product.id == new_product_id.to_i
+        if current_item.product.id == new_product_id
           return current_item.quantity.to_i
         end 
       end 
