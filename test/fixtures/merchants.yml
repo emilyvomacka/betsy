@@ -1,14 +1,23 @@
 sea_wolf:
   name: Sea Wolf Bakers
   email: seawolf@bakers.com
+  provider: github
+  uid: 1238495
 besalu:
   name: Cafe Besalu
   email: cafe@besalu.com
+  provider: github
+  uid: 1238465
 macrina:
   name: Macrina Bakery
   email: macrina@bakery.com
+  provider: github
+  uid: 1218495
 nouveau: 
   name: Nouveau
   email: nouveau@nouveau.com
+  provider: github
+  uid: 1239495
+
   
   
