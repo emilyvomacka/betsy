@@ -24,7 +24,7 @@ class ActiveSupport::TestCase
     return {
     provider: merchant.provider,
     uid: merchant.uid,
-    info: { email: merchant.email, name: merchant.name }}
+    info: { email: merchant.email, name: merchant.name, nickname: merchant.nickname }}
   end
   
   def perform_login(merchant = nil)

@@ -51,7 +51,7 @@ describe MerchantsController do
     
     it "creates an account for a new merchant and redirects to the root route" do
       start_count = Merchant.count
-      new_merchant = Merchant.new(name: "asdfasdfasdf", email: "cafefrance@gmail.com", uid: 60, provider: "github")
+      new_merchant = Merchant.new(name: "cafefrance", nickname: "france", email: "cafefrance@gmail.com", uid: 60, provider: "github")
       perform_login(new_merchant)
       
       Merchant.count.must_equal start_count+1
@@ -60,7 +60,7 @@ describe MerchantsController do
     
     it "redirects to the login route if given invalid merchant data" do
       start_count = Merchant.count
-      new_merchant = Merchant.new(name: nil, email: nil, uid: nil )
+      new_merchant = Merchant.new(name: nil, nickname: nil, email: nil, uid: nil )
       perform_login(new_merchant)
       
       Merchant.count.must_equal start_count 
