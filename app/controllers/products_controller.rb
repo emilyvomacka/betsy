@@ -25,11 +25,13 @@ class ProductsController < ApplicationController
       flash[:status] = :success
       flash[:success] = "Successfully created product #{@product.name}."
       redirect_to product_path(@product)
+      return
     else
       flash.now[:status] = :failure
       flash.now[:error] = "Unable to create product #{@product.name}."
       flash.now[:messages] = @product.errors.messages
       render :new, status: :bad_request
+      return
     end
   end
   
@@ -54,13 +56,13 @@ class ProductsController < ApplicationController
   def retire
     @product = Product.find_by(id: params[:id])
     if @product.retire
-      # flash[:status] = :success
-      # flash[:success] = "Successfully retired product #{@product.name}."
+      flash[:status] = :success
+      flash[:result_text] = "Successfully retired product #{@product.name}."
       redirect_to product_path(@product.id)
     else @product.nil?
-      # flash[:status] = :failure
-      # flash[:error] = "Unable to retire #{@product.name}."
-      # render :edit, status: :bad_request
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "Unable to retire #{@product.name}."
+      render :edit, status: :bad_request
     end
   end
   
