@@ -17,11 +17,10 @@ class MerchantsController < ApplicationController
     auth_hash = request.env["omniauth.auth"]
     merchant = Merchant.find_by(uid: auth_hash[:uid], provider: "github")
     if merchant
-      # User was found in the database
+      # merchant was found in the database
       flash[:success] = "Logged in as returning Merchant #{merchant.name}"
     else
       merchant = Merchant.build_from_github(auth_hash)
-      
       if merchant.save
         flash[:success] = "Logged in as new merchant #{merchant.name}"
       else
@@ -77,7 +76,10 @@ class MerchantsController < ApplicationController
     @merchant = Merchant.find_by(id: params[:id])
     # require_login
   end
-  
-  
-  
 end
+
+
+
+
+
+
