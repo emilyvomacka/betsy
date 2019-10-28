@@ -1,5 +1,6 @@
 a:
   customer_name: Sea Wolf
+  email_address: seawolf@gmail.com
   mailing_address: 1234 Happy Town, Seattle, WA
   cc_number: 1111111111111111
   cc_expiration: 12/20
@@ -8,6 +9,7 @@ a:
   cart_status: pending
 b:
   customer_name: Mr. Besalu
+  email_address: besalu@yahoo.com
   mailing_address: 1234 Sad Town, Seattle, WA 
   cc_number: 1111111111111112
   cc_expiration: 12/21
@@ -16,6 +18,7 @@ b:
   cart_status: paid
 c:
   customer_name: Ms. Macrina
+  email_address: macrina@macrina.com
   mailing_address: 1222 Golden Place, Seattle, WA
   cc_number: 1111111111111113
   cc_expiration: 12/22
