@@ -2,9 +2,9 @@ class OrdersController < ApplicationController
   before_action :find_order, only: [:show, :edit, :update]
   
   def show ; end
-
+  
   def edit ; end 
-
+  
   def update
     @order.order_items.each do |item|
       if item.quantity > item.product.stock
@@ -17,8 +17,9 @@ class OrdersController < ApplicationController
       @order.cart_status = "paid"
       @order.save 
       redirect_to products_path
+      flash[:status] = :success
       flash[:success] = "Order submitted! Bread ahead."
-      session[:order_id] = nil
+      session.delete(:order_id)
       @order.order_items.each do |item|
         item.product.stock -= item.quantity 
         item.product.save 
@@ -35,21 +36,21 @@ class OrdersController < ApplicationController
     new_quantity = params["quantity"]
     new_product_id = params["product_id"]
     if session[:order_id] == nil || session[:order_id] == false
-      @order = Order.create(cart_status: "pending")
-      session[:order_id] = @order.id
+      curr_order = Order.create(cart_status: "pending")
+      session[:order_id] = curr_order.id
     else 
-      @order = Order.find_by(id: session[:order_id])
+      curr_order = Order.find_by(id: session[:order_id])
     end 
-    if new_quantity.to_i + @order.existing_quantity(new_product_id) > Product.find(new_product_id).stock
+    if new_quantity.to_i + curr_order.existing_quantity(new_product_id) > Product.find(new_product_id).stock
       redirect_to product_path(new_product_id)
       flash[:danger] = "Error: excessive carb-loading. Please order less bread!"
       return 
     end 
-    if @order.consolidate_order_items(new_product_id, new_quantity) == false 
-      @order.order_items << OrderItem.create(
+    if curr_order.consolidate_order_items(new_product_id, new_quantity) == false 
+      curr_order.order_items << OrderItem.create(
       quantity: new_quantity,
       product_id: new_product_id,
-      order_id: @order.id)
+      order_id: curr_order.id)
     end 
     flash[:success] = "Item added to shopping carb."
     redirect_to product_path(params["product_id"])
