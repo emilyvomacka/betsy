@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController 
   before_action :find_product, only: [:show, :edit, :update]
+  before_action :set_categories, only: [:new, :create]
   
   def index
     @products = Product.where(active: true)
@@ -13,19 +14,21 @@ class ProductsController < ApplicationController
   
   def new
     @product = Product.new
+    
   end
   
   def create
     @product = Product.new(product_params)
-    # @product.merchant_id = @current_merchant.id
+    @product.merchant_id = Merchant.first.id
     
     if @product.save
       flash[:status] = :success
       flash[:success] = "Successfully created product #{@product.name}."
       redirect_to product_path(@product)
     else
-      flash[:status] = :failure
-      flash[:error] = "Unable to create product #{@product.name}."
+      flash.now[:status] = :failure
+      flash.now[:error] = "Unable to create product #{@product.name}."
+      flash.now[:messages] = @product.errors.messages
       render :new, status: :bad_request
     end
   end
@@ -64,7 +67,7 @@ class ProductsController < ApplicationController
   private
   
   def product_params
-    return params.require(:product).permit(:name, :description, :price, :photo_URL, :stock, :merchant_id, :categories)
+    return params.require(:product).permit(:name, :description, :price, :photo_URL, :stock, :merchant_id, :categories, :active)
   end
   
   def find_product
@@ -73,6 +76,15 @@ class ProductsController < ApplicationController
     if @product.nil?
       head :not_found
       return
+    end
+  end
+  
+  def set_categories
+    @category_names = []
+    category_names = Category.all
+    
+    category_names.each do |category|
+      @category_names << category.name
     end
   end
 end

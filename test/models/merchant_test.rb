@@ -5,7 +5,7 @@ describe Merchant do
   
   describe "validations" do
     
-    it "is valid with a name" do
+    it "is valid with all fields present and valid" do
       expect(merchant.valid?).must_equal true
     end
     
@@ -17,10 +17,24 @@ describe Merchant do
     end
     
     it 'is invalid without a unique name' do
-      invalid_merchant = Merchant.create(name: "Sea Wolf Bakers")
+      invalid_merchant = Merchant.create(name: "Sea Wolf Bakers", email: "new email")
       
       expect(invalid_merchant.valid?).must_equal false
       expect(invalid_merchant.errors.messages).must_include :name
+    end
+    
+    it 'is invalid without an email address' do
+      merchant.email = nil
+      
+      expect(merchant.valid?).must_equal false
+      expect(merchant.errors.messages).must_include :email
+    end
+    
+    it 'is invalid without a unique email address' do
+      invalid_merchant = Merchant.create(name: "new merchant", email: "seawolf@bakers.com")
+      
+      expect(invalid_merchant.valid?).must_equal false
+      expect(invalid_merchant.errors.messages).must_include :email
     end
   end
   
