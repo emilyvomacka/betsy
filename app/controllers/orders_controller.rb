@@ -32,6 +32,9 @@ class OrdersController < ApplicationController
     end
   end
   
+  def lookup
+  end
+  
   private
   
   def order_params
