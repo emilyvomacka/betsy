@@ -1,4 +1,6 @@
 class OrderItemsController < ApplicationController
+
+  before_action :find_order_item, except: :create 
   
   def create #add to cart
     new_quantity = params["quantity"]
@@ -27,11 +29,6 @@ class OrderItemsController < ApplicationController
   end
   
   def update #change quantity
-    @order_item = OrderItem.find_by(id: params[:id])
-    if @order_item.nil?
-      head :not_found
-      return 
-    end 
     @order_item.quantity = params[:new_quantity]    
     @order_item.save 
     flash[:status] = :success
@@ -39,14 +36,7 @@ class OrderItemsController < ApplicationController
     redirect_to order_path(session[:order_id])
   end 
   
-  
-  
   def destroy #delete from cart
-    @order_item = OrderItem.find_by(id: params[:id])
-    if @order_item.nil?
-      head :not_found
-      return 
-    end 
     @order_item.destroy
     flash[:status] = :success
     flash[:result_text] = "Item deleted from carb."
@@ -62,5 +52,13 @@ class OrderItemsController < ApplicationController
   def order_item_params
     return params.require(:order_item).permit(:quantity, :order_id, :product_id) 
   end
+
+  def find_order_item
+    @order_item = OrderItem.find_by(id: params[:id])
+    if @order_item.nil?
+      head :not_found
+      return 
+    end 
+  end 
   
 end
