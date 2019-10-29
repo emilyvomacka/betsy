@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   
   
   resources :products, except: [:destroy]
-  post '/products/retire/:id', to: 'products#retire', as: "retire"
+  get '/products/retire/:id', to: 'products#retire', as: "retire"
   
   resources :merchants, only: [:index, :show]
   get '/merchants/dashboard/:id', to: 'merchants#dashboard', as: "dashboard"

@@ -134,6 +134,8 @@ describe ProductsController do
       must_respond_with :redirect
       must_redirect_to product_path(existing_product.id)
     end
+
+    it ""
     
     
   end

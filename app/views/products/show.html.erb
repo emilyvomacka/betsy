@@ -28,13 +28,11 @@
         </section>
 
  <% if @product.merchant_id == @current_merchant.id %> 
-
     <% if @product.active %>
       <%= link_to "Retire", retire_path(@product), method: "retire", class: "btn btn-secondary"%>
 <% else %>
       Retired!
         <% end %> 
-
         <% end %> 
 
     </div>
