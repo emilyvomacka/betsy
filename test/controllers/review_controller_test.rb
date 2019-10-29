@@ -8,21 +8,21 @@ describe ReviewsController do
     end
     
     let (:existing_review) { review(:started) }
-        
+    
     describe "new" do
       it "succeeds" do
         get new_product_review_path(Product.first.id)
         
         must_respond_with :success
       end
-
+      
       it "does not allow merchant to review product if product is merchant's" do 
         get new_product_review_path
         
         must_respond_with :redirect
         flash[:result_text].must_equal "You seem to own this product - you cannot review your own product."
       end
-
+      
       # can't review own stuff
       # nested route in products
     end
@@ -31,19 +31,19 @@ describe ReviewsController do
       it "creates a review with valid data" do
         new_review = { review: {name: "test name"}}
         
-        expect {post reviews_path, params: new_review}.must_change "review.count", 1
+        expect {post new_product_review_path, params: new_review}.must_change "Review.count", 1
         
         review = Review.find_by(name: "test name")
         
         must_respond_with :redirect
         expect(review.name).must_equal new_review[:review][:name]
-        must_redirect_to reviews_path
+        must_redirect_to products_path
       end
       
       it "renders bad_request and does not update the DB for bogus data" do
         bad_review = { review: {name: nil}}
         
-        expect {post reviews_path, params: bad_review }.wont_change "review.count"
+        expect {post new_product_review_path, params: bad_review }.wont_change "Review.count"
         
         must_respond_with :bad_request
       end
@@ -56,32 +56,30 @@ describe ReviewsController do
     
     describe "new" do
       it "will allow a guest to go through" do
-        get new_product_review_path
+        get new_product_review_path(Product.first.id)
         
-        must_respond_with :redirect
-        flash[:result_text].must_equal "You must be logged in to view this page."
+        must_respond_with :success
       end
     end
     
     describe "create" do
       it "will not creates a review with valid data" do
-        new_review = { review: {name: "test name"}}
+        new_review = { review: {text: "test name", rating: 1, product_id: Product.first.id}}
         
-        expect {post reviews_path, params: new_review}.wont_change "review.count"
+        expect {post products_path, params: new_review}.wont_change "Review.count"
         
-        review = review.find_by(name: "test name")
+        review = Review.find_by(name: "test name")
         
         must_respond_with :redirect
         flash[:result_text].must_equal "You must be logged in to view this page."
       end
       
       it "will not update the DB for bogus data and redirect" do
-        bad_review = { review: {name: nil}}
+        bad_review = { review: {text: nil, rating: nil, product_id: nil}}
         
-        expect {post reviews_path, params: bad_review }.wont_change "review.count"
+        expect {post products_path, params: bad_review }.wont_change "Review.count"
         
         must_respond_with :redirect
-        flash[:result_text].must_equal "You must be logged in to view this page."
       end
     end
   end
