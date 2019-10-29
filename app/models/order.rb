@@ -61,5 +61,4 @@ class Order < ApplicationRecord
     end 
     return 0
   end
-  
 end

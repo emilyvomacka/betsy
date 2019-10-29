@@ -28,7 +28,6 @@ describe MerchantsController do
         
         must_respond_with :success
       end
-      
       it "renders 404 if the merchant doesn't exist" do
         destroyed_id = existing_merchant.id
         existing_merchant.destroy
@@ -67,8 +66,18 @@ describe MerchantsController do
         must_redirect_to root_path
       end
     end
-    
-    # describe "current" do
+  end
+  
+  describe "logout" do
+    it "logs out a merchant when logout is selected" do
+      delete logout_path
+      expect(flash[:success]).must_equal "Successfully logged out!"
+      must_respond_with :redirect
+      must_redirect_to root_path
+    end
+  end
+  
+  describe "current" do
     #   it "sets session[:merchant_id], redirects, and responds with success
     #   " do
     #     # Arrange
@@ -102,4 +111,5 @@ describe MerchantsController do
     
   end
 end
+
 

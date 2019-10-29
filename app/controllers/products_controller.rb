@@ -20,7 +20,8 @@ class ProductsController < ApplicationController
   def create
     require_login
     @product = Product.new(product_params)
-    @product.merchant_id = @current_merchant.id
+    @product.merchant_id = session[:merchant_id]
+
     
     if @product.save
       flash[:status] = :success
