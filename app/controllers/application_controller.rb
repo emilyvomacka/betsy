@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     if @order.nil?
       flash[:status] = :danger
       flash[:result_text] = "Sorry, order not found."
-      redirect_to root_path, status: :bad_request 
+      render 'products/main', status: :bad_request 
       return 
     end
   end
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
     if @order.cart_status == "pending" && @order.id != session[:order_id]
       flash[:status] = :danger
       flash[:result_text] = "You are not authorized to view this pending order."
-      redirect_to root_path, status: :unauthorized 
+      render 'products/main', status: :unauthorized 
       return 
     end 
   end 
@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
     if ["paid", "completed", "cancelled"].include?(@order.cart_status)
       flash[:status] = :danger
       flash[:result_text] = "Sorry, you cannot modify a checked-out order."
-      redirect_to root_path, status: :unauthorized
+      render 'products/main', status: :unauthorized
       return 
     end 
   end 
