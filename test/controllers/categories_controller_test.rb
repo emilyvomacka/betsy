@@ -113,7 +113,7 @@ describe CategoriesController do
     end
     
     describe "new" do
-      it "succeeds" do
+      it "will allow a guest to go through" do
         get new_category_path
         
         must_respond_with :redirect
@@ -122,7 +122,7 @@ describe CategoriesController do
     end
     
     describe "create" do
-      it "creates a category with valid data" do
+      it "will not creates a category with valid data" do
         new_category = { category: {name: "test name"}}
         
         expect {post categories_path, params: new_category}.wont_change "Category.count"
@@ -133,7 +133,7 @@ describe CategoriesController do
         flash[:result_text].must_equal "You must be logged in to view this page."
       end
       
-      it "renders bad_request and does not update the DB for bogus data" do
+      it "will not update the DB for bogus data and redirect" do
         bad_category = { category: {name: nil}}
         
         expect {post categories_path, params: bad_category }.wont_change "Category.count"
