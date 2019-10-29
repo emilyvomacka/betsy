@@ -4,7 +4,7 @@
     <div class="col">
     <%= image_tag("https://www.bakersdelight.com.au/wp-content/uploads/2018/10/9650.jpg",  alt: "bread", class: "baguette", style: 'width: 100%') %>
     
-    
+ 
     </div>
     <div class="col">
       <section class="product-details">
@@ -27,25 +27,22 @@
         <% end %> 
         </section>
 
- <% if @product.merchant_id == @current_merchant.id %> 
-
-    <% if @product.active %>
-      <%= link_to "Retire", retire_path(@product), method: "retire", class: "btn btn-secondary"%>
-<% else %>
-      Retired!
-        <% end %> 
-
+        <% if @current_merchant && @product.merchant_id == @current_merchant.id %>
+          <% if @product.active %>
+                <%= link_to "Retire", retire_path(@product), method: "retire", class: "btn btn-secondary"%>
+          <% else %>
+            <%= link_to "Reactivate", retire_path(@product), method: "retire", class: "btn btn-secondary"%>
+          <% end %> 
         <% end %> 
 
     </div>
     <div class="w-100"></div>
 
     <div class="col">
-
-    <%= link_to "Add a Review", new_product_review_path(@product), class: "btn btn-secondary" %>
     
-    <h3>Reviews (<%= @product.reviews.count %>)</h3>
+    <%= link_to "Add a Review", new_product_review_path(@product), class: "btn btn-secondary" %>
 
+    <h3>Reviews (<%= @product.reviews.count %>)</h3>
       <% @product.reviews.each do |review| %>
       <ul><%= review.rating %></ul>
       <ul><%= review.text %></ul>

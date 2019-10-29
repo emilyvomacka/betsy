@@ -11,31 +11,12 @@ class Product < ApplicationRecord
   validates :stock, presence: true
   validates :merchant_id, presence: true
   
-  after_save :validate_minimum_number_of_categories
-  
   def retire
     if self.active
       return self.update(active: false)
     else
       return self.update(active: true)
     end
-  end
-  
-  # def render_stars(value)
-  #   output = ''
-  #   if (1..5).include?(value.to_i)
-  #     value.to_i.times { output += '*'}
-  #   end
-  #   output
-  # end
-  
-  private
-  def validate_minimum_number_of_categories
-    if categories.count < 1
-      errors.add(:categories, "must have at least one category")
-      return false
-    end 
-    return true
   end
   
 end
