@@ -131,12 +131,12 @@ describe ProductsController do
   
   describe "retire method" do
     it "toggles product status from 'active' to 'retire'" do 
-      get retire_path(existing_product.id)
+      post retire_path(existing_product.id)
       must_respond_with :redirect
       must_redirect_to product_path(existing_product.id)
     end
 
-    it ""
+
     
     
   end

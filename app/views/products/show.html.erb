@@ -27,20 +27,20 @@
         <% end %> 
         </section>
 
- <% if @product.merchant_id == @current_merchant.id %> 
-    <% if @product.active %>
+<% if @current_merchant && @product.merchant_id == @current_merchant.id %>
+<% if @product.active %>
       <%= link_to "Retire", retire_path(@product), method: "retire", class: "btn btn-secondary"%>
 <% else %>
       Retired!
-        <% end %> 
-        <% end %> 
+      <% end %> 
+      <% end %> 
 
     </div>
     <div class="w-100"></div>
 
     <div class="col">
 
-    <%= link_to "Add a Review", new_product_review_path(@product), class: "btn btn-secondary" %>
+    <%= link_to "Add a Review", review_path(@product), class: "btn btn-secondary" %>
     
     <h3>Reviews (<%= @product.reviews.count %>)</h3>
 
