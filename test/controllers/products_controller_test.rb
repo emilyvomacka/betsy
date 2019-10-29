@@ -43,6 +43,7 @@ describe ProductsController do
   
   describe "new" do
     it "succeeds" do
+      perform_login
       get new_product_path
       
       must_respond_with :success

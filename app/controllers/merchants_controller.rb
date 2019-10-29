@@ -32,14 +32,17 @@ class MerchantsController < ApplicationController
     session[:merchant_id] = merchant.id
     session[:merchant_name] = merchant.name
     redirect_to root_path
+    return
   end
   
   def destroy
     session[:merchant_id] = nil
     session[:merchant_name] = nil
+    flash[:status] = :success
     flash[:success] = "Successfully logged out!"
     
     redirect_to root_path
+    return
   end
   
   def login
@@ -55,27 +58,34 @@ class MerchantsController < ApplicationController
         flash[:status] = :success
         flash[:result_text] = "Successfully created new merchant #{merchant.name} with ID #{merchant.id}"
       else
-        flash.now[:status] = :failure
-        flash.now[:result_text] = "Could not log in"
+        flash.now[:status] = :danger
+        flash.now[:result_text] = "Could not log in."
         flash.now[:messages] = merchant.errors.messages
         render "login_form", status: :bad_request
         return
       end
     end
     redirect_to root_path
+    return
   end
   
-  def logout
-    session[:merchant_id] = nil
-    flash[:status] = :success
-    flash[:result_text] = "Successfully logged out"
-    redirect_to root_path
-  end
+  # def logout
+  #   session[:merchant_id] = nil
+  #   flash[:status] = :success
+  #   flash[:result_text] = "Successfully logged out."
+  #   redirect_to root_path
+  #   return
+  # end
   
   def dashboard
-    #will change to @current_merchant after, right now just able to see every merchant's dashboard
-    @merchant = Merchant.find_by(id: params[:id])
-    # require_login
+    if session[:merchant_id] == params[:id].to_i
+      @merchant = Merchant.find_by(id: params[:id])
+    else
+      flash[:status] = :danger
+      flash[:result_text] = "You are not authorized to view this page."
+      redirect_to root_path
+      return
+    end
   end
 end
 

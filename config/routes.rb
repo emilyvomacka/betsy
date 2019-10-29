@@ -2,10 +2,11 @@ Rails.application.routes.draw do
   
   root 'products#main'
   resources :orders, only: [:show, :edit, :update]
-  patch '/order/add_to_cart', to: 'orders#add_to_cart', as: 'add_to_cart'
-  patch '/order/edit_item_quantity', to: 'orders#edit_item_quantity', as: 'edit_item_quantity'
-  delete '/order/delete_from_cart', to: 'orders#delete_from_cart', as: 'delete_from_cart'
+  # patch '/order/add_to_cart', to: 'orders#add_to_cart', as: 'add_to_cart'
+  # patch '/order/edit_item_quantity', to: 'orders#edit_item_quantity', as: 'edit_item_quantity'
+  # delete '/order/delete_from_cart', to: 'orders#delete_from_cart', as: 'delete_from_cart'
   
+  resources :order_items, only: [:create, :update, :destroy]
   
   resources :products, except: [:destroy]
   get '/products/retire/:id', to: 'products#retire', as: "retire"

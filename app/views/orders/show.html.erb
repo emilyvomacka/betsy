@@ -5,13 +5,11 @@
 <% @order.order_items.arrange_by_created_at.each do |item| %>
   <p>Product: <%= item.product.name %></p>
   <p>Quantity: <%= item.quantity %><p>
-    <p><%= form_tag edit_item_quantity_path, method: :patch do %>    
-    <%= hidden_field_tag :order_item_id, item.id %>
-    <%= text_field_tag :new_quantity %>
+    <p><%= form_tag order_item_path(item), method: :patch do %>    
+    <%= select_tag(:new_quantity, options_for_select((1..item.product.stock), item.quantity))%>
     <%= submit_tag "Edit Quantity" %>
     <% end %></p>
-  <p><%= form_tag delete_from_cart_path, method: :delete do %>    
-    <%= hidden_field_tag :order_item_id, item.id %>
+  <p><%= form_tag order_item_path(item), method: :delete do %>    
     <%= submit_tag "Delete This Item" %>
     <% end %></p>
 <% end %>
