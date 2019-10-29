@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   
   root 'products#main'
-  resources :orders, only: [:show, :edit, :update]
-  
-  resources :order_items, only: [:create, :update, :destroy]
+  resources :orders, only: [:show, :edit, :update] do
+    resources :order_items, only: [:update, :destroy]
+  end 
+
+  resources :order_items, only: [:create]
   
   resources :products, except: [:destroy]
   post '/products/retire/:id', to: 'products#retire', as: "retire"
@@ -25,4 +27,3 @@ Rails.application.routes.draw do
   
   resources :reviews
 end
-

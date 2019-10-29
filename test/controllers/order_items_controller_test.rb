@@ -80,7 +80,6 @@ describe OrderItemsController do
 
       current_order = Order.find_by(id: session[:order_id])
       current_item = current_order.order_items.first
-      puts current_item
       
       expect {delete order_item_path (current_item.id)}.must_change 'OrderItem.count', -1
       must_respond_with :redirect
@@ -88,14 +87,17 @@ describe OrderItemsController do
       assert_nil(OrderItem.find_by(id: current_item.id))
     end 
 
-    it "deletes an order item with valid input and redirects to the root path when an order_id is not stored in session" do 
+    it "does not allow order item deletion when an order_id is not stored in session" do 
       expect {delete order_item_path (order_item.id)}.must_change 'OrderItem.count', -1
-      must_respond_with :redirect
-      must_redirect_to root_path
-      assert_nil(OrderItem.find_by(id: order_item.id))
+      must_respond_with :not_found
     end 
     
     it "redirects when requested to delete an order item with invalid input" do
+      order_launching_item_params = {product_id: products(:baguette).id, quantity: 2}
+      post order_items_path, params: order_launching_item_params
+
+      current_order = Order.find_by(id: session[:order_id])
+      
       expect { delete order_item_path (-2948)}.wont_change "OrderItem.count"
       must_respond_with :not_found
     end 
