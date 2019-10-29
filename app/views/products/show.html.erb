@@ -4,7 +4,7 @@
     <div class="col">
     <%= image_tag("https://www.bakersdelight.com.au/wp-content/uploads/2018/10/9650.jpg",  alt: "bread", class: "baguette", style: 'width: 100%') %>
     
-    
+ 
     </div>
     <div class="col">
       <section class="product-details">
@@ -40,8 +40,14 @@
 
     <div class="col">
 
+      <% if @current_merchant == @product.merchant %>
+That's against the grain! As this product's merchant, you can't review your own product.
+      <% end %>
+
     <%= link_to "Add a Review", review_path(@product), class: "btn btn-secondary" %>
-    
+     <% end %> 
+
+     
     <h3>Reviews (<%= @product.reviews.count %>)</h3>
 
       <% @product.reviews.each do |review| %>
