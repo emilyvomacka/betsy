@@ -38,6 +38,7 @@ class MerchantsController < ApplicationController
   def destroy
     session[:merchant_id] = nil
     session[:merchant_name] = nil
+    flash[:status] = :success
     flash[:success] = "Successfully logged out!"
     
     redirect_to root_path
@@ -68,13 +69,13 @@ class MerchantsController < ApplicationController
     return
   end
   
-  def logout
-    session[:merchant_id] = nil
-    flash[:status] = :success
-    flash[:result_text] = "Successfully logged out."
-    redirect_to root_path
-    return
-  end
+  # def logout
+  #   session[:merchant_id] = nil
+  #   flash[:status] = :success
+  #   flash[:result_text] = "Successfully logged out."
+  #   redirect_to root_path
+  #   return
+  # end
   
   def dashboard
     if session[:merchant_id] == params[:id].to_i
