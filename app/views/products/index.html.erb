@@ -27,7 +27,7 @@
   <% @products.each do |product| %>
     <div class="product-card">
       <div class="product-image">
-        <%= link_to image_tag("https://www.bakersdelight.com.au/wp-content/uploads/2018/10/9650.jpg"), product_path(product) %>
+        <%= link_to image_tag(product.photo_URL), product_path(product) %>
       </div>
       <div class="product-info">
         <h5><%= product.name %></h5>

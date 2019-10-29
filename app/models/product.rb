@@ -1,4 +1,7 @@
+require 'open-uri'
+
 class Product < ApplicationRecord
+  
   has_many :reviews, dependent: :destroy
   belongs_to :merchant 
   has_many :order_items, dependent: :destroy
@@ -11,6 +14,7 @@ class Product < ApplicationRecord
   validates :stock, presence: true
   validates :merchant_id, presence: true
   
+  
   def retire
     if self.active
       return self.update(active: false)
@@ -18,6 +22,7 @@ class Product < ApplicationRecord
       return self.update(active: true)
     end
   end
+  
   
 end
 
