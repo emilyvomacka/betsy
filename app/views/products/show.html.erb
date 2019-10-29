@@ -40,14 +40,13 @@
 
     <div class="col">
     
-    <% if @current_merchant == @product.merchant %>
+    <% if @current_merchant != @product.merchant %>
             <% if @product.active %>
-                  <%= link_to "Add a Review", review_path(@product), class: "btn btn-secondary" %>
+                  <%= link_to "Add a Review", new_product_review_path(@product), class: "btn btn-secondary" %>
             <% end %>
      <% else %>
               That's against the grain! As this product's merchant, you can't review your own product.
      <% end %>
-     
 
     <h3>Reviews (<%= @product.reviews.count %>)</h3>
       <% @product.reviews.each do |review| %>
