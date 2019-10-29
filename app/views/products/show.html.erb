@@ -4,7 +4,7 @@
     <div class="col">
     <%= image_tag("https://www.bakersdelight.com.au/wp-content/uploads/2018/10/9650.jpg",  alt: "bread", class: "baguette", style: 'width: 100%') %>
     
-    
+ 
     </div>
     <div class="col">
       <section class="product-details">
@@ -39,11 +39,16 @@
     <div class="w-100"></div>
 
     <div class="col">
-
-    <%= link_to "Add a Review", new_product_review_path(@product), class: "btn btn-secondary" %>
     
-    <h3>Reviews (<%= @product.reviews.count %>)</h3>
+    <% if @current_merchant != @product.merchant %>
+            <% if @product.active %>
+                  <%= link_to "Add a Review", new_product_review_path(@product), class: "btn btn-secondary" %>
+            <% end %>
+     <% else %>
+              That's against the grain! As this product's merchant, you can't review your own product.
+     <% end %>
 
+    <h3>Reviews (<%= @product.reviews.count %>)</h3>
       <% @product.reviews.each do |review| %>
       <ul><%= review.rating %></ul>
       <ul><%= review.text %></ul>
