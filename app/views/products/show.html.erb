@@ -21,12 +21,21 @@
 
         <%= form_tag order_items_path, method: :post do %>    
           <%= label_tag :quantity, "Quantity" %>
-          <%= text_field_tag :quantity %>
+          <%= select_tag(:quantity, options_for_select((1..@product.stock), 1))%>
           <%= hidden_field_tag :product_id, @product.id %>
           <%= submit_tag "Add To Carb", class: "btn btn-secondary"%>
         <% end %> 
-
         </section>
+
+ <% if @product.merchant_id == @current_merchant.id %> 
+
+    <% if @product.active %>
+      <%= link_to "Retire", retire_path(@product), method: "retire", class: "btn btn-secondary"%>
+<% else %>
+      Retired!
+        <% end %> 
+
+        <% end %> 
 
     </div>
     <div class="w-100"></div>

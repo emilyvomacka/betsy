@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  before_action :require_login, except: [:index, :show]
   
   def index
     @categories = Category.all
@@ -18,7 +19,6 @@ class CategoriesController < ApplicationController
   end
   
   def create
-    #check authorized
     @category = Category.new(category_params)
     
     if @category.save

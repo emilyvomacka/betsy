@@ -37,6 +37,7 @@ describe MerchantsController do
     end
   end
   
+  
   describe "auth_callback" do
     it "logs in an existing merchant and redirects to the root route" do
       start_count = Merchant.count
@@ -51,7 +52,7 @@ describe MerchantsController do
     
     it "creates an account for a new merchant and redirects to the root route" do
       start_count = Merchant.count
-      new_merchant = Merchant.new(name: "asdfasdfasdf", email: "cafefrance@gmail.com", uid: 60, provider: "github")
+      new_merchant = Merchant.new(name: "cafefrance", nickname: "france", email: "cafefrance@gmail.com", uid: 60, provider: "github")
       perform_login(new_merchant)
       
       Merchant.count.must_equal start_count+1
@@ -60,10 +61,19 @@ describe MerchantsController do
     
     it "redirects to the login route if given invalid merchant data" do
       start_count = Merchant.count
-      new_merchant = Merchant.new(name: nil, email: nil, uid: nil )
+      new_merchant = Merchant.new(name: nil, nickname: nil, email: nil, uid: nil )
       perform_login(new_merchant)
       
       Merchant.count.must_equal start_count 
+      must_redirect_to root_path
+    end
+  end
+  
+  describe "logout" do
+    it "logs out a merchant when logout is selected" do
+      delete logout_path
+      expect(flash[:success]).must_equal "Successfully logged out!"
+      must_respond_with :redirect
       must_redirect_to root_path
     end
   end
