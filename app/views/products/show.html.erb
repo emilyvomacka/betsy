@@ -27,26 +27,20 @@
         <% end %> 
         </section>
 
-<% if @current_merchant && @product.merchant_id == @current_merchant.id %>
-<% if @product.active %>
-      <%= link_to "Retire", retire_path(@product), method: "retire", class: "btn btn-secondary"%>
-<% else %>
-      Retired!
-      <% end %> 
-      <% end %> 
+        <% if @current_merchant && @product.merchant_id == @current_merchant.id %>
+          <% if @product.active %>
+                <%= link_to "Retire", retire_path(@product), method: "retire", class: "btn btn-secondary"%>
+          <% else %>
+            <%= link_to "Reactivate", retire_path(@product), method: "retire", class: "btn btn-secondary"%>
+          <% end %> 
+        <% end %> 
 
     </div>
     <div class="w-100"></div>
 
     <div class="col">
     
-    <% if @current_merchant != @product.merchant %>
-            <% if @product.active %>
-                  <%= link_to "Add a Review", new_product_review_path(@product), class: "btn btn-secondary" %>
-            <% end %>
-     <% else %>
-              That's against the grain! As this product's merchant, you can't review your own product.
-     <% end %>
+    <%= link_to "Add a Review", new_product_review_path(@product), class: "btn btn-secondary" %>
 
     <h3>Reviews (<%= @product.reviews.count %>)</h3>
       <% @product.reviews.each do |review| %>

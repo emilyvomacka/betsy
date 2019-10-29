@@ -4,6 +4,8 @@ class ReviewsController < ApplicationController
     if params[:product_id]
       @product = Product.find_by(id: params[:product_id])
       @review = @product.reviews.new 
+      
+      check_authorization
     else
       @review = Review.new
     end
@@ -12,6 +14,8 @@ class ReviewsController < ApplicationController
   def create
     @review = Review.new(review_params)
     @product = Product.find_by(id: params[:product_id])
+    
+    check_authorization
     
     if @review.save
       flash[:status] = :success
@@ -29,6 +33,15 @@ class ReviewsController < ApplicationController
   private
   def review_params
     return params.require(:review).permit(:text, :rating, :product_id)
+  end
+  
+  def check_authorization
+    if @current_merchant != nil && @product.merchant_id == @current_merchant.id
+      flash[:status] = :danger
+      flash[:result_text] = "You may not review your own product."
+      redirect_to root_path
+      return
+    end
   end
   
 end
