@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController 
   before_action :find_product, only: [:show, :edit, :update]
+  before_action :require_login, except: [:index, :main, :show]
+  before_action :check_authorization, only: [:edit, :update, :retire]
   
   def index
     @products = Product.where(active: true)
@@ -12,16 +14,12 @@ class ProductsController < ApplicationController
   def show; end
   
   def new
-    require_login
     @product = Product.new
-    
   end
   
   def create
-    require_login
     @product = Product.new(product_params)
     @product.merchant_id = session[:merchant_id]
-
     
     if @product.save
       flash[:status] = :success
@@ -40,8 +38,6 @@ class ProductsController < ApplicationController
   def edit; end
   
   def update
-    #require login
-    #check if user is authorized
     if @product.update(product_params)
       flash[:status] = :success
       flash[:result_text] = "Successfully updated #{@product.name}."
@@ -83,4 +79,12 @@ class ProductsController < ApplicationController
     end
   end
   
+  def check_authorization
+    if @product.merchant.id != @current_merchant.id
+      flash[:status] = :danger
+      flash[:result_text] = "You are not authorized to view this page."
+      redirect_to root_path
+      return
+    end
+  end
 end
