@@ -11,9 +11,16 @@ describe ReviewsController do
         
     describe "new" do
       it "succeeds" do
-        get new_review_path(Product.first.id)
+        get new_product_review_path(Product.first.id)
         
         must_respond_with :success
+      end
+
+      it "does not allow merchant to review product if product is merchant's" do 
+        get new_product_review_path
+        
+        must_respond_with :redirect
+        flash[:result_text].must_equal "You seem to own this product - you cannot review your own product."
       end
 
       # can't review own stuff
@@ -49,7 +56,7 @@ describe ReviewsController do
     
     describe "new" do
       it "will allow a guest to go through" do
-        get new_review_path
+        get new_product_review_path
         
         must_respond_with :redirect
         flash[:result_text].must_equal "You must be logged in to view this page."
