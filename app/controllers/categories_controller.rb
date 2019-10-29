@@ -14,6 +14,7 @@ class CategoriesController < ApplicationController
   end
   
   def new 
+    # require_login
     @category = Category.new
   end
   
