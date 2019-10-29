@@ -1,15 +1,22 @@
 class Merchant < ApplicationRecord
   has_many :products, dependent: :destroy
   has_many :order_items, through: :products
-  validates :name, presence: true, uniqueness: true
+  
+  validates :nickname, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
   
   def self.build_from_github(auth_hash)
     merchant = Merchant.new
     merchant.uid = auth_hash[:uid]
     merchant.provider = "github"
-    merchant.name = auth_hash["info"]["name"]
     merchant.email = auth_hash["info"]["email"]
+    merchant.nickname = auth_hash["info"]["nickname"]
+    
+    if auth_hash["info"]["name"] == nil
+      merchant.name = merchant.nickname
+    else
+      merchant.name = auth_hash["info"]["name"]
+    end
     return merchant
   end
   

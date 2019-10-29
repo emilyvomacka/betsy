@@ -8,12 +8,11 @@
 <body>
   <section>
     <button type="button" class="btn btn-outline-primary"><%= link_to "Add a Product", new_product_path %></button>
-    <button type="button" class="btn btn-outline-primary"><%= link_to "View My Products" %></button>
     <button type="button" class="btn btn-outline-primary"><%= link_to "Add a Category", new_category_path %></button>
   </section>
 
   <h1><%= @merchant.name %>'s Dashboard</h1>
-
+  
   <p>Total Revenue: $<%= @merchant.total_revenue %></p>
 
   <section>
@@ -52,6 +51,7 @@
     </table>
   </section>
 
+  <section>
   <h2>Orders:</h2>
     <table class="table" id="table" data-filter-control="true">
       <thead>
@@ -81,5 +81,29 @@
         $('#table').bootstrapTable()
       })
     </script>
+
+  </section>
+
+<section>
+  <h2>Products:</h2>
+    <table class="table" id="table" data-filter-control="true">
+      <thead>
+        <tr>
+          <th scope="col" data-field="order_num" data-filter-control="input">Name</th>
+          <th scope="col" data-field="status" data-filter-control="select">Price</th>
+          <th scope="col" data-field="product" data-filter-control="input">Active</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @merchant.products.each do |product| %>
+        <tr>
+          <th scope="row"><%= link_to product.name, product_path(product) %></th>
+          <td><%= product.price %></td>
+          <td><%= product.active %></td>
+        </tr>
+        <% end %>
+    </tbody>
+    </table>
+</section>
 
 </body>
