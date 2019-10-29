@@ -5,7 +5,7 @@ describe OrdersController do
   
   describe "show" do
     it "succeeds for an extant order ID" do
-      get order_path(existing_order)
+      get order_path(existing_order.id)
       must_respond_with :success
     end
     
