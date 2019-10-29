@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :order_items, only: [:create, :update, :destroy]
   
   resources :products, except: [:destroy]
-  get '/products/retire/:id', to: 'products#retire', as: "retire"
+  post '/products/retire/:id', to: 'products#retire', as: "retire"
   
   resources :merchants, only: [:index, :show]
   get '/merchants/dashboard/:id', to: 'merchants#dashboard', as: "dashboard"
