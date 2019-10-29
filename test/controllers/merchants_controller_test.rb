@@ -1,9 +1,74 @@
 require "test_helper"
 
 describe MerchantsController do
+  let (:existing_merchant) { merchants(:macrina) }
+  
   describe "logged in users" do
-    let (:existing_merchant) { merchants(:macrina) }
+    before do
+      @current_merchant = perform_login
+    end
     
+    describe "index" do
+      it "succeeds when there are merchants" do
+        get merchants_path
+        
+        must_respond_with :success
+      end
+      
+      it "succeeds when there are no merchants" do
+        Merchant.all do |merchant|
+          merchant.destroy
+        end
+        
+        get merchants_path
+        
+        must_respond_with :success
+      end
+    end
+    
+    describe "show" do
+      it "succeeds for an existing merchant" do
+        get merchant_path(existing_merchant)
+        
+        must_respond_with :success
+      end
+      it "renders 404 if the merchant doesn't exist" do
+        destroyed_id = existing_merchant.id
+        existing_merchant.destroy
+        
+        get merchant_path(destroyed_id)
+        must_respond_with :not_found
+      end
+    end
+    
+    describe "logout" do
+      it "logs out a merchant when logout is selected" do
+        delete logout_path
+        expect(flash[:success]).must_equal "Successfully logged out!"
+        must_respond_with :redirect
+        must_redirect_to root_path
+      end
+    end
+    
+    describe "dashboard" do
+      it "only allows the current merchant to view their own dashboard" do
+        get dashboard_path(@current_merchant)
+        
+        must_respond_with :success
+      end
+      
+      it "will not allow them to view someone else's dashboard" do
+        get dashboard_path(merchants(:sea_wolf))
+        
+        must_respond_with :redirect
+        flash[:result_text].must_equal "You are not authorized to view this page."
+      end
+      
+    end
+    
+  end
+  
+  describe "guest users" do
     describe "index" do
       it "succeeds when there are merchants" do
         get merchants_path
@@ -66,50 +131,20 @@ describe MerchantsController do
         must_redirect_to root_path
       end
     end
-  end
-  
-  describe "logout" do
-    it "logs out a merchant when logout is selected" do
-      delete logout_path
-      expect(flash[:success]).must_equal "Successfully logged out!"
-      must_respond_with :redirect
-      must_redirect_to root_path
-    end
-  end
-  
-  describe "current" do
-    #   it "sets session[:merchant_id], redirects, and responds with success
-    #   " do
-    #     # Arrange
-    #     merchant = perform_login
-    
-    #     # Act 
-    #     get current_merchant_path
-    
-    #     # Assert 
-    #     must_respond_with :success
-    #   end
-    
-    #   it "sets flash[:error] and redirects when there's no merchant" do
-    #     # Act 
-    #     get current_merchant_path
-    
-    #     #Assert
-    #     expect(flash[:error]).must_equal "You must be logged in to see this page"
-    #     must_redirect_to root_path
-    #   end
-    # end
     
     describe "dashboard" do
-      
+      it "does not allow a guest to view any dashboard" do
+        all_merchants = Merchant.all
+        
+        all_merchants.each do |merchant|
+          get dashboard_path(merchant)
+          
+          must_respond_with :redirect
+          flash[:result_text].must_equal "You are not authorized to view this page."
+        end
+      end
     end
-  end
-  
-  
-  describe "guest users" do
-    
     
   end
+  
 end
-
-
