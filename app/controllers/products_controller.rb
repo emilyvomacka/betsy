@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController 
-  before_action :find_product, only: [:show, :edit, :update]
+  before_action :find_product, only: [:show, :edit, :update, :retire]
   before_action :require_login, except: [:index, :main, :show]
   before_action :check_authorization, only: [:edit, :update, :retire]
   
@@ -52,7 +52,6 @@ class ProductsController < ApplicationController
   end
   
   def retire
-    @product = Product.find_by(id: params[:id])
     if @product.retire
       flash[:status] = :success
       flash[:result_text] = "Successfully retired product #{@product.name}."
@@ -80,7 +79,7 @@ class ProductsController < ApplicationController
   end
   
   def check_authorization
-    if @product.merchant.id != @current_merchant.id
+    if @product.merchant_id != @current_merchant.id
       flash[:status] = :danger
       flash[:result_text] = "You are not authorized to view this page."
       redirect_to root_path
