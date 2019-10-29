@@ -68,30 +68,8 @@ describe MerchantsController do
     end
   end
   
-  describe "current" do
-    #   it "sets session[:merchant_id], redirects, and responds with success
-    #   " do
-    #     # Arrange
-    #     merchant = perform_login
-    
-    #     # Act 
-    #     get current_merchant_path
-    
-    #     # Assert 
-    #     must_respond_with :success
-    #   end
-    
-    #   it "sets flash[:error] and redirects when there's no merchant" do
-    #     # Act 
-    #     get current_merchant_path
-    
-    #     #Assert
-    #     expect(flash[:error]).must_equal "You must be logged in to see this page"
-    #     must_redirect_to root_path
-    #   end
-    # end
-  end
 end
+
 
 
 
