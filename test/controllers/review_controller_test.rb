@@ -8,47 +8,16 @@ describe ReviewsController do
     end
     
     let (:existing_review) { review(:started) }
-    
-    describe "index" do
-      it "succeeds when there are reviews" do
-        get reviews_path
         
-        must_respond_with :success
-      end
-      
-      it "succeeds when there are no reviews" do
-        Review.all do |review|
-          review.destroy
-        end
-        
-        get reviews_path
-        
-        must_respond_with :success
-      end
-    end
-    
-    describe "show" do
-      it "succeeds for an existing review" do
-        get review_path(existing_review)
-        
-        must_respond_with :success
-      end
-      
-      it "renders 404 if the review doesn't exist" do
-        destroyed_id = existing_review.id
-        existing_review.destroy
-        
-        get review_path(destroyed_id)
-        must_respond_with :not_found
-      end
-    end
-    
     describe "new" do
       it "succeeds" do
-        get new_review_path
+        get new_review_path(Product.first.id)
         
         must_respond_with :success
       end
+
+      # can't review own stuff
+      # nested route in products
     end
     
     describe "create" do
@@ -76,41 +45,7 @@ describe ReviewsController do
   end
   
   describe "guest users" do
-    let (:existing_review) { reviews(:started) }
-    
-    describe "index" do
-      it "succeeds when there are reviews" do
-        get reviews_path
-        
-        must_respond_with :success
-      end
-      
-      it "succeeds when there are no reviews" do
-        Review.all do |review|
-          review.destroy
-        end
-        
-        get reviews_path
-        
-        must_respond_with :success
-      end
-    end
-    
-    describe "show" do
-      it "succeeds for an existing review" do
-        get review_path(existing_review)
-        
-        must_respond_with :success
-      end
-      
-      it "renders 404 if the review doesn't exist" do
-        destroyed_id = existing_review.id
-        existing_review.destroy
-        
-        get review_path(destroyed_id)
-        must_respond_with :not_found
-      end
-    end
+    let (:existing_review) { reviews(:one) }
     
     describe "new" do
       it "will allow a guest to go through" do
