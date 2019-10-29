@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
   before_action :find_order
+  before_action :is_this_your_cart?
+  before_action :have_you_checked_out?, except: :show
   
   def show ; end
   
@@ -46,4 +48,18 @@ class OrdersController < ApplicationController
       return
     end
   end
+
+  def is_this_your_cart?
+    if @order.cart_status == "pending" && @order.id != session[:order_id]
+      head :not_found
+      return 
+    end 
+  end 
+
+  def have_you_checked_out?
+    if ["paid", "completed", "cancelled"].include?(@order.cart_status)
+      head :not_found
+      return
+    end 
+  end 
 end

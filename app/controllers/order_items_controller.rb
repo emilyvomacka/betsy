@@ -1,6 +1,7 @@
 class OrderItemsController < ApplicationController
 
   before_action :find_order_item, except: :create 
+  before_action :are_these_your_pending_items?, except: :create
   
   def create #add to cart
     new_quantity = params["quantity"]
@@ -60,5 +61,11 @@ class OrderItemsController < ApplicationController
       return 
     end 
   end 
-  
+
+  def are_these_your_pending_items?
+    if @order.cart_status != "pending" || @order.id != session[:order_id]
+      head :not_found
+      return 
+    end 
+  end
 end
