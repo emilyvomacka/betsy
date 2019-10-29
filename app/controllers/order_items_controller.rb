@@ -3,7 +3,7 @@ class OrderItemsController < ApplicationController
   def create #add to cart
     new_quantity = params["quantity"]
     new_product_id = params["product_id"]
-    if session[:order_id] == nil || session[:order_id] == false
+    if session[:order_id] == nil || session[:order_id] == false || !session[:order_id]
       curr_order = Order.create(cart_status: "pending")
       session[:order_id] = curr_order.id
     else 
