@@ -69,14 +69,6 @@ class MerchantsController < ApplicationController
     return
   end
   
-  # def logout
-  #   session[:merchant_id] = nil
-  #   flash[:status] = :success
-  #   flash[:result_text] = "Successfully logged out."
-  #   redirect_to root_path
-  #   return
-  # end
-  
   def dashboard
     if session[:merchant_id] == params[:id].to_i
       @merchant = Merchant.find_by(id: params[:id])
