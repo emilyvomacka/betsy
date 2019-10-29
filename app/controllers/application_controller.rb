@@ -25,27 +25,27 @@ class ApplicationController < ActionController::Base
       @order = Order.find_by(id: params[:id])
     end 
     if @order.nil?
-      redirect_to root_path, status: :bad_request 
       flash[:status] = :danger
       flash[:result_text] = "Sorry, order not found."
+      redirect_to root_path, status: :bad_request 
       return 
     end
   end
   
   def is_this_your_cart?
     if @order.cart_status == "pending" && @order.id != session[:order_id]
-      redirect_to root_path, status: :unauthorized 
       flash[:status] = :danger
       flash[:result_text] = "You are not authorized to view this pending order."
+      redirect_to root_path, status: :unauthorized 
       return 
     end 
   end 
   
   def still_pending?
     if ["paid", "completed", "cancelled"].include?(@order.cart_status)
-      redirect_to root_path, status: :unauthorized
       flash[:status] = :danger
       flash[:result_text] = "Sorry, you cannot modify a checked-out order."
+      redirect_to root_path, status: :unauthorized
       return 
     end 
   end 
