@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   end
   
   def require_login
-    if session[:merchant_id].nil?
+    if @current_merchant.nil?
       flash[:status] = :failure
       flash[:result_text] = "You must be logged in to view this page."
       redirect_back fallback_location: root_path

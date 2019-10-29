@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController 
   before_action :find_product, only: [:show, :edit, :update]
-  before_action :set_categories, only: [:new, :create]
   
   def index
     @products = Product.where(active: true)
@@ -13,13 +12,15 @@ class ProductsController < ApplicationController
   def show; end
   
   def new
+    require_login
     @product = Product.new
     
   end
   
   def create
+    require_login
     @product = Product.new(product_params)
-    @product.merchant_id = Merchant.first.id
+    @product.merchant_id = @current_merchant.id
     
     if @product.save
       flash[:status] = :success
@@ -69,7 +70,7 @@ class ProductsController < ApplicationController
   private
   
   def product_params
-    return params.require(:product).permit(:name, :description, :price, :photo_URL, :stock, :merchant_id, :categories, :active)
+    return params.require(:product).permit(:name, :description, :price, :photo_URL, :stock, :merchant_id, :active, category_ids: [])
   end
   
   def find_product
@@ -81,12 +82,4 @@ class ProductsController < ApplicationController
     end
   end
   
-  def set_categories
-    @category_names = []
-    category_names = Category.all
-    
-    category_names.each do |category|
-      @category_names << category.name
-    end
-  end
 end
