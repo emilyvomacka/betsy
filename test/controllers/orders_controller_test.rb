@@ -47,8 +47,7 @@ describe OrdersController do
       products(:daily_baguette).reload
       
       expect(patch order_path(existing_order.id), params: existing_order_params)
-      expect(existing_order.cart_status).must_equal "pending"
-      
+      expect(existing_order.cart_status).must_equal "pending"      
     end
     
     it "changes cart status to paid" do
@@ -74,7 +73,14 @@ describe OrdersController do
     end
     
     it "reduces quantity in stock after order has been confirmed" do
-      
+      existing_order_params = {
+        order: {
+          quantity: 1,
+          product: "daily_baguette"
+        }
+      }
+      expect(patch order_path(existing_order.id), params: existing_order_params)   
+      expect(products(:daily_baguette).stock).must_equal 39      
     end
   end
   
