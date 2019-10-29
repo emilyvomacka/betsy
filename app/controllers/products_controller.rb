@@ -53,13 +53,20 @@ class ProductsController < ApplicationController
   
   def retire
     if @product.retire
-      flash[:status] = :success
-      flash[:result_text] = "Successfully retired product #{@product.name}."
+      if @product.active == true
+        flash[:status] = :success
+        flash[:result_text] = "Successfully reactivated #{@product.name}."
+      else
+        flash[:status] = :success
+        flash[:result_text] = "Successfully retired product #{@product.name}."
+      end
       redirect_to product_path(@product.id)
+      return
     else @product.nil?
       flash.now[:status] = :danger
       flash.now[:result_text] = "Unable to retire #{@product.name}."
       render :edit, status: :bad_request
+      return
     end
   end
   
