@@ -162,22 +162,39 @@ describe ProductsController do
     end
     
     describe "retire method" do
-      it "toggles product status from 'active' to 'retire'" do 
-        # post retire_path(existing_product.id)
-        # must_respond_with :redirect
-        # must_redirect_to product_path(existing_product.id)
-      end
-      
-      it "toggles product status from 'retire' to 'active'" do 
-        #test if we add this functionality
-      end
-      
-      it "allows merchants to retire their own products" do 
+      describe "allows merchants to retire/reactivate their own products" do
+        it "toggles product status from 'active' to 'inactive'" do 
+          existing_product.active.must_equal true
+          post retire_path(existing_product)
+          
+          existing_product.reload
+          
+          existing_product.active.must_equal false
+          
+          must_respond_with :redirect
+          must_redirect_to product_path(existing_product.id)
+        end
+        
+        it "toggles product status from 'retire' to 'active'" do 
+          post retire_path(existing_product)
+          post retire_path(existing_product)
+          existing_product.reload
+          
+          existing_product.active.must_equal true
+          
+          must_respond_with :redirect
+          must_redirect_to product_path(existing_product.id)
+        end
         
       end
       
       it "does not allow merchants to retire other people's products" do 
+        not_my_product = merchants(:besalu).products.first
         
+        post retire_path(not_my_product)
+        
+        must_redirect_to root_path
+        flash[:result_text].must_equal "You are not authorized to view this page."
       end
       
     end
@@ -321,9 +338,17 @@ describe ProductsController do
       
     end
     
+    describe "retire method" do
+      it "doesn't allow guests to retire/reactivate products" do
+        post retire_path(existing_product)
+        
+        must_redirect_to root_path
+        flash[:result_text].must_equal "You must be logged in to view this page."
+      end
+      
+    end
+    
   end
   
-  
 end
-
 
