@@ -70,7 +70,7 @@ describe ProductsController do
     
     describe "create" do
       it "creates a product with valid data for a real category" do
-        new_product_hash = { product: {name: "test name", description: "test", price: 1, photo_URL: "test", stock: 1000, merchant_id: @current_merchant.id}}
+        new_product_hash = { product: {name: "test name", description: "test", price: 1, photo_URL: "http://www.google.com", stock: 1000, merchant_id: @current_merchant.id}}
         
         expect {post products_path, params: new_product_hash}.must_change "Product.count", 1
         
