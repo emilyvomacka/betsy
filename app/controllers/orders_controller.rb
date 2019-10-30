@@ -1,8 +1,15 @@
 class OrdersController < ApplicationController
+<<<<<<< HEAD
   before_action :find_order, except: :find
   before_action :is_this_your_cart?, except: :find
   before_action :still_pending?, except: [:show, :find]
   
+=======
+  before_action :find_order, except: [:find]
+  before_action :is_this_your_cart?, except: [:find]
+  before_action :still_pending?, except: [:show, :find, :search]
+
+>>>>>>> master
   def show ; end
   
   def edit ; end 
@@ -34,8 +41,9 @@ class OrdersController < ApplicationController
     end
   end
   
-  def find
-  end 
+  def search
+    render action: 'show'
+ end
   
   private
   

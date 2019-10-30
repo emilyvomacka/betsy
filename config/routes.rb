@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   
   root 'products#main'
-  
-  get '/orders/find_my_order', to: 'orders#find', as: "find_my_order"
+  get '/orders/find', to: 'orders#find', as: "find_my_order"
+  get '/orders/search', to: 'orders#search', as: "search_order"
   resources :orders, only: [:show, :edit, :update] do
     resources :order_items, only: [:update, :destroy]
   end 
