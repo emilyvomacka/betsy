@@ -13,8 +13,9 @@
   <body>
   
     <section>
-      <h2 class="toptitle font-weight-bold"><%= link_to "Baguettsy", root_path %></h2>
+      
       <nav class="navbar navbar-expand-lg navbar-light">
+      <h2 class="toptitle font-weight-bold"><%= link_to "Baguettsy", root_path %></h2>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,20 +36,29 @@
             </li>
           </ul>
 
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right auto">
             
-             <% if session[:order_id] %>	
-              <li>	
-                <button type="button" ><li><%= link_to "View Shopping Carb", order_path(session[:order_id]) %></li></button>	
+            <% if session[:order_id] %>	
+              <li class="nav-item">
+                <button type="button" class="btn btn-light"><%= link_to "View Shopping Carb", order_path(session[:order_id]) %></button>	
               </li>	
             <% end %>
             
-           <% if session[:merchant_id] %>
-            Welcome, <%= link_to session[:merchant_name], dashboard_path(session[:merchant_id]) %> 
-                 <%= link_to "Log out", logout_path, method: "delete" %>
-                 <% else %>
-             <%= link_to "Login with Github", github_login_path %>
+            <% if session[:merchant_id] %>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Welcome, <%= session[:merchant_name] %>! 
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#"><%= link_to "View Dashboard", dashboard_path(session[:merchant_id]) %> </a>
+                  <a class="dropdown-item" href="#"><%= link_to "Log out", logout_path, method: "delete" %></a>
+                </div>
+              </li>
+            <% else %>
+              <button type="button" class="btn btn-light"><%= link_to "Login with Github", github_login_path %></button>
           <% end %>
+          </li>
           </ul>
         </div>
       </nav>
