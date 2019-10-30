@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
   before_action :current_merchant
+  before_action :all_categories
+  before_action :all_merchants
+  
   
   def current_merchant
     @current_merchant = Merchant.find_by(id: session[:merchant_id])
@@ -28,8 +31,8 @@ class ApplicationController < ActionController::Base
       @order = Order.find_by(id: session[:order_id])
     end 
     if @order.nil?
-      flash[:status] = :danger
-      flash[:result_text] = "Sorry, order not found."
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "Sorry, order not found."
       render 'products/main', status: :bad_request 
       return 
     end
@@ -37,8 +40,8 @@ class ApplicationController < ActionController::Base
   
   def is_this_your_cart?
     if @order.cart_status == "pending" && @order.id != session[:order_id]
-      flash[:status] = :danger
-      flash[:result_text] = "You are not authorized to view this pending order."
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "You are not authorized to view this pending order."
       render 'products/main', status: :unauthorized 
       return 
     end 
@@ -70,4 +73,15 @@ class ApplicationController < ActionController::Base
       return 
     end 
   end 
+  
+  private 
+  
+  def all_categories
+    @all_categories = Category.all
+  end
+  
+  def all_merchants
+    @all_merchants = Merchant.all
+  end
+  
 end

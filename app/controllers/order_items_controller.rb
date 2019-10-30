@@ -8,7 +8,7 @@ class OrderItemsController < ApplicationController
 
   def create #add to cart
     new_quantity = params["quantity"]
-    new_product_id = params["id"]
+    new_product_id = params["product_id"]
     #find_product?
     #if product.status != active, return 
     if session[:order_id] == nil || session[:order_id] == false || !session[:order_id]

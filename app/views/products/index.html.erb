@@ -1,40 +1,50 @@
-<nav class="product-filter">
+<body>
 
-  <h1>All Products</h1>
+    <nav class="product-filter">
 
-  <div class="sort">
+      <h1>All Products</h1>
 
-    <div class="collection-sort">
-      <label>Filter by:</label>
-      <select>
-        <option value="/">All Products</option>
-      </select>
-    </div>
+      <div class="sort">
 
-    <div class="collection-sort">
-      <label>Sort by:</label>
-      <select>
-        <option value="/">Featured</option>
-      </select>
-    </div>
+        <div class="collection-sort">
+          <label>Filter by:</label>
+          <select>
+            <option value="/">All Products</option>
+          </select>
+        </div>
 
-  </div>
+        <div class="collection-sort">
+          <label>Sort by:</label>
+          <select>
+            <option value="/">Featured</option>
+          </select>
+        </div>
 
-</nav>
-
-<section class="products">
-
-  <% @products.each do |product| %>
-    <div class="product-card">
-      <div class="product-image">
-        <%= link_to image_tag(product.photo_URL), product_path(product) %>
       </div>
-      <div class="product-info">
-        <h5><%= product.name %></h5>
-        <h6>$<%= product.price %></h6>
-      </div>
-    </div>
-  <% end %>
+    </div> 
 
+    </nav>
 
-</section>
+    <section class="products">
+
+      <% @products.each do |product| %>
+        <div class="card product-card">
+          <div class="product-image">
+            <%= link_to image_tag(product.photo_URL), product_path(product) %>
+          </div>
+          <div class="product-info">
+            <h5><%= product.name %></h5>
+            <h6><%= number_to_currency(product.price) %></h6>
+          </div>
+
+          <%= form_tag order_items_path, method: :post do %>    
+              <%= label_tag :quantity, "Quantity" %>
+              <%= select_tag(:quantity, options_for_select((1..product.stock), 1))%>
+              <%= hidden_field_tag :product_id, product.id %>
+              <%= submit_tag "Add To Carb", class: "btn btn-secondary"%>
+            <% end %> 
+        </div>
+      <% end %>
+    </section>
+
+</body>

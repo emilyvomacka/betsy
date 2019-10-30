@@ -5,15 +5,15 @@ describe Product do
   describe "relations" do
     
     it "has one or many categories" do
-      product.must_respond_to :categories
+      _(product).must_respond_to :categories
       product.categories.each do |category|
-        category.must_be_kind_of Category
+        _(category).must_be_kind_of Category
       end
     end
     
     it "can have a single merchant" do
-      product.must_respond_to :merchant_id
-      product.merchant.must_be_kind_of Merchant
+      _(product).must_respond_to :merchant_id
+      _(product.merchant).must_be_kind_of Merchant
     end
     
   end

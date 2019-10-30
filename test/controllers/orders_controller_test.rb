@@ -81,7 +81,7 @@ describe OrdersController do
       
       expect(@new_order.cart_status).must_equal "paid"
       must_respond_with :redirect
-      must_redirect_to products_path
+      must_redirect_to order_path(@new_order)
       products(:seedy).reload
       expect(products(:seedy).stock).must_equal 18
     end

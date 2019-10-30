@@ -1,6 +1,27 @@
-<h3>Name: <%= @merchant.name %></h3>
-<p> Products: 
-  <%@merchant.products.each do |product|%>
-    <li><%= link_to product.name, product_path(product) %></li>
-  <%end%>
-</p>
+<body>
+
+  <h2><%= @merchant.name %></h2>
+
+  <section class="products">
+    <% @merchant.products.each do |product| %>
+      <div class="card product-card">
+        <div class="product-image">
+          <%= link_to image_tag(product.photo_URL), product_path(product) %>
+        </div>
+        <div class="product-info">
+          <h5><%= product.name %></h5>
+          <h6>$<%= product.price %></h6>
+        </div>
+
+        <%= form_tag order_items_path, method: :post do %>    
+            <%= label_tag :quantity, "Quantity" %>
+            <%= select_tag(:quantity, options_for_select((1..product.stock), 1))%>
+            <%= hidden_field_tag :product_id, product.id %>
+            <%= submit_tag "Add To Carb", class: "btn btn-secondary"%>
+          <% end %> 
+      </div>
+    <% end %>
+  </section>
+  
+</body>
+

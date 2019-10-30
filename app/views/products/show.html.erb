@@ -10,7 +10,7 @@
       <section class="product-details">
         <p>Name: <%= @product.name %></p>
         <p>Description: <%= @product.description %></p>
-        <p>Price: <%= @product.price %></p>
+        <p>Price: <%= number_to_currency(@product.price) %></p>
         <p>stock: <%= @product.stock %></p>
         <p>Seller: <%= link_to @product.merchant.name, merchant_path(@product.merchant) %></p>
         <p>categories: <p><% @product.categories.each do |category| %>
@@ -22,7 +22,7 @@
         <%= form_tag order_items_path, method: :post do %>    
           <%= label_tag :quantity, "Quantity" %>
           <%= select_tag(:quantity, options_for_select((1..@product.stock), 1))%>
-          <%= hidden_field_tag :id, @product.id %>
+          <%= hidden_field_tag :product_id, @product.id %>
           <%= submit_tag "Add To Carb", class: "btn btn-secondary"%>
         <% end %> 
         </section>

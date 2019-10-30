@@ -11,8 +11,8 @@ class OrdersController < ApplicationController
   def update
     @order.order_items.each do |item|
       if item.quantity > item.product.stock
-        flash[:status] = :failure
-        flash[:result_text] = "#{item.product.name} running low! We currently only have #{item.product.stock} left. Please adjust your order."
+        flash.now[:status] = :failure
+        flash.now[:result_text] = "#{item.product.name} running low! We currently only have #{item.product.stock} left. Please adjust your order."
         render :edit, status: :bad_request 
         return 
       end 
@@ -20,7 +20,7 @@ class OrdersController < ApplicationController
     if @order.update(order_params) 
       @order.cart_status = "paid"
       @order.save 
-      redirect_to products_path
+      redirect_to order_path(@order)
       flash[:status] = :success
       flash[:result_text] = "Order submitted! Bread ahead."
       session.delete(:order_id)
