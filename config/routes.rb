@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   
   root 'products#main'
+  get '/orders/find', to: 'orders#find', as: "find_my_order"
+  get '/orders/search', to: 'orders#search', as: "search_order"
+  resources :orders, only: [:show, :edit, :update] do
+    resources :order_items, only: [:update, :destroy]
+  end 
   
-  resources :orders, only: [:show, :edit, :update]
-  # patch '/order/add_to_cart', to: 'orders#add_to_cart', as: 'add_to_cart'
-  # patch '/order/edit_item_quantity', to: 'orders#edit_item_quantity', as: 'edit_item_quantity'
-  # delete '/order/delete_from_cart', to: 'orders#delete_from_cart', as: 'delete_from_cart'
-  
-  resources :order_items, only: [:create, :update, :destroy]
+  resources :order_items, only: [:create]
   
   resources :products, except: [:destroy]
   post '/products/retire/:id', to: 'products#retire', as: "retire"
@@ -17,8 +17,6 @@ Rails.application.routes.draw do
   
   resources :categories, only: [:index, :show, :new, :create]
   
-  # get "/login", to: "merchants#login_form", as: "login"
-  # post "/login", to: "merchants#login"
   get "/auth/github", as: "github_login"
   get "/auth/:provider/callback", to: "merchants#create", as: "auth_callback"
   delete "/logout", to: "merchants#destroy", as: "logout" 
@@ -28,4 +26,3 @@ Rails.application.routes.draw do
   end
   
 end
-

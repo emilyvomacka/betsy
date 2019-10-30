@@ -62,11 +62,6 @@ class ProductsController < ApplicationController
       end
       redirect_to product_path(@product.id)
       return
-    else @product.nil?
-      flash.now[:status] = :danger
-      flash.now[:result_text] = "Unable to retire #{@product.name}."
-      render :edit, status: :bad_request
-      return
     end
   end
   

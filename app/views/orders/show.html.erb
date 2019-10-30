@@ -1,12 +1,32 @@
 <h3> Order Show Page </h3>
 
+
 <% if @order.order_items.count == 0 %>
     <p>Your shopping carb is empty.</p>
 <%else%>
 
-  <!-- if order requested is user's shopping cart -->
-  <% if @order.id == session[:order_id] %>
-  <% @order.order_items.arrange_by_created_at.each do |item| %>
+<!-- if order requested is user's shopping cart -->
+<% if @order.id == session[:order_id] %>
+<% @order.order_items.arrange_by_created_at.each do |item| %>
+  <p>Product: <%= item.product.name %></p>
+  <p>Quantity: <%= item.quantity %><p>
+    <p><%= form_tag order_order_item_path(@order, item), method: :patch do %>    
+    <%= select_tag(:new_quantity, options_for_select((1..item.product.stock), item.quantity))%>
+    <%= submit_tag "Edit Quantity" %>
+    <% end %></p>
+  <p><%= form_tag order_order_item_path(@order, item), method: :delete do %>    
+    <%= submit_tag "Delete This Item" %>
+    <% end %></p>
+<% end %>
+
+<p>Total Cost: <%= @order.total_cost %>
+
+<%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-primary" %>
+
+<!--if one of the order's merchants is logged in and @order is paid, complete or cancelled, shows customer details and only merchant's order items-->
+<% elsif @order.cart_status != "pending" && session[:merchant_id] && @order.return_merchants.include?(session[:merchant_id]) %>
+  <h2>Order <%= order.id %>: Items Requested From Your Store</h2>
+  <%= @order.return_merchant_items(session[:merchant_id]).each do |item| %>
     <p>Product: <%= item.product.name %></p>
     <p>Quantity: <%= item.quantity %><p>
       <p><%= form_tag order_item_path(item), method: :patch do %>    
