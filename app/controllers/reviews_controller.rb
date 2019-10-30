@@ -24,8 +24,8 @@ class ReviewsController < ApplicationController
       return
     else
       flash.now[:status] = :failure
-      flash.now[:result_text] = "Unable to save review for #{@review.product.name}."
-      render :new
+      flash.now[:result_text] = "Unable to save review for #{@product.name}."
+      render :new, status: :bad_request
       return
     end
   end
