@@ -1,10 +1,14 @@
-<%= @category.name %>
+<body>
 
-<h2>Products:</h2>
+  <h2><%= @category.name %></h2>
 
-<% @category.products.each do |product| %>
-  <li>
-    <%= link_to product.name, product_path(product) %>
-  </li>
+  <section class="pagelist">
+    <h1>Products:</h1>
+    <% @category.products.each do |product| %>
+      <li>
+        <%= link_to product.name, product_path(product) %>
+      </li>
+    <% end %>
+  </section>
 
-<% end %>
+</body>

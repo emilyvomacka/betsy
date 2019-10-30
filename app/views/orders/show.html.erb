@@ -21,7 +21,7 @@
 
 <p>Total Cost: <%= @order.total_cost %>
 
-<%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-primary" %>
+<%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-light" %>
 
 <!--if one of the order's merchants is logged in and @order is paid, complete or cancelled, shows customer details and only merchant's order items-->
 <% elsif @order.cart_status != "pending" && session[:merchant_id] && @order.return_merchants.include?(session[:merchant_id]) %>
@@ -40,7 +40,7 @@
 
   <p>Total Cost: <%= @order.total_cost %>
 
-  <%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-primary" %>
+  <%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-light" %>
 
     <% elsif @order.order_items.count == 0 %>
     <p class="text-center">
