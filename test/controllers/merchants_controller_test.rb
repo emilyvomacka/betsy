@@ -44,7 +44,7 @@ describe MerchantsController do
     describe "logout" do
       it "logs out a merchant when logout is selected" do
         delete logout_path
-        expect(flash[:success]).must_equal "Successfully logged out!"
+        expect(flash[:result_text]).must_equal "Successfully logged out!"
         must_respond_with :redirect
         must_redirect_to root_path
       end
@@ -112,7 +112,7 @@ describe MerchantsController do
         
         _(Merchant.count).must_equal start_count
       end
-     
+      
       it "creates an account for a new merchant and redirects to the root route" do
         start_count = Merchant.count
         new_merchant = Merchant.new(name: "cafefrance", nickname: "france", email: "cafefrance@gmail.com", uid: 60, provider: "github")
@@ -128,6 +128,15 @@ describe MerchantsController do
         perform_login(new_merchant)
         
         Merchant.count.must_equal start_count 
+        must_redirect_to root_path
+      end
+    end
+    
+    describe "logout" do
+      it "will not do anything if no one is logged in " do
+        delete logout_path
+        expect(flash[:result_text]).must_equal "You are not logged in."
+        must_respond_with :redirect
         must_redirect_to root_path
       end
     end

@@ -90,21 +90,32 @@ describe Product do
         product.photo_URL = nil 
         expect(product.valid?).must_equal false
         expect(product.errors.messages).must_include :photo_URL
-        expect(product.errors.messages[:photo_URL]).must_equal ["can't be blank"]
+      end
+      
+      it "must include a valid photo_URL" do
+        product.photo_URL = "sjfkdf" 
+        expect(product.valid?).must_equal false
+        expect(product.errors.messages).must_include :photo_URL
+        
+        product.photo_URL = "http://"
+        expect(product.valid?).must_equal false
+        expect(product.errors.messages).must_include :photo_URL
+        
+        product.photo_URL = 128291832
+        expect(product.valid?).must_equal false
+        expect(product.errors.messages).must_include :photo_URL
       end
       
       it "must be in stock" do 
         product.stock = nil 
         expect(product.valid?).must_equal false
         expect(product.errors.messages).must_include :stock
-        expect(product.errors.messages[:stock]).must_equal ["can't be blank"] 
       end
       
       it "must have a merchant_id associated" do
         product.merchant_id = nil 
         expect(product.valid?).must_equal false
         expect(product.errors.messages).must_include :merchant_id
-        expect(product.errors.messages[:merchant_id]).must_equal ["can't be blank"]
       end
     end
   end
