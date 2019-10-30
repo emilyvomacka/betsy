@@ -36,35 +36,16 @@ class MerchantsController < ApplicationController
   end
   
   def destroy
-    session[:merchant_id] = nil
-    session[:merchant_name] = nil
-    flash[:status] = :success
-    flash[:success] = "Successfully logged out!"
-    
-    redirect_to root_path
-    return
-  end
-  
-  def login
-    name = params[:name]
-    if name and merchant = Merchant.find_by(name: name)
-      session[:merchant_id] = merchant.id
+    if @current_merchant != nil
+      session[:merchant_id] = nil
+      session[:merchant_name] = nil
       flash[:status] = :success
-      flash[:result_text] = "Successfully logged in as existing merchant #{merchant.name}"
+      flash[:result_text] = "Successfully logged out!"
     else
-      merchant = Merchant.new(name: name)
-      if merchant.save
-        session[:merchant_id] = merchant.id
-        flash[:status] = :success
-        flash[:result_text] = "Successfully created new merchant #{merchant.name} with ID #{merchant.id}"
-      else
-        flash.now[:status] = :danger
-        flash.now[:result_text] = "Could not log in."
-        flash.now[:messages] = merchant.errors.messages
-        render "login_form", status: :bad_request
-        return
-      end
+      flash[:status] = :danger
+      flash[:result_text] = "You are not logged in."
     end
+    
     redirect_to root_path
     return
   end
