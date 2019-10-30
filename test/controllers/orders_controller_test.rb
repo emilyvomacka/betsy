@@ -2,7 +2,7 @@ require "test_helper"
 require "pry"
 
 describe OrdersController do 
-
+  
   before do 
     new_params = {product_id: products(:seedy).id, quantity: 3}
     post order_items_path, params: new_params
@@ -34,7 +34,7 @@ describe OrdersController do
       @new_order = Order.last
     end
     
-    it "succeeds for an extant order ID with pending status whose ID matches session[:order_id]" do     
+    it "succeeds for an extant order ID with pending status whose order_id == session[:order_id]" do     
       get edit_order_path(@new_order)
       must_respond_with :success
     end
@@ -58,7 +58,7 @@ describe OrdersController do
   end
   
   describe "update" do
-    before do 
+    before do
       @update_params = {
         order: {
           customer_name: "Sea Wolf",
@@ -68,30 +68,14 @@ describe OrdersController do
           cc_expiration: "12/20",
           cc_security_code: "123",
           zip_code: "99999",
-          cart_status: "paid"
-        }
+          cart_status: "paid"}
       }
       new_params = {product_id: products(:seedy).id, quantity: 3}
       post order_items_path, params: new_params
       @new_order = Order.last 
     end 
     
-    it "re-renders edit page if any order item's quantity is greater than its product's stock" do
-      products(:seedy).stock = 2
-      products(:seedy).save
-      
-      @new_order.order_items.each do |item|
-        puts "#{item.product.name}, we have #{item.product.stock}, you want #{item.quantity}"
-      end 
-      
-      patch order_path(@new_order), params: @update_params
-      must_respond_with :bad_request 
-      expect(flash[:status]).must_equal :failure
-      expect(@new_order.cart_status).must_equal "pending"      
-    end
-    
-    it "changes cart status to paid and reduces stock for a legitimate order" do
-      
+    it "changes cart status to paid and reduces stock for a pending order when order.id == session[:order_id]" do
       patch order_path(@new_order), params: @update_params
       @new_order.reload      
       
@@ -101,18 +85,53 @@ describe OrdersController do
       products(:seedy).reload
       expect(products(:seedy).stock).must_equal 18
     end
-  end
+    
+    it "re-renders edit page if any order item's quantity is greater than its product's stock" do
+      products(:seedy).stock = 2
+      products(:seedy).save
+      
+      patch order_path(@new_order), params: @update_params
+      must_respond_with :bad_request 
+      expect(flash[:status]).must_equal :failure
+      expect(@new_order.cart_status).must_equal "pending"      
+    end
+    
+    it "responds with :bad_request for an invalid order id" do 
+      patch order_path(-1), params: @update_params
+      must_respond_with :bad_request
+    end 
+    
+    it "responds with :unauthorized if order.id != session[:order_id]" do
+      patch order_path(orders(:a)), params: @update_params
+      must_respond_with :unauthorized
+    end 
 
+    it "will not let user check out when cart status != pending" do
+      patch order_path(@new_order), params: @update_params
+      patch order_path(@new_order), params: @update_params
+      must_respond_with :unauthorized
+    end 
+
+    it "will not let user check out if an order item has changed status to inactive" do
+      products(:seedy).retire
+      products(:seedy).save
+
+      patch order_path(@new_order), params: @update_params
+      must_respond_with :bad_request
+    end 
+  end
+  
   describe "search" do 
     it "renders show page for a valid id" do
       get search_order_path, params: {id: orders(:b).id}
       must_respond_with :success
     end 
-
+    
     it "responds with :bad_request to an invalid id" do
       get search_order_path, params: {id: -1}
       must_respond_with :bad_request
     end 
   end 
 end 
-
+  
+  
