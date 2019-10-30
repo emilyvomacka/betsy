@@ -22,7 +22,7 @@
         <%= form_tag order_items_path, method: :post do %>    
           <%= label_tag :quantity, "Quantity" %>
           <%= select_tag(:quantity, options_for_select((1..@product.stock), 1))%>
-          <%= hidden_field_tag :product_id, @product.id %>
+          <%= hidden_field_tag :id, @product.id %>
           <%= submit_tag "Add To Carb", class: "btn btn-secondary"%>
         <% end %> 
         </section>

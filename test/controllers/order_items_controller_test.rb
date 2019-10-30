@@ -16,7 +16,7 @@ describe OrderItemsController do
       must_respond_with :redirect
     end 
     
-    it "adds new order item to an existing order when order_id is stored in session" do
+    it "adds new order item to an existing order, and does not create a new order, when order_id is stored in session" do
       post order_items_path, params: @first_item_params
       
       expect{post order_items_path, params: @new_params}.must_change "OrderItem.count", 1
@@ -35,7 +35,7 @@ describe OrderItemsController do
       expect(curr_order.total_cost).must_equal 0.79e1
     end 
     
-    it "adds to an existing order item if new product_id already exists in the order" do 
+    it "consolidates with existing order items if new product_id already exists in the order" do 
       post order_items_path, params: @first_item_params
       duplicate_product_params = {product_id: products(:baguette).id, quantity: 2}
       expect{post order_items_path, params: duplicate_product_params}.wont_change "OrderItem.count"
@@ -43,9 +43,8 @@ describe OrderItemsController do
       expect(curr_order.order_items.count).must_equal 1
       expect(curr_order.total_cost).must_equal 0.158e2
     end 
-
-    it "will not add an inactive order item to the cart" do 
-      skip
+    
+    it "will not add an inactive product to the cart" do  
       products(:seedy).retire
       products(:seedy).save
       post order_items_path, params: @new_params
@@ -63,67 +62,66 @@ describe OrderItemsController do
     end 
     
     it "updates an order item's quantity when all authorizations and info are valid" do
-      expect{patch order_order_item_path(@my_order, @my_order_item), params: @update_params}.wont_change "OrderItem.count"
+      patch order_order_item_path(@my_order, @my_order_item), params: @update_params
       must_redirect_to order_path(@my_order)
       
       @my_order_item.reload
       expect(@my_order_item.quantity).must_equal 5
     end 
-
+    
     it "responds :bad_request when asked to update an invalid order" do 
-      expect {patch order_order_item_path(-1, @my_order_item), params: @update_params}.wont_change OrderItem.count
+      patch order_order_item_path(-1, @my_order_item), params: @update_params
       must_respond_with :bad_request
     end 
     
     it "responds :bad_request when asked to update the quantity of an invalid order item" do
-      expect {patch order_order_item_path(@my_order, -1), params: @update_params}.wont_change OrderItem.count
+      patch order_order_item_path(@my_order, -1), params: @update_params
       must_respond_with :bad_request
     end 
-
+    
     it "responds :bad_request when asked to update the quantity of an order item that has been retired" do
       @my_order_item.product.retire
       @my_order_item.save
       
-      expect {patch order_order_item_path(@my_order, @my_order_item), params: @update_params}.wont_change OrderItem.count
+      expect patch order_order_item_path(@my_order, @my_order_item), params: @update_params
       must_respond_with :bad_request
     end 
-
+    
     it "responds :unauthorized when order.cart_status == pending, but order.id != session[:order_id]" do
-      expect {patch order_order_item_path(orders(:a), order_items(:one)), params: @update_params}.wont_change OrderItem.count
+      patch order_order_item_path(orders(:a), order_items(:one)), params: @update_params
       must_respond_with :unauthorized
     end 
-
+    
     it "responds :unauthorized when order.status != pending" do 
-      expect {patch order_order_item_path(orders(:b), order_items(:three)), params: @update_params}.wont_change OrderItem.count
+      patch order_order_item_path(orders(:b), order_items(:three)), params: @update_params
       must_respond_with :unauthorized
     end 
   end 
   
   describe "destroy" do
-    let (:order_item) {order_items(:one)}
-
+    
     it "deletes an order item with valid input" do
       first_item_params = {product_id: products(:baguette).id, quantity: 2}
       post order_items_path, params: first_item_params
-
+      
       current_order = Order.find_by(id: session[:order_id])
       current_item = current_order.order_items.first
-
+      
       expect {delete order_order_item_path(current_order, current_item)}.must_change 'OrderItem.count', -1
       must_respond_with :redirect
       must_redirect_to order_path(current_order)
       assert_nil(OrderItem.find_by(id: current_item.id))
     end 
-
+    
     it "does not delete an order item if order.status != session[:order_id]" do 
-      expect {delete order_order_item_path(orders(:a), order_item)}.wont_change 'OrderItem.count' 
+      expect { delete order_order_item_path(orders(:a), order_items(:one)) }.wont_change 'OrderItem.count' 
       must_respond_with :unauthorized
     end 
     
     it "redirects when requested to delete an order item with invalid id" do
       first_item_params = {product_id: products(:baguette).id, quantity: 2}
       post order_items_path, params: first_item_params
-
+      
       current_order = Order.find_by(id: session[:order_id])
       
       expect { delete order_order_item_path(current_order, -2948)}.wont_change "OrderItem.count"
@@ -134,7 +132,7 @@ describe OrderItemsController do
       expect {delete order_order_item_path(orders(:b), order_items(:three)), params: @update_params}.wont_change OrderItem.count
       must_respond_with :unauthorized
     end 
-
+    
     it "responds :bad_request when order.id is invalid" do
       expect {delete order_order_item_path(-1, order_items(:three)), params: @update_params}.wont_change OrderItem.count
       must_respond_with :bad_request

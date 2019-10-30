@@ -5,34 +5,34 @@ class OrderItemsController < ApplicationController
   before_action :still_pending?, except: :create
   before_action :find_order_item, except: :create 
   before_action :are_products_active?, except: [:destroy, :create]
-  
-  after_action :are_products_active?, only: :create
-  after_action :find_order, only: :create
 
   def create #add to cart
     new_quantity = params["quantity"]
-    new_product_id = params["product_id"]
+    new_product_id = params["id"]
+    #find_product?
+    #if product.status != active, return 
     if session[:order_id] == nil || session[:order_id] == false || !session[:order_id]
-      curr_order = Order.create(cart_status: "pending")
-      session[:order_id] = curr_order.id
+      @order = Order.create(cart_status: "pending")
+      session[:order_id] = @order.id
     else 
-      curr_order = Order.find_by(id: session[:order_id])
+      @order = Order.find_by(id: session[:order_id])
     end 
-    if new_quantity.to_i + curr_order.existing_quantity(new_product_id) > Product.find(new_product_id).stock
+    if new_quantity.to_i + @order.existing_quantity(new_product_id) > Product.find(new_product_id).stock
       flash.now[:status] = :danger
       flash.now[:result_text] = "Error: excessive carb-loading. Please order less bread!"
       render 'products/main', status: :bad_request 
       return 
     end 
-    if curr_order.consolidate_order_items(new_product_id, new_quantity) == false 
-      curr_order.order_items << OrderItem.create(
+    if @order.consolidate_order_items(new_product_id, new_quantity) == false 
+      @order.order_items << OrderItem.create(
       quantity: new_quantity,
       product_id: new_product_id,
-      order_id: curr_order.id)
+      order_id: @order.id)
     end 
     flash[:status] = :success
     flash[:result_text] = "Item added to shopping carb."
     redirect_to product_path(params["product_id"])
+    return 
   end
   
   def update #change quantity
