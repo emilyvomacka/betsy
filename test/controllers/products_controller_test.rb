@@ -287,7 +287,7 @@ describe ProductsController do
         expect {post products_path, params: bad_product }.wont_change "Product.count"
         
         must_respond_with :redirect
-        flash[:result_text].must_equal "You must be logged in to view this page."
+        _(flash[:result_text]).must_equal "You must be logged in to view this page."
       end
     end
     
