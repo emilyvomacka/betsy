@@ -4,7 +4,7 @@ describe ReviewsController do
   
   describe "logged in users" do
     before do
-      perform_login
+      @current_merchant = perform_login(merchants(:sea_wolf))
     end
     
     let (:existing_review) { review(:started) }
@@ -17,13 +17,10 @@ describe ReviewsController do
       end
       
       it "does not allow merchant to review product if product is merchant's" do 
-        product = Product.first
-        merchant = Merchant.find(product.merchant_id)
+        product = @current_merchant.products.first
+        get new_product_review_path(product.id)
         
-        # TODO: Unsure how to modify @current_merchant in reviews_controller.rb for check_authorization() method
-        
-        get new_product_review_path(product.first)
-        must_respond_with :success
+        must_respond_with :redirect
         expect (flash[:result_text]).must_equal "You may not review your own product."
       end
     end
@@ -32,7 +29,6 @@ describe ReviewsController do
       it "creates a review with valid data" do
         product = Product.first.id
         new_review = { review: {text: "test name", rating: 1, product_id: product}}
-        # binding.pry
         expect {post product_reviews_path(product), params: new_review}.must_change "Review.count", 1
         
         review = Review.find_by(text: "test name")
@@ -50,10 +46,8 @@ describe ReviewsController do
         
         must_respond_with :bad_request
         expect (flash[:result_text]).must_equal "Unable to save review for #{product.name}."
-        
       end
     end
-    
   end
   
   describe "guest users" do
@@ -67,5 +61,4 @@ describe ReviewsController do
       end
     end
   end
-  
 end
