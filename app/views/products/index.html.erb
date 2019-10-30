@@ -21,13 +21,7 @@
         </div>
 
       </div>
-
-      <div class="product-info">
-        <h5><%= product.name %></h5>
-        <h6><%= number_to_currency(product.price) %></h6>
-      </div>
-    </div>
-  <% end %>
+    </div> 
 
     </nav>
 
@@ -40,7 +34,7 @@
           </div>
           <div class="product-info">
             <h5><%= product.name %></h5>
-            <h6>$<%= product.price %></h6>
+            <h6><%= number_to_currency(product.price) %></h6>
           </div>
 
           <%= form_tag order_items_path, method: :post do %>    
