@@ -24,7 +24,9 @@ class Merchant < ApplicationRecord
     total_revenue = 0.0
     
     self.order_items.each do |order_item|
-      total_revenue += order_item.total
+      if order_item.order.cart_status == "paid"
+        total_revenue += order_item.total
+      end
     end
     
     return total_revenue

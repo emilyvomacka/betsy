@@ -117,7 +117,7 @@ describe CategoriesController do
         get new_category_path
         
         must_respond_with :redirect
-        flash[:result_text].must_equal "You must be logged in to view this page."
+        _(flash[:result_text]).must_equal "You must be logged in to view this page."
       end
     end
     
@@ -130,7 +130,7 @@ describe CategoriesController do
         category = Category.find_by(name: "test name")
         
         must_respond_with :redirect
-        flash[:result_text].must_equal "You must be logged in to view this page."
+        _(flash[:result_text]).must_equal "You must be logged in to view this page."
       end
       
       it "will not update the DB for bogus data and redirect" do
@@ -139,7 +139,7 @@ describe CategoriesController do
         expect {post categories_path, params: bad_category }.wont_change "Category.count"
         
         must_respond_with :redirect
-        flash[:result_text].must_equal "You must be logged in to view this page."
+        _(flash[:result_text]).must_equal "You must be logged in to view this page."
       end
     end
   end

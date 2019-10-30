@@ -6,19 +6,18 @@
 </head>
 
 <body>
-  <section>
-    <button type="button" class="btn btn-outline-primary"><%= link_to "Add a Product", new_product_path %></button>
-    <button type="button" class="btn btn-outline-primary"><%= link_to "Add a Category", new_category_path %></button>
-  </section>
-
   <h1><%= @merchant.name %>'s Dashboard</h1>
+  <section class="merchant-buttons">
+    <button type="button" class="btn btn-light"><%= link_to "Add a Product", new_product_path %></button>
+    <button type="button" class="btn btn-light"><%= link_to "Add a Category", new_category_path %></button>
+  </section>
   
   <p>Total Revenue: <%= number_to_currency(@merchant.total_revenue) %></p>
 
   <section>
     <h2>Total Revenue Breakdown:</h2>
 
-    <table class="table">
+    <table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th scope="col">Order Status</th>
@@ -53,7 +52,7 @@
 
   <section>
   <h2>Orders:</h2>
-    <table class="table" id="table" data-filter-control="true">
+    <table class="table table-bordered table-hover" id="table" data-filter-control="true">
       <thead>
         <tr>
           <th scope="col" data-field="order_num" data-filter-control="input">Order Number</th>
@@ -86,7 +85,7 @@
 
 <section>
   <h2>Products:</h2>
-    <table class="table" id="table" data-filter-control="true">
+    <table class="table table-bordered table-hover" id="table" data-filter-control="true">
       <thead>
         <tr>
           <th scope="col" data-field="order_num" data-filter-control="input">Name</th>

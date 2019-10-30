@@ -1,12 +1,18 @@
-<p>Please provide the following information to add a category. Must be a bread pun. </p>
+<body>
+  <section class="categoryform">
+    
+    <%= form_with model: @category, method: :post do |f| %>
+      <div class="form-group">Please provide the following information to add a category. Must be a bread pun. </div>
 
+      <div class="form-group">
+        <%= f.label :name, "Category Name:" %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="form-group">
+        <%= f.submit "Create Category", class: "btn btn-light" %>
+      </div>
+    <% end %>
 
-<%= form_with model: @category, method: :post do |f| %>
-  <div>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-  </div>
+  </section>
 
-  <%= f.submit "Create Category" %>
-
-<% end %>
+</body>
