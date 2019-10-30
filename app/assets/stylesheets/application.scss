@@ -17,6 +17,10 @@
 /* Import scss content */
 @import "**/*";
 
+a:hover{
+   text-decoration: none;
+   color: #544538;
+}
 
 .navbar {
    background-color: #ece1cb;
@@ -37,11 +41,22 @@
    }
 }
 
-.toptitle a{
+.btn:hover{
+   color: white;
+   background-color: #544538;
+}
+
+.toptitle a, h1{
    font-family: 'Annie Use Your Telescope', cursive;
    font-size: 3rem;
    text-decoration: none;
    color: #614936;
+}
+
+h1{
+   margin: 1rem;
+   text-decoration: underline;
+ 
 }
 
 .product-filter {
@@ -80,4 +95,12 @@
    margin-top: auto;
 }
 
-
+.pagelist li{
+   font-size: 2rem;
+   margin: 1rem;
+   padding-left: 2rem;
+   font-family: 'Annie Use Your Telescope', cursive;
+   a{
+      color: #614936;
+   }
+}
