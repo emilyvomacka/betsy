@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController 
-  before_action :find_product, only: [:show, :edit, :update]
+  before_action :find_product, only: [:show, :edit, :update, :retire]
+  before_action :require_login, except: [:index, :main, :show]
+  before_action :check_authorization, only: [:edit, :update, :retire]
   
   def index
     @products = Product.where(active: true)
@@ -12,16 +14,12 @@ class ProductsController < ApplicationController
   def show; end
   
   def new
-    require_login
     @product = Product.new
-    
   end
   
   def create
-    require_login
     @product = Product.new(product_params)
     @product.merchant_id = session[:merchant_id]
-
     
     if @product.save
       flash[:status] = :success
@@ -40,8 +38,6 @@ class ProductsController < ApplicationController
   def edit; end
   
   def update
-    #require login
-    #check if user is authorized
     if @product.update(product_params)
       flash[:status] = :success
       flash[:result_text] = "Successfully updated #{@product.name}."
@@ -56,15 +52,21 @@ class ProductsController < ApplicationController
   end
   
   def retire
-    @product = Product.find_by(id: params[:id])
     if @product.retire
-      flash[:status] = :success
-      flash[:result_text] = "Successfully retired product #{@product.name}."
+      if @product.active == true
+        flash[:status] = :success
+        flash[:result_text] = "Successfully reactivated #{@product.name}."
+      else
+        flash[:status] = :success
+        flash[:result_text] = "Successfully retired product #{@product.name}."
+      end
       redirect_to product_path(@product.id)
+      return
     else @product.nil?
       flash.now[:status] = :danger
       flash.now[:result_text] = "Unable to retire #{@product.name}."
       render :edit, status: :bad_request
+      return
     end
   end
   
@@ -83,4 +85,12 @@ class ProductsController < ApplicationController
     end
   end
   
+  def check_authorization
+    if @product.merchant_id != @current_merchant.id
+      flash[:status] = :danger
+      flash[:result_text] = "You are not authorized to view this page."
+      redirect_to root_path
+      return
+    end
+  end
 end

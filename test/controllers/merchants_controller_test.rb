@@ -112,7 +112,7 @@ describe MerchantsController do
         
         _(Merchant.count).must_equal start_count
       end
-      
+     
       it "creates an account for a new merchant and redirects to the root route" do
         start_count = Merchant.count
         new_merchant = Merchant.new(name: "cafefrance", nickname: "france", email: "cafefrance@gmail.com", uid: 60, provider: "github")
