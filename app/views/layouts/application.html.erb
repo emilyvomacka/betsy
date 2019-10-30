@@ -22,18 +22,33 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
+
+            <li class="nav-item nav-link">
               <%= link_to "View All Products", products_path %></li>
             </li>
-            <li class="nav-item">
-              <%= link_to "Browse by Category", categories_path  %>
+            
+            <li class="nav-item dropdown">
+              <%= link_to "Browse by Category", categories_path, class:"nav-link dropdown-toggle", id:"navbarDropdown", role:"button", data_toggle:"dropdown", aria_haspopup:"true", aria_expanded:"false" %>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <% @all_categories.each do |category| %>
+                <%= link_to category.name, category_path(category), class:"dropdown-item" %>
+                <%end%>
+              </div>
             </li>
-            <li class="nav-item">
-              <%= link_to "Browse by Merchant", merchants_path %>
+
+            <li class="nav-item dropdown">
+                <%= link_to "Browse by Merchant", merchants_path, class:"nav-link dropdown-toggle", id:"navbarDropdown", role:"button", data_toggle:"dropdown", aria_haspopup:"true", aria_expanded:"false" %>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <% @all_merchants.each do |merchant| %>
+                <%= link_to merchant.name, merchant_path(merchant), class:"dropdown-item"%>
+                <%end%>
+              </div>
             </li>
-            <li class="nav-item">
+
+            <li class="nav-item nav-link">
               <%= link_to "Find My Order", find_my_order_path %>
             </li>
+
           </ul>
 
           <ul class="nav navbar-nav navbar-right auto">
@@ -51,12 +66,12 @@
                   Welcome, <%= session[:merchant_name] %>! 
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#"><%= link_to "View Dashboard", dashboard_path(session[:merchant_id]) %> </a>
-                  <a class="dropdown-item" href="#"><%= link_to "Log out", logout_path, method: "delete" %></a>
+                  <%= link_to "View Dashboard", dashboard_path(session[:merchant_id]), class:"dropdown-item" %>
+                  <%= link_to "Log out", logout_path, method: "delete", class:"dropdown-item" %>
                 </div>
               </li>
             <% else %>
-              <button type="button" class="btn btn-light"><%= link_to "Login with Github", github_login_path %></button>
+              <button type="button" class="btn btn-light nav-link"><%= link_to "Login with Github", github_login_path %></button>
           <% end %>
           </li>
           </ul>
