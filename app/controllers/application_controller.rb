@@ -25,8 +25,8 @@ class ApplicationController < ActionController::Base
       @order = Order.find_by(id: params[:id])
     end 
     if @order.nil?
-      flash[:status] = :danger
-      flash[:result_text] = "Sorry, order not found."
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "Sorry, order not found."
       render 'products/main', status: :bad_request 
       return 
     end
