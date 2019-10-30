@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
   before_action :current_merchant
+  before_action :all_categories
+  before_action :all_merchants
+  
   
   def current_merchant
     @current_merchant = Merchant.find_by(id: session[:merchant_id])
@@ -49,4 +52,16 @@ class ApplicationController < ActionController::Base
       return 
     end 
   end 
+  
+  
+  private 
+  
+  def all_categories
+    @all_categories = Category.all
+  end
+  
+  def all_merchants
+    @all_merchants = Merchant.all
+  end
+  
 end

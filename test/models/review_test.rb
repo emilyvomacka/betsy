@@ -11,27 +11,27 @@ describe Review do
     
     it  "is invalid without a rating" do
       review.rating = nil
-      result = review.valid?.must_equal false
+      _(result = review.valid?).must_equal false
       expect(review.errors.messages).must_include :rating
     end
     
     it  "is invalid without text" do
       review.text = nil
-      result = review.valid?.must_equal false
+      _(result = review.valid?).must_equal false
       expect(review.errors.messages).must_include :text
     end
     
     it "is invalid with a rating that is not 1-5" do
       review.rating = 0
-      result = review.valid?.must_equal false
+      _(result = review.valid?).must_equal false
       expect(review.errors.messages).must_include :rating
       
       review.rating = 6
-      result = review.valid?.must_equal false
+      _(result = review.valid?).must_equal false
       expect(review.errors.messages).must_include :rating
       
       review.rating = 101
-      result = review.valid?.must_equal false
+      _(result = review.valid?).must_equal false
       expect(review.errors.messages).must_include :rating
     end
   end
