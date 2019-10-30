@@ -30,6 +30,7 @@
       <%= f.label :category_ids %>
 
       <%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |f| %>
+        <br>
         <%= f.check_box %>
         <%= f.label %>
       <% end %>

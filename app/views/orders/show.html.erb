@@ -6,6 +6,38 @@
 <%else%>
 
 <!-- if order requested is user's shopping cart -->
+
+<!-- START OF TABLE FORMAT OF CART -->
+<section>
+    <h2>Your shopping carb:</h2>
+
+    <table class="table table-bordered table-hover cart">
+      <thead>
+        <tr>
+          <th scope="col">Product</th>
+          <th scope="col">Quantity</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @order.order_items.each do |order_item| %>
+        <tr>
+          <th scope="row"><%= link_to image_tag(order_item.product.photo_URL, width: "20%"), product_path(order_item.product) %>    <%= link_to order_item.product.name, product_path(order_item.product) %> </th>
+          <th scope="row"><%= form_tag order_order_item_path(@order, order_item.product), method: :patch do %>    
+          <%= select_tag(:new_quantity, options_for_select((1..order_item.product.stock), order_item.quantity))%>
+          <%= submit_tag "Edit Quantity", class: "btn btn-light" %>
+          <% end %></th>
+          <th scope="row"><%= form_tag order_order_item_path(@order, order_item.product), method: :delete do %>    
+          <%= submit_tag "Remove This Item",  class: "btn btn-light" %>
+          <% end %></th>
+        </tr>
+      <%end%>
+      </tbody>
+    </table>
+  </section>
+
+<!-- END OF TABLE FORMAT OF CART -->
+
 <% if @order.id == session[:order_id] %>
 <% @order.order_items.arrange_by_created_at.each do |item| %>
   <p>Product: <%= item.product.name %></p>
@@ -20,7 +52,7 @@
 <% end %>
 
 <p>Total Cost: <%= @order.total_cost %>
-
+<br>
 <%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-light" %>
 
 <!--if one of the order's merchants is logged in and @order is paid, complete or cancelled, shows customer details and only merchant's order items-->
