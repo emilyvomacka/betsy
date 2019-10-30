@@ -59,7 +59,7 @@ class OrderItemsController < ApplicationController
   def find_order_item
     @order_item = OrderItem.find_by(id: params[:id])
     if @order_item.nil?
-      redirect_to root_path
+      redirect_to root_path, status: :bad_request 
       return 
     end 
   end 
