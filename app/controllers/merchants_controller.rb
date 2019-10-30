@@ -36,10 +36,15 @@ class MerchantsController < ApplicationController
   end
   
   def destroy
-    session[:merchant_id] = nil
-    session[:merchant_name] = nil
-    flash[:status] = :success
-    flash[:success] = "Successfully logged out!"
+    if @current_merchant != nil
+      session[:merchant_id] = nil
+      session[:merchant_name] = nil
+      flash[:status] = :success
+      flash[:result_text] = "Successfully logged out!"
+    else
+      flash[:status] = :danger
+      flash[:result_text] = "You are not logged in."
+    end
     
     redirect_to root_path
     return
