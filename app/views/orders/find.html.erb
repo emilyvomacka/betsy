@@ -1,6 +1,7 @@
 <h1>Find My Order</h1>
 
-<p><%= form_tag order_path(:id), method: :get do %>    
-    <%= select_tag(:id, options_for_select((1..Order.last.id)))%>
+<p><%= form_tag search_order_path, method: :get do %>    
+    <%= label_tag "Please enter order id:"%>
+    <%= number_field_tag(:id)%>
     <%= submit_tag "Find My Order" %>
     <% end %></p>
