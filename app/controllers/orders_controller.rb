@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
-  before_action :find_order, except: [:find, :search]
-  before_action :is_this_your_cart?, except: :find
-  before_action :still_pending?, except: [:show, :find]
+  before_action :find_order, except: [:find]
+  before_action :is_this_your_cart?, except: [:find]
+  before_action :still_pending?, except: [:show, :find, :search]
 
   def show ; end
   
@@ -35,7 +35,6 @@ class OrdersController < ApplicationController
   end
   
   def search
-    @order = Order.find_by(id: params[:id])
     render action: 'show'
  end
   
