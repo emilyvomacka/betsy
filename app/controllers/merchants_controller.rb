@@ -50,30 +50,6 @@ class MerchantsController < ApplicationController
     return
   end
   
-  def login
-    name = params[:name]
-    if name and merchant = Merchant.find_by(name: name)
-      session[:merchant_id] = merchant.id
-      flash[:status] = :success
-      flash[:result_text] = "Successfully logged in as existing merchant #{merchant.name}"
-    else
-      merchant = Merchant.new(name: name)
-      if merchant.save
-        session[:merchant_id] = merchant.id
-        flash[:status] = :success
-        flash[:result_text] = "Successfully created new merchant #{merchant.name} with ID #{merchant.id}"
-      else
-        flash.now[:status] = :danger
-        flash.now[:result_text] = "Could not log in."
-        flash.now[:messages] = merchant.errors.messages
-        render "login_form", status: :bad_request
-        return
-      end
-    end
-    redirect_to root_path
-    return
-  end
-  
   def dashboard
     if session[:merchant_id] == params[:id].to_i
       @merchant = Merchant.find_by(id: params[:id])
