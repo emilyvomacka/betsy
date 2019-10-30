@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
     if @order.update(order_params) 
       @order.cart_status = "paid"
       @order.save 
-      redirect_to products_path
+      redirect_to order_path(@order)
       flash[:status] = :success
       flash[:result_text] = "Order submitted! Bread ahead."
       session.delete(:order_id)
