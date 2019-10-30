@@ -5,7 +5,7 @@ class Order < ApplicationRecord
   validates :cc_number, length: { is: 16 }, on: :update
   validates :cc_security_code, length: { is: 3 }, on: :update 
   validates :zip_code, length: { is: 5 }, on: :update
-  
+  validates :order_items, length: { minimum: 1 }, on: :update
   validates :cart_status, presence: true
   
   def total_cost
