@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   
   root 'products#main'
+  
+  get '/orders/find_my_order', to: 'orders#find', as: "find_my_order"
   resources :orders, only: [:show, :edit, :update] do
     resources :order_items, only: [:update, :destroy]
   end 
-  get '/orders/find_my_order', to: 'orders#find', as: "find_my_order"
-
+  
   resources :order_items, only: [:create]
   
   resources :products, except: [:destroy]

@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
-  before_action :find_order
-  before_action :is_this_your_cart?
-  before_action :still_pending?, except: :show
-  
+  before_action :find_order, except: :find
+  before_action :is_this_your_cart?, except: :find
+  before_action :still_pending?, except: [:show, :find]
+
   def show ; end
   
   def edit ; end 
@@ -32,9 +32,10 @@ class OrdersController < ApplicationController
       render :edit 
       return
     end
-    
   end
   
+  def find
+  end 
   
   private
   
