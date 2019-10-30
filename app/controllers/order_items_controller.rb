@@ -1,5 +1,8 @@
 class OrderItemsController < ApplicationController
-
+  # before_action :find_order
+  before_action :find_order, except: :create
+  before_action :is_this_your_cart?, except: :create
+  before_action :still_pending?, except: :create
   before_action :find_order_item, except: :create 
   
   def create #add to cart
@@ -50,15 +53,14 @@ class OrderItemsController < ApplicationController
   private
   
   def order_item_params
-    return params.require(:order_item).permit(:quantity, :order_id, :product_id) 
+    return params.require(:order_item).permit(:quantity, :product_id) 
   end
 
   def find_order_item
     @order_item = OrderItem.find_by(id: params[:id])
     if @order_item.nil?
-      head :not_found
+      redirect_to root_path, status: :bad_request 
       return 
     end 
   end 
-  
 end
