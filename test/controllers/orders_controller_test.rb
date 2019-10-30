@@ -80,11 +80,11 @@ describe OrdersController do
       it "re-renders edit page if any order item's quantity is greater than its product's stock" do
         products(:seedy).stock = 2
         products(:seedy).save
-
+        
         @new_order.order_items.each do |item|
           puts "#{item.product.name}, we have #{item.product.stock}, you want #{item.quantity}"
         end 
-
+        
         patch order_path(@new_order), params: @update_params
         must_respond_with :bad_request 
         expect(flash[:status]).must_equal :failure
@@ -98,7 +98,7 @@ describe OrdersController do
         
         expect(@new_order.cart_status).must_equal "paid"
         must_respond_with :redirect
-        must_redirect_to products_path
+        must_redirect_to order_path(@new_order)
         products(:seedy).reload
         expect(products(:seedy).stock).must_equal 18
       end
