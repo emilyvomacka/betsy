@@ -185,7 +185,6 @@ describe ProductsController do
           must_respond_with :redirect
           must_redirect_to product_path(existing_product.id)
         end
-        
       end
       
       it "does not allow merchants to retire other people's products" do 
@@ -195,6 +194,12 @@ describe ProductsController do
         
         must_redirect_to root_path
         flash[:result_text].must_equal "You are not authorized to view this page."
+      end
+      
+      it "gives a bad request for products that don't exist" do
+        post retire_path(-1)
+        
+        must_respond_with :not_found
       end
       
     end
