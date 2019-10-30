@@ -61,7 +61,7 @@ describe MerchantsController do
         get dashboard_path(merchants(:sea_wolf))
         
         must_respond_with :redirect
-        flash[:result_text].must_equal "You are not authorized to view this page."
+        _(flash[:result_text]).must_equal "You are not authorized to view this page."
       end
       
     end
@@ -118,7 +118,7 @@ describe MerchantsController do
         new_merchant = Merchant.new(name: "cafefrance", nickname: "france", email: "cafefrance@gmail.com", uid: 60, provider: "github")
         perform_login(new_merchant)
         
-        Merchant.count.must_equal start_count+1
+        _(Merchant.count).must_equal start_count+1
         must_redirect_to root_path
       end
       
@@ -127,7 +127,7 @@ describe MerchantsController do
         new_merchant = Merchant.new(name: nil, nickname: nil, email: nil, uid: nil )
         perform_login(new_merchant)
         
-        Merchant.count.must_equal start_count 
+        _(Merchant.count).must_equal start_count 
         must_redirect_to root_path
       end
     end
@@ -149,7 +149,7 @@ describe MerchantsController do
           get dashboard_path(merchant)
           
           must_respond_with :redirect
-          flash[:result_text].must_equal "You are not authorized to view this page."
+          _(flash[:result_text]).must_equal "You are not authorized to view this page."
         end
       end
     end
