@@ -17,35 +17,40 @@ describe ReviewsController do
       end
       
       it "does not allow merchant to review product if product is merchant's" do 
-        get new_product_review_path
+        product = Product.first
+        merchant = Merchant.find(product.merchant_id)
         
-        must_respond_with :redirect
-        flash[:result_text].must_equal "You seem to own this product - you cannot review your own product."
+        # TODO: Unsure how to modify @current_merchant in reviews_controller.rb for check_authorization() method
+        
+        get new_product_review_path(product.first)
+        must_respond_with :success
+        expect (flash[:result_text]).must_equal "You may not review your own product."
       end
-      
-      # can't review own stuff
-      # nested route in products
     end
     
     describe "create" do
       it "creates a review with valid data" do
-        new_review = { review: {name: "test name"}}
+        product = Product.first.id
+        new_review = { review: {text: "test name", rating: 1, product_id: product}}
+        # binding.pry
+        expect {post product_reviews_path(product), params: new_review}.must_change "Review.count", 1
         
-        expect {post new_product_review_path, params: new_review}.must_change "Review.count", 1
-        
-        review = Review.find_by(name: "test name")
+        review = Review.find_by(text: "test name")
         
         must_respond_with :redirect
-        expect(review.name).must_equal new_review[:review][:name]
-        must_redirect_to products_path
+        expect(review.text).must_equal new_review[:review][:text]
+        must_redirect_to product_path(product)
       end
       
       it "renders bad_request and does not update the DB for bogus data" do
-        bad_review = { review: {name: nil}}
+        product = Product.first
+        bad_review = { review: {text: nil, rating: nil, product_id: product.id}}
         
-        expect {post new_product_review_path, params: bad_review }.wont_change "Review.count"
+        expect {post product_reviews_path(product), params: bad_review }.wont_change "Review.count"
         
         must_respond_with :bad_request
+        expect (flash[:result_text]).must_equal "Unable to save review for #{product.name}."
+        
       end
     end
     
@@ -59,27 +64,6 @@ describe ReviewsController do
         get new_product_review_path(Product.first.id)
         
         must_respond_with :success
-      end
-    end
-    
-    describe "create" do
-      it "will not creates a review with valid data" do
-        new_review = { review: {text: "test name", rating: 1, product_id: Product.first.id}}
-        
-        expect {post products_path, params: new_review}.wont_change "Review.count"
-        
-        review = Review.find_by(name: "test name")
-        
-        must_respond_with :redirect
-        flash[:result_text].must_equal "You must be logged in to view this page."
-      end
-      
-      it "will not update the DB for bogus data and redirect" do
-        bad_review = { review: {text: nil, rating: nil, product_id: nil}}
-        
-        expect {post products_path, params: bad_review }.wont_change "Review.count"
-        
-        must_respond_with :redirect
       end
     end
   end

@@ -13,7 +13,7 @@ describe CategoriesController do
       it "succeeds when there are categories" do
         get categories_path
         
-        must_respond_with :success
+        must_respond_with :redirect
       end
       
       it "succeeds when there are no categories" do
