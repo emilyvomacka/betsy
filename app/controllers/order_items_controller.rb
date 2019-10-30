@@ -1,10 +1,14 @@
 class OrderItemsController < ApplicationController
-  # before_action :find_order
+
   before_action :find_order, except: :create
   before_action :is_this_your_cart?, except: :create
   before_action :still_pending?, except: :create
   before_action :find_order_item, except: :create 
+  before_action :are_products_active?, except: [:destroy, :create]
   
+  after_action :are_products_active?, only: :create
+  after_action :find_order, only: :create
+
   def create #add to cart
     new_quantity = params["quantity"]
     new_product_id = params["product_id"]
@@ -15,9 +19,9 @@ class OrderItemsController < ApplicationController
       curr_order = Order.find_by(id: session[:order_id])
     end 
     if new_quantity.to_i + curr_order.existing_quantity(new_product_id) > Product.find(new_product_id).stock
-      redirect_to product_path(new_product_id)
-      flash[:status] = :danger
-      flash[:result_text] = "Error: excessive carb-loading. Please order less bread!"
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "Error: excessive carb-loading. Please order less bread!"
+      render 'products/main', status: :bad_request 
       return 
     end 
     if curr_order.consolidate_order_items(new_product_id, new_quantity) == false 

@@ -2,7 +2,8 @@ class OrdersController < ApplicationController
   before_action :find_order, except: [:find]
   before_action :is_this_your_cart?, except: [:find]
   before_action :still_pending?, except: [:show, :find, :search]
-
+  before_action :are_products_active?, only: [:update]
+  
   def show ; end
   
   def edit ; end 
@@ -36,13 +37,11 @@ class OrdersController < ApplicationController
   
   def search
     render action: 'show'
- end
+  end
   
   private
   
   def order_params
     return params.require(:order).permit(:mailing_address, :email_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, :cart_status) 
   end
-  
-  
 end

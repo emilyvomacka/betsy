@@ -20,9 +20,12 @@ class ApplicationController < ActionController::Base
     #this is the nested route
     if params[:order_id]
       @order = Order.find_by(id: params[:order_id])
-    else
+    elsif params[:id]
       #non-nested
       @order = Order.find_by(id: params[:id])
+      #if active cart
+    elsif session[:order_id] && session[:order_id] != nil
+      @order = Order.find_by(id: session[:order_id])
     end 
     if @order.nil?
       flash[:status] = :danger
@@ -43,9 +46,27 @@ class ApplicationController < ActionController::Base
   
   def still_pending?
     if ["paid", "completed", "cancelled"].include?(@order.cart_status)
-      flash[:status] = :danger
-      flash[:result_text] = "Sorry, you cannot modify a checked-out order."
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "Sorry, you cannot modify a checked-out order."
       render 'products/main', status: :unauthorized
+      return 
+    end 
+  end 
+  
+  def are_products_active?
+    inactive_items = []
+    @order.order_items.each do |item|
+      if item.product.active == false
+        inactive_items << item
+      end 
+    end 
+    if inactive_items.any?
+      inactive_items.each do |item|
+        item.destroy
+      end 
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "Sorry, you have requested products that are now inactive on our site. We have removed them from your cart. Please carry on with your order!"
+      render 'products/main', status: :bad_request 
       return 
     end 
   end 
