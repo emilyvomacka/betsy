@@ -24,7 +24,6 @@ a:hover{
 
 .navbar {
    background-color: #ece1cb;
-   
 }
 
 .nav-item{
@@ -32,6 +31,15 @@ a:hover{
    a{
       color: #614936;
    }
+}
+
+.navbar-light .navbar-nav .nav-link {
+   color: #614936;
+}
+
+
+.nav-link{
+   color: #614936;
 }
 
 .btn{
