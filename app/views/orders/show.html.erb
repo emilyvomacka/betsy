@@ -19,7 +19,7 @@
     <% end %></p>
 <% end %>
 
-<p>Total Cost: <%= @order.total_cost %>
+<p>Total Cost: <%= number_to_currency(@order.total_cost) %>
 
 <%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-primary" %>
 
@@ -38,7 +38,7 @@
       <% end %></p>
   <% end %>
 
-  <p>Total Cost: <%= @order.total_cost %>
+  <p>Total Cost: <%= number_to_currency(@order.total_cost) %>
 
   <%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-primary" %>
 

@@ -13,7 +13,7 @@
 
   <h1><%= @merchant.name %>'s Dashboard</h1>
   
-  <p>Total Revenue: $<%= @merchant.total_revenue %></p>
+  <p>Total Revenue: <%= number_to_currency(@merchant.total_revenue) %></p>
 
   <section>
     <h2>Total Revenue Breakdown:</h2>
@@ -30,22 +30,22 @@
         <tr>
           <th scope="row">Pending</th>
           <td><%= @merchant.num_orders("pending") %></td>
-          <td><%= @merchant.revenue_by_status("pending") %></td>
+          <td><%= number_to_currency(@merchant.revenue_by_status("pending")) %></td>
         </tr>
         <tr>
           <th scope="row">Paid</th>
           <td><%= @merchant.num_orders("paid") %></td>
-          <td><%= @merchant.revenue_by_status("paid") %></td>
+          <td><%= number_to_currency(@merchant.revenue_by_status("paid")) %></td>
         </tr>
         <tr>
           <th scope="row">Complete</th>
           <td><%= @merchant.num_orders("complete") %></td>
-          <td><%= @merchant.revenue_by_status("complete") %></td>
+          <td><%= number_to_currency(@merchant.revenue_by_status("complete")) %></td>
         </tr>
         <tr>
           <th scope="row">Cancelled</th>
           <td><%= @merchant.num_orders("cancelled") %></td>
-          <td><%= @merchant.revenue_by_status("cancelled") %></td>
+          <td><%= number_to_currency(@merchant.revenue_by_status("cancelled")) %></td>
         </tr>
       </tbody>
     </table>
@@ -98,7 +98,7 @@
         <% @merchant.products.each do |product| %>
         <tr>
           <th scope="row"><%= link_to product.name, product_path(product) %></th>
-          <td><%= product.price %></td>
+          <td><%= number_to_currency(product.price) %></td>
           <td><%= product.active %></td>
         </tr>
         <% end %>
