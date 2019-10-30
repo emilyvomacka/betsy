@@ -12,13 +12,13 @@ describe OrdersController do
     
     describe "show" do
       it "succeeds for an extant order ID with cart_status: pending and order_id == session[:order_id]" do
-        get order_path(@new_order.id)
+        get order_path(@new_order)
         must_respond_with :success
       end
       
       it "responds with unauthorized when cart status is pending but order_id does not match session[:order_id]" do 
         second_order = orders(:a)
-        get edit_order_path(second_order.id)
+        get edit_order_path(second_order)
         must_respond_with :unauthorized
       end 
       
@@ -42,7 +42,7 @@ describe OrdersController do
       
       it "responds with a not_found when extant order with pending status does not match session[:order_id]" do 
         second_order = orders(:a)
-        get edit_order_path(second_order.id)
+        get edit_order_path(second_order)
         must_respond_with :unauthorized
       end 
       
@@ -53,14 +53,14 @@ describe OrdersController do
       
       it "responds with an unauthorized when order is no longer pending" do 
         paid_order = orders(:b)
-        get edit_order_path(paid_order.id)
+        get edit_order_path(paid_order)
         must_respond_with :unauthorized
       end 
     end
     
     describe "update" do
       before do 
-        @new_order_update_params = {
+        @update_params = {
           order: {
             customer_name: "Sea Wolf",
             email_address: "seawolf@gmail.com",
@@ -77,19 +77,23 @@ describe OrdersController do
         @new_order = Order.last 
       end 
       
-      it "re-renders edit page if quantity wanted is greater than stock" do
-        skip
+      it "re-renders edit page if any order item's quantity is greater than its product's stock" do
         products(:seedy).stock = 2
-        products(:seedy).reload
-        
-        patch order_path(@new_order.id), params: @new_order_update_params
+        products(:seedy).save
+
+        @new_order.order_items.each do |item|
+          puts "#{item.product.name}, we have #{item.product.stock}, you want #{item.quantity}"
+        end 
+
+        patch order_path(@new_order), params: @update_params
         must_respond_with :bad_request 
+        expect(flash[:status]).must_equal :failure
         expect(@new_order.cart_status).must_equal "pending"      
       end
       
       it "changes cart status to paid and reduces stock for a legitimate order" do
         
-        patch order_path(@new_order), params: @new_order_update_params
+        patch order_path(@new_order), params: @update_params
         @new_order.reload      
         
         expect(@new_order.cart_status).must_equal "paid"

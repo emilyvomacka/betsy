@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :orders, only: [:show, :edit, :update] do
     resources :order_items, only: [:update, :destroy]
   end 
+  get '/orders/find_my_order', to: 'orders#find', as: "find_my_order"
 
   resources :order_items, only: [:create]
   
