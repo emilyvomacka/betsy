@@ -28,7 +28,7 @@ describe OrderItemsController do
       
       bad_params = {product_id: products(:seedy).id, quantity: 3000}
       expect{post order_items_path, params: bad_params}.wont_change "OrderItem.count"
-      must_redirect_to product_path(products(:seedy).id)
+      must_respond_with :bad_request
       
       curr_order = Order.find_by(id: session[:order_id])
       expect(curr_order.order_items.count).must_equal 1
@@ -64,9 +64,18 @@ describe OrderItemsController do
       expect(@my_order_item.quantity).must_equal 5
     end 
     
-    it "redirects when asked to update the quantity of an invalid order item" do
+    it "responds :bad_request when asked to update the quantity of an invalid order item" do
       update_params = {new_quantity: 5}
       expect {patch order_order_item_path(@my_order, -1), params: update_params}.wont_change OrderItem.count
+      must_respond_with :bad_request
+    end 
+
+    it "responds :bad_request when asked to update the quantity of an order item that has been retired" do
+      @my_order_item.product.retire
+      @my_order_item.save
+      
+      update_params = {new_quantity: 5}
+      expect {patch order_order_item_path(@my_order, @my_order_item), params: update_params}.wont_change OrderItem.count
       must_respond_with :bad_request
     end 
   end 
