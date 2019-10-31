@@ -73,14 +73,12 @@ class ApplicationController < ActionController::Base
       return 
     end 
   end 
-
+  
   def find_product
-    def find_product
-      @product = Product.find_by(id: params[:id])
-      if @product.nil?
-        head :not_found
-        return
-      end
+    @product = Product.find_by(id: params[:id])
+    if @product.nil?
+      head :not_found
+      return
     end
   end
   
