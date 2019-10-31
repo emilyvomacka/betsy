@@ -96,6 +96,12 @@ describe OrderItemsController do
       patch order_order_item_path(@my_order, -1), params: @update_params
       must_respond_with :bad_request
     end 
+
+    it "responds :bad_request when new_quantity is < 1" do
+      bad_quantity_params = { new_quantity: -5 }
+      patch order_order_item_path(@my_order, -1), params: @update_params
+      must_respond_with :bad_request
+    end 
   end 
   
   describe "destroy" do

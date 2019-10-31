@@ -114,7 +114,13 @@ describe OrdersController do
     it "responds with :bad_request when order ID is invalid" do 
       patch order_path(-1), params: @update_params
       must_respond_with :bad_request
-    end  
+    end 
+    
+    it "responds with :bad_request when cart is empty" do
+      @new_order.order_items.destroy_all
+      patch order_path(@new_order), params: @update_params
+      must_respond_with :bad_request
+    end 
   end
   
   describe "search" do 

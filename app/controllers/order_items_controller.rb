@@ -1,5 +1,5 @@
 class OrderItemsController < ApplicationController
-
+  
   before_action :find_order, except: :create
   before_action :is_this_your_cart?, except: :create
   before_action :still_pending?, except: :create
@@ -7,11 +7,11 @@ class OrderItemsController < ApplicationController
   before_action :are_products_active?, except: [:destroy, :create]
   before_action :find_product, only: :create
   before_action :active_product?, only: :create
-
+  before_action :validate_quantity, only: [:create, :update]
+  
   def create 
     new_quantity = params["quantity"]
     new_product_id = params["product_id"]
-    #if product.status != active, return 
     if session[:order_id] == nil || session[:order_id] == false || !session[:order_id]
       @order = Order.create(cart_status: "pending")
       session[:order_id] = @order.id
@@ -26,15 +26,16 @@ class OrderItemsController < ApplicationController
     end 
     if @order.consolidate_order_items(new_product_id, new_quantity) == false 
       @order.order_items << OrderItem.create(
-      quantity: new_quantity,
-      product_id: new_product_id,
-      order_id: @order.id)
-    end 
-    flash[:status] = :success
-    flash[:result_text] = "Item added to shopping carb."
-    redirect_to product_path(params["product_id"])
-    return 
-  end
+        quantity: new_quantity,
+        product_id: new_product_id,
+        order_id: @order.id 
+      )
+      flash[:status] = :success
+      flash[:result_text] = "Item added to shopping carb."
+      redirect_to product_path(params["product_id"])
+      return 
+    end
+  end 
   
   def update 
     @order_item.quantity = params[:new_quantity]    
@@ -77,4 +78,14 @@ class OrderItemsController < ApplicationController
       return 
     end 
   end 
+  
+  def validate_quantity
+    if params[:quantity] && params[:quantity].to_i < 1 || params[:new_quantity] && params[:new_quantity].to_i < 1
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "Your request is bad and you should feel bad."
+      render 'products/main', status: :bad_request
+      return 
+    end 
+  end 
+  
 end

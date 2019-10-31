@@ -3,6 +3,7 @@ class OrdersController < ApplicationController
   before_action :is_this_your_cart?, except: [:find]
   before_action :still_pending?, except: [:show, :find, :search]
   before_action :are_products_active?, only: [:update]
+  before_action :does_order_have_items?, only: [:update]
   
   def show ; end
   
@@ -20,14 +21,14 @@ class OrdersController < ApplicationController
     if @order.update(order_params) 
       @order.cart_status = "paid"
       @order.save 
-      redirect_to order_path(@order)
-      flash[:status] = :success
-      flash[:result_text] = "Order submitted! Bread ahead."
       session.delete(:order_id)
       @order.order_items.each do |item|
         item.product.stock -= item.quantity 
         item.product.save 
       end 
+      flash[:status] = :success
+      flash[:result_text] = "Order submitted! Bread ahead."
+      redirect_to order_path(@order)
       return
     else
       render :edit 
@@ -40,6 +41,16 @@ class OrdersController < ApplicationController
   end
   
   private
+  
+  def does_order_have_items?
+    if @order.order_items.empty?
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "Your order is bad and you should feel bad."
+      render 'products/main', status: :bad_request
+      return  
+    end 
+  end 
+  
   
   def order_params
     return params.require(:order).permit(:mailing_address, :email_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, :cart_status) 
