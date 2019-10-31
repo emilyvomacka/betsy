@@ -2,7 +2,7 @@
 
   <section class="pagelist">
     <h1>Merchants</h1>
-      <% @merchants.each do |merchant|  %>
+      <% @all_merchants.each do |merchant|  %>
         <li>
           <%= link_to merchant.name, merchant_path(merchant) %>
         </li>
