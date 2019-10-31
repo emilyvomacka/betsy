@@ -11,19 +11,18 @@ describe OrderItemsController do
       @new_params = {product_id: products(:seedy).id, quantity: 3}
     end 
     
-    it "creates a new order for incoming order item when order doesn't exist in the session" do
+    it "creates a new order for incoming order item when !session[:order_id]" do
       expect{post order_items_path, params: @new_params}.must_change "OrderItem.count", 1
       must_respond_with :redirect
     end 
     
-    it "adds new order item to an existing order, and does not create a new order, when order_id is stored in session" do
+    it "adds new order item to current order, and does not create a new order, when session[:order_id]" do
       post order_items_path, params: @first_item_params
-      
       expect{post order_items_path, params: @new_params}.must_change "OrderItem.count", 1
       must_respond_with :redirect
     end 
     
-    it "doesn't modify order when combined quantity of order items exceeds available stock" do 
+    it "responds with :bad_request when quantity of order item exceeds available stock" do 
       post order_items_path, params: @first_item_params
       
       bad_params = {product_id: products(:seedy).id, quantity: 3000}
@@ -35,7 +34,7 @@ describe OrderItemsController do
       expect(curr_order.total_cost).must_equal 0.79e1
     end 
     
-    it "consolidates with existing order items if new product_id already exists in the order" do 
+    it "consolidates order items if new product_id already exists in the order" do 
       post order_items_path, params: @first_item_params
       duplicate_product_params = {product_id: products(:baguette).id, quantity: 2}
       expect{post order_items_path, params: duplicate_product_params}.wont_change "OrderItem.count"
@@ -69,6 +68,16 @@ describe OrderItemsController do
       @my_order_item.reload
       expect(@my_order_item.quantity).must_equal 5
     end 
+
+    it "responds :unauthorized when order.cart_status == pending, but order.id != session[:order_id]" do
+      patch order_order_item_path(orders(:a), order_items(:one)), params: @update_params
+      must_respond_with :unauthorized
+    end 
+
+    it "responds :unauthorized when order.status != pending" do 
+      patch order_order_item_path(orders(:b), order_items(:three)), params: @update_params
+      must_respond_with :unauthorized
+    end 
     
     it "responds :bad_request when asked to update an invalid order" do 
       patch order_order_item_path(-1, @my_order_item), params: @update_params
@@ -86,16 +95,6 @@ describe OrderItemsController do
       
       expect patch order_order_item_path(@my_order, @my_order_item), params: @update_params
       must_respond_with :bad_request
-    end 
-    
-    it "responds :unauthorized when order.cart_status == pending, but order.id != session[:order_id]" do
-      patch order_order_item_path(orders(:a), order_items(:one)), params: @update_params
-      must_respond_with :unauthorized
-    end 
-    
-    it "responds :unauthorized when order.status != pending" do 
-      patch order_order_item_path(orders(:b), order_items(:three)), params: @update_params
-      must_respond_with :unauthorized
     end 
   end 
   

@@ -10,17 +10,17 @@ describe OrdersController do
   end 
   
   describe "show" do
-    it "succeeds for an extant order ID with cart_status: pending and order_id == session[:order_id]" do
+    it "succeeds for an extant order ID when order.cart_status == pending and order_id == session[:order_id]" do
       get order_path(@new_order)
       must_respond_with :success
     end
     
-    it "responds with unauthorized when cart status is pending but order_id does not match session[:order_id]" do 
+    it "responds with unauthorized when order.cart_status = pending but order_id != session[:order_id]" do 
       get edit_order_path(orders(:a))
       must_respond_with :unauthorized
     end 
     
-    it "responds with a bad_request when id given does not exist" do
+    it "responds with a bad_request when id given DNE" do
       get order_path(-58437)
       must_respond_with :bad_request
     end
@@ -33,25 +33,25 @@ describe OrdersController do
       @new_order = Order.last
     end
     
-    it "succeeds for an extant order ID with pending status whose ID matches session[:order_id]" do     
+    it "succeeds when order.cart_status == pending and order.id == session[:order_id]" do     
       get edit_order_path(@new_order)
       must_respond_with :success
     end
     
-    it "responds with :unauthorized when extant order with pending status does not match session[:order_id]" do 
+    it "responds with :unauthorized when order.cart_status == pending but order.id != session[:order_id]" do 
       get edit_order_path(orders(:a))
       must_respond_with :unauthorized
     end 
-    
-    it "responds with :bad_request when id given does not exist" do
-      get edit_order_path(Order.last.id + 1000000000)
-      must_respond_with :bad_request
-    end
-    
-    it "responds with :unauthorized when order is no longer pending" do 
+
+    it "responds with :unauthorized when order.cart_status != pending" do 
       get edit_order_path(orders(:b))
       must_respond_with :unauthorized
     end 
+    
+    it "responds with :bad_request when id given DNE" do
+      get edit_order_path(Order.last.id + 1000000000)
+      must_respond_with :bad_request
+    end
   end
   
   describe "update" do
@@ -72,7 +72,7 @@ describe OrdersController do
       @new_order = Order.last 
     end 
     
-    it "sets cart_status to paid and reduces stock when order.cart_status == pending and order.id == session[:order_id]" do
+    it "completes order with valid params when order.cart_status == pending and order.id == session[:order_id]" do
       patch order_path(@new_order), params: @update_params
       @new_order.reload      
       
@@ -93,25 +93,25 @@ describe OrdersController do
       expect(@new_order.cart_status).must_equal "pending"      
     end
 
-    it "will not let user check out when cart status != pending" do
-      patch order_path(@new_order), params: @update_params
-      patch order_path(@new_order), params: @update_params
-      must_respond_with :unauthorized
-    end 
-
     it "will not let user check out if an order item has changed status to inactive" do
       products(:seedy).retire
       products(:seedy).save
       patch order_path(@new_order), params: @update_params
       must_respond_with :bad_request
     end
-    
+
     it "responds with :unauthorized if order.id != session[:order_id]" do
       patch order_path(orders(:a)), params: @update_params
       must_respond_with :unauthorized
     end 
     
-    it "responds with :bad_request for an invalid order id" do 
+    it "will not let user check out when cart status != pending" do
+      patch order_path(@new_order), params: @update_params
+      patch order_path(@new_order), params: @update_params
+      must_respond_with :unauthorized
+    end 
+    
+    it "responds with :bad_request when id given DNE" do 
       patch order_path(-1), params: @update_params
       must_respond_with :bad_request
     end  
