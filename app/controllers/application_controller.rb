@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   before_action :all_categories
   before_action :all_merchants
   
-  
   def current_merchant
     @current_merchant = Merchant.find_by(id: session[:merchant_id])
   end
@@ -17,16 +16,11 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  #order/order items authorizations
-  
   def find_order
-    #this is the nested route
     if params[:order_id]
       @order = Order.find_by(id: params[:order_id])
     elsif params[:id]
-      #non-nested
       @order = Order.find_by(id: params[:id])
-      #if active cart
     elsif session[:order_id] && session[:order_id] != nil
       @order = Order.find_by(id: session[:order_id])
     end 

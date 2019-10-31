@@ -6,10 +6,9 @@ class OrderItemsController < ApplicationController
   before_action :find_order_item, except: :create 
   before_action :are_products_active?, except: [:destroy, :create]
 
-  def create #add to cart
+  def create 
     new_quantity = params["quantity"]
     new_product_id = params["product_id"]
-    #find_product?
     #if product.status != active, return 
     if session[:order_id] == nil || session[:order_id] == false || !session[:order_id]
       @order = Order.create(cart_status: "pending")
@@ -35,7 +34,7 @@ class OrderItemsController < ApplicationController
     return 
   end
   
-  def update #change quantity
+  def update 
     @order_item.quantity = params[:new_quantity]    
     @order_item.save 
     flash[:status] = :success
@@ -43,7 +42,7 @@ class OrderItemsController < ApplicationController
     redirect_to order_path(session[:order_id])
   end 
   
-  def destroy #delete from cart
+  def destroy 
     @order_item.destroy
     flash[:status] = :success
     flash[:result_text] = "Item deleted from carb."

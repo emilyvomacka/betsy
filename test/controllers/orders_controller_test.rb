@@ -2,7 +2,7 @@ require "test_helper"
 require "pry"
 
 describe OrdersController do 
-  
+
   before do 
     new_params = {product_id: products(:seedy).id, quantity: 3}
     post order_items_path, params: new_params
@@ -16,8 +16,7 @@ describe OrdersController do
     end
     
     it "responds with unauthorized when cart status is pending but order_id does not match session[:order_id]" do 
-      second_order = orders(:a)
-      get edit_order_path(second_order)
+      get edit_order_path(orders(:a))
       must_respond_with :unauthorized
     end 
     
@@ -39,20 +38,18 @@ describe OrdersController do
       must_respond_with :success
     end
     
-    it "responds with a not_found when extant order with pending status does not match session[:order_id]" do 
-      second_order = orders(:a)
-      get edit_order_path(second_order)
+    it "responds with :unauthorized when extant order with pending status does not match session[:order_id]" do 
+      get edit_order_path(orders(:a))
       must_respond_with :unauthorized
     end 
     
-    it "responds with a bad_request when id given does not exist" do
+    it "responds with :bad_request when id given does not exist" do
       get edit_order_path(Order.last.id + 1000000000)
       must_respond_with :bad_request
     end
     
-    it "responds with an unauthorized when order is no longer pending" do 
-      paid_order = orders(:b)
-      get edit_order_path(paid_order)
+    it "responds with :unauthorized when order is no longer pending" do 
+      get edit_order_path(orders(:b))
       must_respond_with :unauthorized
     end 
   end
@@ -75,7 +72,7 @@ describe OrdersController do
       @new_order = Order.last 
     end 
     
-    it "changes cart status to paid and reduces stock for a pending order when order.id == session[:order_id]" do
+    it "sets cart_status to paid and reduces stock when order.cart_status == pending and order.id == session[:order_id]" do
       patch order_path(@new_order), params: @update_params
       @new_order.reload      
       
@@ -95,16 +92,6 @@ describe OrdersController do
       expect(flash[:status]).must_equal :failure
       expect(@new_order.cart_status).must_equal "pending"      
     end
-    
-    it "responds with :bad_request for an invalid order id" do 
-      patch order_path(-1), params: @update_params
-      must_respond_with :bad_request
-    end 
-    
-    it "responds with :unauthorized if order.id != session[:order_id]" do
-      patch order_path(orders(:a)), params: @update_params
-      must_respond_with :unauthorized
-    end 
 
     it "will not let user check out when cart status != pending" do
       patch order_path(@new_order), params: @update_params
@@ -115,10 +102,19 @@ describe OrdersController do
     it "will not let user check out if an order item has changed status to inactive" do
       products(:seedy).retire
       products(:seedy).save
-
       patch order_path(@new_order), params: @update_params
       must_respond_with :bad_request
+    end
+    
+    it "responds with :unauthorized if order.id != session[:order_id]" do
+      patch order_path(orders(:a)), params: @update_params
+      must_respond_with :unauthorized
     end 
+    
+    it "responds with :bad_request for an invalid order id" do 
+      patch order_path(-1), params: @update_params
+      must_respond_with :bad_request
+    end  
   end
   
   describe "search" do 
