@@ -46,8 +46,8 @@ class OrderItemsController < ApplicationController
   
   def destroy 
     @order_item.destroy
-    flash[:status] = :success
-    flash[:result_text] = "Item deleted from carb."
+    flash.now[:status] = :success
+    flash.now[:result_text] = "Item deleted from carb."
     if session[:order_id]
       redirect_to order_path(session[:order_id])
     else 

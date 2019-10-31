@@ -40,11 +40,16 @@ describe OrderItemsController do
     end 
     
     it "will not add an inactive product to the cart" do  
-      # skip
       products(:seedy).retire
       products(:seedy).save
       post order_items_path, params: @new_params
       must_respond_with :bad_request
+    end
+    
+    it "will respond :not_found when product_id is invalid" do
+      bad_params = {product_id: -1, quantity: 2}
+      post order_items_path, params: bad_params
+      must_respond_with :not_found
     end 
   end 
   
