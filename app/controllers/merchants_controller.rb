@@ -1,11 +1,9 @@
 class MerchantsController < ApplicationController
   
-  def index
-    @merchants = Merchant.all
-  end
+  def index; end
   
   def show 
-    @merchant = Merchant.find_by(id: params[:id])
+    find_merchant
     
     if @merchant.nil?
       head :not_found
@@ -52,13 +50,19 @@ class MerchantsController < ApplicationController
   
   def dashboard
     if session[:merchant_id] == params[:id].to_i
-      @merchant = Merchant.find_by(id: params[:id])
+      find_merchant
     else
       flash[:status] = :danger
       flash[:result_text] = "You are not authorized to view this page."
       render 'products/main', status: :unauthorized 
       return
     end
+  end
+  
+  private
+  
+  def find_merchant
+    @merchant = Merchant.find_by(id: params[:id])
   end
 end
 

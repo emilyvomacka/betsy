@@ -113,7 +113,7 @@ describe CategoriesController do
     end
     
     describe "new" do
-      it "will allow a guest to go through" do
+      it "will not allow a guest to go to the form" do
         get new_category_path
         
         must_respond_with :unauthorized
@@ -121,7 +121,7 @@ describe CategoriesController do
     end
     
     describe "create" do
-      it "will not creates a category with valid data" do
+      it "will not create a category with valid data" do
         new_category = { category: {name: "test name"}}
         
         expect {post categories_path, params: new_category}.wont_change "Category.count"
