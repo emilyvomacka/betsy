@@ -8,15 +8,17 @@
     </div>
     <div class="col">
       <section class="product-details">
-        <p>Name: <%= @product.name %></p>
-        <p>Description: <%= @product.description %></p>
-        <p>Price: <%= number_to_currency(@product.price) %></p>
-        <p>stock: <%= @product.stock %></p>
-        <p>Seller: <%= link_to @product.merchant.name, merchant_path(@product.merchant) %></p>
-        <p>categories: <p><% @product.categories.each do |category| %>
+        <h3><%= @product.name %></h3>
+        <p><%= link_to @product.merchant.name, merchant_path(@product.merchant) %></p>
+
+        <p><%= number_to_currency(@product.price) %></p>
+        <p><%= @product.description %></p>
+       
+        <p>Categories: <% @product.categories.each do |category| %>
         <li><%= link_to category.name, category_path(category) %></li>
-          <%end%>
+          <%end%></p>
       </section>
+      
       <section class="product-buttons">
 
         <%= form_tag order_items_path, method: :post do %>    
@@ -43,9 +45,12 @@
     <%= link_to "Add a Review", new_product_review_path(@product), class: "btn btn-secondary" %>
 
     <h3>Reviews (<%= @product.reviews.count %>)</h3>
+      
       <% @product.reviews.each do |review| %>
-      <ul><%= review.rating %></ul>
-      <ul><%= review.text %></ul>
+      <section class="review">
+        <ul>Rating: <% review.rating.times do %>🥖<% end %></ul>
+        <ul><%= review.text %></ul>
+      </section>
     <% end %>
     </div>
 

@@ -114,8 +114,7 @@ describe ProductsController do
       it "only allows merchants to edit their own products" do 
         get edit_product_path(merchants(:besalu).products.first.id)
         
-        must_redirect_to root_path
-        _(flash[:result_text]).must_equal "You are not authorized to view this page."
+        must_respond_with :unauthorized
       end
     end
     
@@ -155,8 +154,7 @@ describe ProductsController do
         
         expect {put product_path(products(:seedy)), params: updates}.wont_change "Product.count"
         
-        must_redirect_to root_path
-        _(flash[:result_text]).must_equal "You are not authorized to view this page."
+        must_respond_with :unauthorized
       end
       
     end
@@ -192,8 +190,7 @@ describe ProductsController do
         
         post retire_path(not_my_product)
         
-        must_redirect_to root_path
-        _(flash[:result_text]).must_equal "You are not authorized to view this page."
+        must_respond_with :unauthorized
       end
       
       it "gives a bad request for products that don't exist" do
@@ -264,8 +261,7 @@ describe ProductsController do
       it "does not allow a guest to view this page" do
         get new_product_path
         
-        must_respond_with :redirect
-        _(flash[:result_text]).must_equal "You must be logged in to view this page."
+        must_respond_with :unauthorized
       end
     end
     
@@ -277,8 +273,7 @@ describe ProductsController do
         
         new_product = Product.find_by(name: "test name")
         
-        must_respond_with :redirect
-        _(flash[:result_text]).must_equal "You must be logged in to view this page."
+        must_respond_with :unauthorized
       end
       
       it "renders bad_request and does not update the DB for bogus data" do
@@ -286,8 +281,7 @@ describe ProductsController do
         
         expect {post products_path, params: bad_product }.wont_change "Product.count"
         
-        must_respond_with :redirect
-        _(flash[:result_text]).must_equal "You must be logged in to view this page."
+        must_respond_with :unauthorized
       end
     end
     
@@ -295,8 +289,7 @@ describe ProductsController do
       it "does not allow a guest to edit a product" do
         get edit_product_path(merchants(:besalu).products.first.id)
         
-        must_respond_with :redirect
-        _(flash[:result_text]).must_equal "You must be logged in to view this page."
+        must_respond_with :unauthorized
       end
       
       it "renders 404 not_found for a bogus work ID" do
@@ -316,8 +309,7 @@ describe ProductsController do
         
         expect {put product_path(existing_product), params: updates}.wont_change "Product.count"
         
-        must_respond_with :redirect
-        _(flash[:result_text]).must_equal "You must be logged in to view this page."
+        must_respond_with :unauthorized
       end
       
       it "renders bad_request for bogus data" do
@@ -327,8 +319,7 @@ describe ProductsController do
         
         product = Product.find_by(id: existing_product.id)
         
-        must_respond_with :redirect
-        _(flash[:result_text]).must_equal "You must be logged in to view this page."
+        must_respond_with :unauthorized
       end
       
       it "renders 404 not_found for a bogus product ID" do
@@ -347,8 +338,7 @@ describe ProductsController do
       it "doesn't allow guests to retire/reactivate products" do
         post retire_path(existing_product)
         
-        must_redirect_to root_path
-        _(flash[:result_text]).must_equal "You must be logged in to view this page."
+        must_respond_with :unauthorized
       end
       
     end

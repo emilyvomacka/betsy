@@ -20,8 +20,7 @@ describe ReviewsController do
         product = @current_merchant.products.first
         get new_product_review_path(product.id)
         
-        must_respond_with :redirect
-        expect (flash[:result_text]).must_equal "You may not review your own product."
+        must_respond_with :unauthorized
       end
     end
     

@@ -2,71 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-
-// .parallax {
-//   /* The image used */
-//   background-image: url("https://images.unsplash.com/photo-1507638940746-7b17d6b55b8f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80");
-//   /* Set a specific height */
-//   width: 100%;
- 
-
-//   /* Create the parallax scrolling effect */
-//   background-attachment: fixed;
-//   background-position: center;
-//   background-repeat: no-repeat;
-//   background-size: 50%;
-
-
-// p {
-//   color: white;
-//   padding: 50px;
-//   text-align: center;
-//   font-family: 'Annie Use Your Telescope', cursive;
-//   font-size: 40px
+// .row {
+//   margin-top: 20px;
 // }
 
-// body {
-//   font-family: "Annie Use Your Telescope"
+// .col {
+//   border: solid 1px #6c757d;
+//   padding: 10px;
 // }
 
-
-// #parallax-image{
-//   background-image: url("https://images.unsplash.com/photo-1486887396153-fa416526c108?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
-//   height: 620px;
-//   margin-bottom: 50px;
-//   background-attachment: fixed;
-//   background-position: center; 
-//   background-repeat: no-repeat;
-//   background-size: auto;
-// }
-// #parallax-image1{
-//   background-image: url("https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1252&q=80");
-//   height: 700px;
-//   margin-bottom: 50px;
-//   background-attachment: fixed;
-//   background-position: center; 
-//   background-repeat: no-repeat;
-//   background-size: auto;
-// }
-// h1 {
-//   color: whitesmoke;
-//   font-size: 130px;
-//   font-weight: bold; 
-// }
-
-.row {
-  margin-top: 20px;
-}
-
-.col {
-  border: solid 1px #6c757d;
-  padding: 10px;
-}
 .slidescss{
   background-size: 1920px 1080px;
   width:100%;
-  min-height:600px;
+  min-height: 600px;
 }
 
 .h1_title {
@@ -82,11 +30,42 @@
   font-size: 150%
 }
 
-.featured {
-  text-align: center;
-  text-decoration: fade-in($color: #000000, $amount: 0)
-}
+// .featured {
+//   text-align: center;
+//   text-decoration: fade-in($color: #000000, $amount: 0)
+// }
 
 .card-deck {
   padding: 15px
+}
+
+.btn-secondary{
+  margin: 1rem;
+}
+
+.baguette{
+  margin: 2rem;
+}
+
+.product-details{
+  margin-top: 2rem;
+}
+
+.col {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.review {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  margin: 1rem;
+}
+
+.bg {
+  background-color: whitesmoke
+}
+
+.featured {
+  text-align: center
 }
