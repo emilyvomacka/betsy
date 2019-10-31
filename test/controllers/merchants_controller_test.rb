@@ -60,8 +60,7 @@ describe MerchantsController do
       it "will not allow them to view someone else's dashboard" do
         get dashboard_path(merchants(:sea_wolf))
         
-        must_respond_with :redirect
-        _(flash[:result_text]).must_equal "You are not authorized to view this page."
+        must_respond_with :unauthorized
       end
       
     end
@@ -148,8 +147,7 @@ describe MerchantsController do
         all_merchants.each do |merchant|
           get dashboard_path(merchant)
           
-          must_respond_with :redirect
-          _(flash[:result_text]).must_equal "You are not authorized to view this page."
+          must_respond_with :unauthorized
         end
       end
     end

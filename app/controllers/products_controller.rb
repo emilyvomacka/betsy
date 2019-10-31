@@ -75,7 +75,7 @@ class ProductsController < ApplicationController
     if @product.merchant_id != @current_merchant.id
       flash[:status] = :danger
       flash[:result_text] = "You are not authorized to view this page."
-      redirect_to root_path
+      render 'products/main', status: :unauthorized 
       return
     end
   end
