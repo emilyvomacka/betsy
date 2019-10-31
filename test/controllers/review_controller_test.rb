@@ -7,8 +7,6 @@ describe ReviewsController do
       @current_merchant = perform_login(merchants(:sea_wolf))
     end
     
-    let (:existing_review) { review(:started) }
-    
     describe "new" do
       it "succeeds" do
         get new_product_review_path(Product.first.id)
@@ -26,8 +24,8 @@ describe ReviewsController do
     
     describe "create" do
       it "creates a review with valid data" do
-        product = Product.first.id
-        new_review = { review: {text: "test name", rating: 1, product_id: product}}
+        product = Product.first
+        new_review = { review: {text: "test name", rating: 1, product_id: product.id}}
         expect {post product_reviews_path(product), params: new_review}.must_change "Review.count", 1
         
         review = Review.find_by(text: "test name")
@@ -50,14 +48,28 @@ describe ReviewsController do
   end
   
   describe "guest users" do
-    let (:existing_review) { reviews(:one) }
-    
     describe "new" do
       it "will allow a guest to go through" do
         get new_product_review_path(Product.first.id)
         
         must_respond_with :success
       end
+    end
+    
+    describe "create" do
+      it "allows a guest to create a review for any product" do
+        Product.all.each do |product|
+          new_review = { review: {text: "test name", rating: 1, product_id: product.id}}
+          expect {post product_reviews_path(product), params: new_review}.must_change "Review.count", 1
+          
+          review = Review.find_by(text: "test name")
+          
+          must_respond_with :redirect
+          expect(review.text).must_equal new_review[:review][:text]
+          must_redirect_to product_path(product)
+        end
+      end
+      
     end
   end
 end
