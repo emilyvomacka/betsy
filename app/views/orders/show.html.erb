@@ -22,13 +22,18 @@
       <tbody>
       <% @order.order_items.each do |order_item| %>
         <tr>
-          <th scope="row"><%= link_to image_tag(order_item.product.photo_URL, width: "20%"), product_path(order_item.product) %>    <%= link_to order_item.product.name, product_path(order_item.product) %> </th>
-          <th scope="row"><%= form_tag order_order_item_path(@order, order_item.product), method: :patch do %>    
+          <th scope="row">
+          <%= link_to image_tag(order_item.product.photo_URL, width: "20%"), product_path(order_item.product) %>    
+          <%= link_to order_item.product.name, product_path(order_item.product) %> </th>
+
+          <th scope="row"><%= form_tag order_order_item_path(@order, order_item), method: :patch do %>    
           <%= select_tag(:new_quantity, options_for_select((1..order_item.product.stock), order_item.quantity))%>
           <%= submit_tag "Edit Quantity", class: "btn btn-light" %>
           <% end %></th>
-          <th scope="row"><%= form_tag order_order_item_path(@order, order_item.product), method: :delete do %>    
+
+          <th scope="row"><%= form_tag order_order_item_path(@order, order_item), method: :delete do %> 
           <%= submit_tag "Remove This Item",  class: "btn btn-light" %>
+
           <% end %></th>
         </tr>
       <%end%>

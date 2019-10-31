@@ -7,15 +7,6 @@ class ApplicationController < ActionController::Base
     @current_merchant = Merchant.find_by(id: session[:merchant_id])
   end
   
-  def require_login
-    if @current_merchant.nil?
-      flash[:status] = :failure
-      flash[:result_text] = "You must be logged in to view this page."
-      redirect_back fallback_location: root_path
-      return
-    end
-  end
-  
   def find_order
     if params[:order_id]
       @order = Order.find_by(id: params[:order_id])
@@ -42,7 +33,7 @@ class ApplicationController < ActionController::Base
   end 
   
   def still_pending?
-    if ["paid", "completed", "cancelled"].include?(@order.cart_status)
+    if @order.cart_status != "pending"
       flash.now[:status] = :danger
       flash.now[:result_text] = "Sorry, you cannot modify a checked-out order."
       render 'products/main', status: :unauthorized
