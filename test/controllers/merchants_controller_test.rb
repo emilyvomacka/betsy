@@ -51,7 +51,7 @@ describe MerchantsController do
     end
     
     describe "dashboard" do
-      it "only allows the current merchant to view their own dashboard" do
+      it "allows only the current merchant to view their own dashboard" do
         get dashboard_path(@current_merchant)
         
         must_respond_with :success
@@ -108,7 +108,7 @@ describe MerchantsController do
         perform_login(existing_merchant)
         
         must_redirect_to root_path
-        
+        session[:merchant_id].must_equal  existing_merchant.id
         _(Merchant.count).must_equal start_count
       end
       
@@ -119,6 +119,7 @@ describe MerchantsController do
         
         _(Merchant.count).must_equal start_count+1
         must_redirect_to root_path
+        session[:merchant_id].must_equal  Merchant.last.id
       end
       
       it "redirects to the login route if given invalid merchant data" do
@@ -128,6 +129,7 @@ describe MerchantsController do
         
         _(Merchant.count).must_equal start_count 
         must_redirect_to root_path
+        session[:merchant_id].must_equal nil
       end
     end
     
