@@ -116,8 +116,7 @@ describe CategoriesController do
       it "will allow a guest to go through" do
         get new_category_path
         
-        must_respond_with :redirect
-        _(flash[:result_text]).must_equal "You must be logged in to view this page."
+        must_respond_with :unauthorized
       end
     end
     
@@ -129,8 +128,7 @@ describe CategoriesController do
         
         category = Category.find_by(name: "test name")
         
-        must_respond_with :redirect
-        _(flash[:result_text]).must_equal "You must be logged in to view this page."
+        must_respond_with :unauthorized
       end
       
       it "will not update the DB for bogus data and redirect" do
@@ -138,8 +136,7 @@ describe CategoriesController do
         
         expect {post categories_path, params: bad_category }.wont_change "Category.count"
         
-        must_respond_with :redirect
-        _(flash[:result_text]).must_equal "You must be logged in to view this page."
+        must_respond_with :unauthorized
       end
     end
   end

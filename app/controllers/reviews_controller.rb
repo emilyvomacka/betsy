@@ -39,7 +39,7 @@ class ReviewsController < ApplicationController
     if @current_merchant != nil && @product.merchant_id == @current_merchant.id
       flash[:status] = :danger
       flash[:result_text] = "You may not review your own product."
-      redirect_to root_path
+      render 'products/main', status: :unauthorized 
       return
     end
   end
