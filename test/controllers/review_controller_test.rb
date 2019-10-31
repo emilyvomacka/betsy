@@ -42,7 +42,7 @@ describe ReviewsController do
         expect {post product_reviews_path(product), params: bad_review }.wont_change "Review.count"
         
         must_respond_with :bad_request
-        expect (flash[:result_text]).must_equal "Unable to save review for #{product.name}."
+        expect _(flash[:result_text]).must_equal "Unable to save review for #{product.name}."
       end
     end
   end

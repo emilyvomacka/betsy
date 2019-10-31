@@ -108,7 +108,7 @@ describe MerchantsController do
         perform_login(existing_merchant)
         
         must_redirect_to root_path
-        session[:merchant_id].must_equal  existing_merchant.id
+        _(session[:merchant_id]).must_equal  existing_merchant.id
         _(Merchant.count).must_equal start_count
       end
       
@@ -119,7 +119,7 @@ describe MerchantsController do
         
         _(Merchant.count).must_equal start_count+1
         must_redirect_to root_path
-        session[:merchant_id].must_equal  Merchant.last.id
+        _(session[:merchant_id]).must_equal  Merchant.last.id
       end
       
       it "redirects to the login route if given invalid merchant data" do
@@ -129,7 +129,7 @@ describe MerchantsController do
         
         _(Merchant.count).must_equal start_count 
         must_redirect_to root_path
-        session[:merchant_id].must_equal nil
+        assert_nil(session[:merchant_id])
       end
     end
     
