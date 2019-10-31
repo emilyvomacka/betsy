@@ -20,7 +20,7 @@ describe OrdersController do
       must_respond_with :unauthorized
     end 
     
-    it "responds with a bad_request when id given DNE" do
+    it "responds with a bad_request when order ID is invalid" do
       get order_path(-58437)
       must_respond_with :bad_request
     end
@@ -48,7 +48,7 @@ describe OrdersController do
       must_respond_with :unauthorized
     end 
     
-    it "responds with :bad_request when id given DNE" do
+    it "responds with :bad_request when order ID is invalid" do
       get edit_order_path(Order.last.id + 1000000000)
       must_respond_with :bad_request
     end
@@ -111,7 +111,7 @@ describe OrdersController do
       must_respond_with :unauthorized
     end 
     
-    it "responds with :bad_request when id given DNE" do 
+    it "responds with :bad_request when order ID is invalid" do 
       patch order_path(-1), params: @update_params
       must_respond_with :bad_request
     end  
@@ -123,7 +123,7 @@ describe OrdersController do
       must_respond_with :success
     end 
     
-    it "responds with :bad_request to an invalid id" do
+    it "responds with :bad_request when order ID is invalid" do
       get search_order_path, params: {id: -1}
       must_respond_with :bad_request
     end 

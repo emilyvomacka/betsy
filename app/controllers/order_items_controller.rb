@@ -5,6 +5,8 @@ class OrderItemsController < ApplicationController
   before_action :still_pending?, except: :create
   before_action :find_order_item, except: :create 
   before_action :are_products_active?, except: [:destroy, :create]
+  before_action :find_product, only: :create
+  before_action :active_product?, only: :create
 
   def create 
     new_quantity = params["quantity"]
@@ -63,6 +65,15 @@ class OrderItemsController < ApplicationController
     @order_item = OrderItem.find_by(id: params[:id])
     if @order_item.nil?
       redirect_to root_path, status: :bad_request 
+      return 
+    end 
+  end
+  
+  def active_product?
+    if @product.active != true
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "Sorry, this product is inactive and cannot be added to your cart."
+      render 'products/main', status: :bad_request
       return 
     end 
   end 
