@@ -73,6 +73,16 @@ class ApplicationController < ActionController::Base
       return 
     end 
   end 
+
+  def find_product
+    @product = Product.find_by(id: params[:id])
+    
+    if @product.nil?
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "Sorry, the requested product cannot be found."
+      render 'products/main', status: :unauthorized
+    end
+  end
   
   private 
   

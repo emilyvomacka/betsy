@@ -119,7 +119,7 @@ describe OrderItemsController do
       must_respond_with :unauthorized
     end 
     
-    it "redirects when requested to delete an order item with invalid id" do
+    it "responds :bad_request when asked to delete an order item with invalid input" do
       first_item_params = {product_id: products(:baguette).id, quantity: 2}
       post order_items_path, params: first_item_params
       

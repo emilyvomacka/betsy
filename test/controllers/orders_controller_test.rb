@@ -34,7 +34,7 @@ describe OrdersController do
       @new_order = Order.last
     end
     
-    it "succeeds for an extant order ID with pending status whose order_id == session[:order_id]" do     
+    it "succeeds for an extant order ID with pending status whose ID matches session[:order_id]" do     
       get edit_order_path(@new_order)
       must_respond_with :success
     end

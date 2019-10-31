@@ -71,15 +71,6 @@ class ProductsController < ApplicationController
     return params.require(:product).permit(:name, :description, :price, :photo_URL, :stock, :merchant_id, :active, category_ids: [])
   end
   
-  def find_product
-    @product = Product.find_by(id: params[:id])
-    
-    if @product.nil?
-      head :not_found
-      return
-    end
-  end
-  
   def check_authorization
     if @product.merchant_id != @current_merchant.id
       flash[:status] = :danger
