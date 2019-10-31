@@ -38,6 +38,9 @@ describe Review do
   
   describe "relations" do
     it "belongs to a product" do
+      _(review).must_respond_to :product
+      _(review.product).must_be_kind_of Product
     end
+    
   end
 end

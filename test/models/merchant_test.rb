@@ -46,6 +46,13 @@ describe Merchant do
       end
     end
     
+    it "can have one or more order items through products" do
+      _(merchant).must_respond_to :order_items
+      merchant.order_items.each do |order_item|
+        order_item.must_be_kind_of OrderItem
+      end
+    end
+    
   end
   
   describe "custom methods" do
@@ -79,6 +86,22 @@ describe Merchant do
         expect(merchants(:nouveau).num_orders("paid")).must_equal 0
       end
       
+    end
+    
+    
+    describe "build_from_github" do
+      it "returns a merchant" do
+        auth_hash = OmniAuth::AuthHash.new(mock_auth_hash(merchants(:besalu)))
+        
+        merchant = Merchant.build_from_github(auth_hash)
+        
+        merchant.must_be_kind_of Merchant
+        expect(merchant.uid).must_equal auth_hash[:uid]
+        expect(merchant.provider).must_equal "github"
+        expect(merchant.email).must_equal auth_hash["info"]["email"]
+        expect(merchant.nickname).must_equal auth_hash["info"]["nickname"]
+        expect(merchant.name).must_equal auth_hash["info"]["name"]
+      end
     end
   end
   
