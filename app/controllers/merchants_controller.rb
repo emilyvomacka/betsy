@@ -52,8 +52,8 @@ class MerchantsController < ApplicationController
     if session[:merchant_id] == params[:id].to_i
       find_merchant
     else
-      flash[:status] = :danger
-      flash[:result_text] = "You are not authorized to view this page."
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "You are not authorized to view this page."
       render 'products/main', status: :unauthorized 
       return
     end

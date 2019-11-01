@@ -71,8 +71,10 @@
                 </div>
               </li>
             <% else %>
+            <li class="nav-item">
               <button type="button" class="btn btn-light nav-link"><%= link_to "Login with Github", github_login_path %></button>
-          <% end %>
+            </li>
+        <% end %>
           </li>
           </ul>
         </div>

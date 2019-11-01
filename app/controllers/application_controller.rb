@@ -87,8 +87,8 @@ class ApplicationController < ActionController::Base
   
   def require_login
     if @current_merchant.nil?
-      flash[:status] = :failure
-      flash[:result_text] = "You must be logged in to view this page."
+      flash.now[:status] = :failure
+      flash.now[:result_text] = "You must be logged in to view this page."
       render 'products/main', status: :unauthorized 
       return
     end

@@ -3,11 +3,10 @@ class ReviewsController < ApplicationController
   def new
     if params[:product_id]
       @product = Product.find_by(id: params[:product_id])
-      @review = @product.reviews.new 
       
       check_authorization
-    else
-      @review = Review.new
+      
+      @review = @product.reviews.new 
     end
   end
   
@@ -37,8 +36,8 @@ class ReviewsController < ApplicationController
   
   def check_authorization
     if @current_merchant != nil && @product.merchant_id == @current_merchant.id
-      flash[:status] = :danger
-      flash[:result_text] = "You may not review your own product."
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "You may not review your own product."
       render 'products/main', status: :unauthorized 
       return
     end
