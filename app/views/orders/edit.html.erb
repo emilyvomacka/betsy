@@ -1,56 +1,65 @@
+<body>
 
-<% if @order.errors.any? %>
-  <section class="alert alert-danger">
-    <h1>This seems half-baked:</h1>
-    <ul>
-      <% @order.errors.each do |column, message| %>
-        <li>
-          <strong><%= column.capitalize %></strong> <%= message %>
-        </li>
-      <% end %>
-    </ul>
-    </section>
-<% end %>
+  
+  <% if @order.errors.any? %>
+    <section class="alert alert-danger">
+      <h1>This seems half-baked:</h1>
+      <ul>
+        <% @order.errors.each do |column, message| %>
+          <li>
+            <strong><%= column.capitalize %></strong> <%= message %>
+          </li>
+        <% end %>
+      </ul>
+      </section>
+  <% end %>
 
-<p>Please provide the following information to complete your order, and hey, don't give us your real credit card. This is a student project and our data security is less than upper-crust. </p>
+  <section class="checkoutpage">
+  <p>Please provide the following information to complete your order, and hey, don't give us your real credit card. This is a student project and our data security is less than upper-crust. </p>
 
 
-<%= form_with model: @order, url: order_path(@order), method: :patch do |f| %>
-  <div>
-  <%= f.label :customer_name %>
-  <%= f.text_field :customer_name %>
-  </div>
+  <%= form_with model: @order, url: order_path(@order), method: :patch do |f| %>
+    <div class="form-group">
+    <%= f.label :customer_name, "Name" %>
+    <%= f.text_field :customer_name, class: "form-control", placeholder: "Bready McBreaderson"  %>
+    </div>
 
-  <div>
-  <%= f.label :email_address %>
-  <%= f.text_field :email_address %>
-  </div>
+    <div class="form-group">
+    <%= f.label :email_address, "Email Address" %>
+    <%= f.text_field :email_address, class: "form-control", placeholder: "breadman@gmail.com"  %>
+    </div>
 
-  <div>
-  <%= f.label :mailing_address %>
-  <%= f.text_field :mailing_address %>
-  </div>
+    <div class="form-group">
+    <%= f.label :mailing_address, "Shipping Address" %>
+    <%= f.text_field :mailing_address, class: "form-control", placeholder: "1234 Breadlane"  %>
+    </div>
 
-  <div>
-  <%= f.label :cc_number %>
-  <%= f.number_field :cc_number %>
-  </div>
+    <div class="form-group">
+    <%= f.label :cc_number, "Card Number" %>
+    <%= f.number_field :cc_number, class: "form-control"  %>
+    </div>
 
-  <div>
-  <%= f.label :cc_expiration %>
-  <%= f.number_field :cc_expiration %>
-  </div>
+    <div class="form-group">
+    <%= f.label :cc_expiration, "Expiration Date" %>
+    <%= f.number_field :cc_expiration, class: "form-control", placeholder: "01/23"  %>
+    </div>
 
-  <div>
-  <%= f.label :cc_security_code %>
-  <%= f.number_field :cc_security_code %>
-  </div>
+    <div class="form-group">
+    <%= f.label :cc_security_code, "Security Code" %>
+    <%= f.number_field :cc_security_code, class: "form-control" %>
+    </div>
 
-  <div>
-  <%= f.label :zip_code %>
-  <%= f.number_field :zip_code %>
-  </div>
+    <div class="form-group">
+    <%= f.label :zip_code, "Zip Code" %>
+    <%= f.number_field :zip_code, class: "form-control" %>
+    </div>
 
-  <%= f.submit "Complete Order", class: "btn btn-primary" %>
+    <div class="form-group">
+    <%= f.submit "Complete Order", class: "btn btn-light" %>
+    </div>
 
-<% end %>
+  <% end %>
+
+  </section>
+
+</body>
