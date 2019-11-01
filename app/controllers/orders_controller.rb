@@ -21,10 +21,7 @@ class OrdersController < ApplicationController
       @order.cart_status = "paid"
       @order.save 
       session.delete(:order_id)
-      @order.order_items.each do |item|
-        item.product.stock -= item.quantity 
-        item.product.save 
-      end 
+      @order.decrement_stock 
       flash[:status] = :success
       flash[:result_text] = "Order submitted! Bread ahead."
       redirect_to order_path(@order)

@@ -29,7 +29,7 @@ class Order < ApplicationRecord
     end 
     return false
   end 
-
+  
   def check_stock 
     self.order_items.each do |item|
       if item.quantity > item.product.stock
@@ -69,4 +69,11 @@ class Order < ApplicationRecord
     end 
     return 0
   end
+  
+  def decrement_stock
+    self.order_items.each do |item|
+      item.product.stock -= item.quantity 
+      item.product.save 
+    end
+  end 
 end
