@@ -1,7 +1,18 @@
-<h1>Find My Order</h1>
+<body>
+    <section>
+        <h1>Find My Order</h1>
 
-<p><%= form_tag search_order_path, method: :get do %>    
-    <%= label_tag "Please enter order id:"%>
-    <%= number_field_tag(:id)%>
-    <%= submit_tag "Find My Order" %>
-    <% end %></p>
+        <div class="form-group find-order">
+        <%= form_tag search_order_path, method: :get do %>    
+        <%= label_tag "Please enter your order number:" %><br>
+
+
+        <%= number_field_tag(:id) %>
+        <%= submit_tag "Find My Order", class: "btn btn-light"%>
+        <% end %>
+
+        </div>
+
+    </section>
+
+</body>
