@@ -45,7 +45,7 @@ a:hover{
 .btn{
    background-color:#614936;
    color: white;
-   a{
+   a {
       color: white;
    }
 }
@@ -125,9 +125,17 @@ h6 {
 }
 
 footer {
-   background-color: #ece1cb
+   background-color: #ece1cb;
+   color: #614936;
 }
 
+<<<<<<< HEAD
 .find-order{
 margin: 1.5rem;
 }
+=======
+footer a:link {
+   color: #614936;
+}
+
+>>>>>>> master
