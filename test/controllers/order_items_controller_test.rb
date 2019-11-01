@@ -14,6 +14,7 @@ describe OrderItemsController do
     
     it "adds new order item to current order, and does not create a new order, when session[:order_id]" do
       post order_items_path, params: @first_item_params
+      
       expect{post order_items_path, params: @new_params}.must_change "OrderItem.count", 1
       must_respond_with :redirect
     end 
