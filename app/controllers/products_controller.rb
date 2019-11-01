@@ -73,8 +73,8 @@ class ProductsController < ApplicationController
   
   def check_authorization
     if @product.merchant_id != @current_merchant.id
-      flash[:status] = :danger
-      flash[:result_text] = "You are not authorized to view this page."
+      flash.now[:status] = :danger
+      flash.now[:result_text] = "You are not authorized to view this page."
       render 'products/main', status: :unauthorized 
       return
     end
