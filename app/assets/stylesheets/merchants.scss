@@ -9,3 +9,11 @@
 h2{
   margin: 1rem;
 }
+
+.merchants-list {
+  list-style-type: none;
+}
+// # important tag: https://stackoverflow.com/questions/12810227/override-css-styles-set-for-html-tag
+.merchant-button a {
+  color: #fff !important;
+}

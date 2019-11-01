@@ -1,12 +1,16 @@
 <body>
 
   <section class="pagelist">
-    <h1>Merchants</h1>
-      <% @all_merchants.each do |merchant|  %>
-        <li>
+   <h1>Merchants:</h1>
+   <ul class="merchants-list">
+   <% @all_merchants.each do |merchant|  %>
+   <li>
+      <button type="button" class="btn btn-light merchant-button">
           <%= link_to merchant.name, merchant_path(merchant) %>
-        </li>
+      </button>
+      </li>
       <% end %>
+    </ul>
   </section>
 
 </body>
