@@ -29,6 +29,15 @@ class Order < ApplicationRecord
     end 
     return false
   end 
+
+  def check_stock 
+    self.order_items.each do |item|
+      if item.quantity > item.product.stock
+        return [false, item.product.name, item.product.stock]  
+      end 
+    end 
+    return [true]
+  end 
   
   def return_merchant_items(current_merchant_id)
     merchant_items = []

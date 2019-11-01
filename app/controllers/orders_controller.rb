@@ -10,13 +10,12 @@ class OrdersController < ApplicationController
   def edit ; end 
   
   def update
-    @order.order_items.each do |item|
-      if item.quantity > item.product.stock
-        flash.now[:status] = :failure
-        flash.now[:result_text] = "#{item.product.name} running low! We currently only have #{item.product.stock} left. Please adjust your order."
-        render :edit, status: :bad_request 
-        return 
-      end 
+    result = @order.check_stock
+    if result[0] == false
+      flash.now[:status] = :failure
+      flash.now[:result_text] = "#{result[1]} running low! We currently only have #{result[2]} left. Please adjust your order."
+      render :edit, status: :bad_request 
+      return
     end 
     if @order.update(order_params) 
       @order.cart_status = "paid"
