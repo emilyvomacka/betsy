@@ -31,6 +31,11 @@ a:hover{
    a{
       color: #614936;
    }
+   .btn{
+      padding-left: 1rem;
+      padding-right: 1rem;
+      margin-top: .5rem;
+   }
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -39,7 +44,12 @@ a:hover{
 
 
 .nav-link{
+   font-family: 'Annie Use Your Telescope', cursive;
    color: #614936;
+}
+
+.dropdown{
+   font-family: 'Annie Use Your Telescope', cursive;
 }
 
 .btn{
@@ -130,7 +140,7 @@ footer {
 }
 
 .find-order{
-margin: 1.5rem;
+   margin: 1.5rem;
 }
 
 footer a:link {
