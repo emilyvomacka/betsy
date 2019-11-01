@@ -75,8 +75,6 @@
       <p>Cart Status: <%= @order.cart_status %></p>
       <p>Order placed at: <%= @order.updated_at %>
 
-    <!-- we'll want links to Complete Order and Cancel Order here -->
-
   <!-- if no logged-in user, or if logged-in user doesn't match any of @order's merchants -->
   <% else %>
     <table class="table-sm table-bordered table-hover cart">

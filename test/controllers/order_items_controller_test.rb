@@ -14,7 +14,10 @@ describe OrderItemsController do
     
     it "adds new order item to current order, and does not create a new order, when session[:order_id]" do
       post order_items_path, params: @first_item_params
-      expect{post order_items_path, params: @new_params}.must_change "OrderItem.count", 1
+      
+      assert_difference ->{ Order.count } => 0, ->{ OrderItem.count } => 1 do
+        post order_items_path, params: @new_params 
+      end
       must_respond_with :redirect
     end 
     
@@ -50,6 +53,13 @@ describe OrderItemsController do
       bad_params = {product_id: -1, quantity: 2}
       post order_items_path, params: bad_params
       must_respond_with :not_found
+    end 
+
+    it "will not add a product with insufficient stock" do
+      products(:seedy).stock = 0
+      products(:seedy).save
+      post order_items_path, params: @new_params
+      must_respond_with :bad_request
     end 
   end 
   
@@ -93,6 +103,12 @@ describe OrderItemsController do
     end 
     
     it "responds :bad_request when asked to update the quantity of an invalid order item" do
+      patch order_order_item_path(@my_order, -1), params: @update_params
+      must_respond_with :bad_request
+    end 
+
+    it "responds :bad_request when new_quantity is < 1" do
+      bad_quantity_params = { new_quantity: -5 }
       patch order_order_item_path(@my_order, -1), params: @update_params
       must_respond_with :bad_request
     end 

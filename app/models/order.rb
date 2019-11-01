@@ -30,6 +30,16 @@ class Order < ApplicationRecord
     return false
   end 
   
+  def check_stock 
+    result = []
+    self.order_items.each do |item|
+      if item.quantity > item.product.stock
+        result << [item.product.name, item.product.stock]  
+      end 
+    end 
+    return result
+  end 
+  
   def return_merchant_items(current_merchant_id)
     merchant_items = []
     if self.order_items.any? 
@@ -60,4 +70,11 @@ class Order < ApplicationRecord
     end 
     return 0
   end
+  
+  def decrement_stock
+    self.order_items.each do |item|
+      item.product.stock -= item.quantity 
+      item.product.save 
+    end
+  end 
 end
