@@ -2,7 +2,6 @@
     <section>
         <h1>Find My Order</h1>
 
-<<<<<<< HEAD
         <div class="form-group find-order">
         <%= form_tag search_order_path, method: :get do %>    
         <%= label_tag "Please enter your order number:" %><br>
@@ -17,12 +16,3 @@
     </section>
 
 </body>
-=======
-<div style="width:100%; height:200px;">
-<p><%= form_tag search_order_path, method: :get do %>    
-    <%= label_tag "Please enter order id:"%>
-    <%= number_field_tag(:id)%>
-    <%= submit_tag "Find My Order", class: "btn btn-secondary" %>
-    <% end %></p>
-</div>
->>>>>>> master

@@ -3,11 +3,10 @@ class ReviewsController < ApplicationController
   def new
     if params[:product_id]
       @product = Product.find_by(id: params[:product_id])
-      @review = @product.reviews.new 
       
       check_authorization
-    else
-      @review = Review.new
+      
+      @review = @product.reviews.new 
     end
   end
   
