@@ -13,79 +13,77 @@
         <div class=" btn browse-link-container">
           <%= link_to "Browse Our Bread!", products_path %>
         </div>
-      </div>
-  <%else%>
+    <%else%>
 
-  <h2>Your shopping carb:</h2>
+    <h2>Your shopping carb:</h2>
 
-    <table class="table table-bordered table-hover cart">
-      <thead>
-        <tr>
-          <th scope="col">Product</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Price</th>
-          <th scope="col">Not this time?</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% @order.order_items.each do |order_item| %>
-        <tr>
-          <th scope="row">
-            <%= link_to image_tag(order_item.product.photo_URL, width: "30%"), product_path(order_item.product) %>    
-            <%= link_to order_item.product.name, product_path(order_item.product) %> 
-          </th>
-          <th scope="row">
-            <%= form_tag order_order_item_path(@order, order_item), method: :patch do %>    
-            <%= select_tag(:new_quantity, options_for_select((1..order_item.product.stock), order_item.quantity))%>
-            <%= submit_tag "Edit Quantity", class: "btn btn-light" %>
-            <%end%>
-          </th>
-          <th scope="row">
-            <%= number_to_currency(order_item.total)%>
-          </th>
-          <th scope="row">
-            <%= form_tag order_order_item_path(@order, order_item), method: :delete do %>    
-            <%= submit_tag "Remove This Item",  class: "btn btn-light" %>
-            <%end%>
-          </th>
-        </tr>
+      <table class="table-sm table-bordered table-hover cart">
+        <thead>
+          <tr>
+            <th scope="col">Product</th>
+            <th style="width: 17%">Quantity</th>
+            <th style="width: 17%">Price</th>
+            <th scope="col">Not this time?</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @order.order_items.each do |order_item| %>
+          <tr>
+            <th scope="row">
+              <%= link_to image_tag(order_item.product.photo_URL, width: "30%"), product_path(order_item.product) %>    
+              <%= link_to order_item.product.name, product_path(order_item.product) %> 
+            </th>
+            <th scope="row">
+              <%= form_tag order_order_item_path(@order, order_item), method: :patch do %>    
+              <%= select_tag(:new_quantity, options_for_select((1..order_item.product.stock), order_item.quantity))%>
+              <%= submit_tag "Edit Quantity", class: "btn btn-light" %>
+              <%end%>
+            </th>
+            <th scope="row">
+              <%= number_to_currency(order_item.total)%>
+            </th>
+            <th scope="row">
+              <%= form_tag order_order_item_path(@order, order_item), method: :delete do %>    
+              <%= submit_tag "Remove This Item",  class: "btn btn-light" %>
+              <%end%>
+            </th>
+          </tr>
+        <%end%>
+        </tbody>
+      </table>
+          <p> <strong> Total Cost: <%= number_to_currency(@order.total_cost)%> </strong> </p>
+    <br>
+      <%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-lg btn-light" %>
       <%end%>
-      </tbody>
-    </table>
-    <%end%>
-  </section>
-<!-- END OF TABLE FORMAT OF CART -->
-
-<p> <strong> Total Cost: <%= number_to_currency(@order.total_cost)%> </strong> </p>
-<br>
-<%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-light" %>
-
+    </section>
+ 
   <!--if one of the order's merchants is logged in and @order is paid, complete or cancelled, shows customer details and only merchant's order items-->
-<% elsif session[:merchant_id] && @order.return_merchants.include?(session[:merchant_id]) %>
-  <h2>Order <%= order.id %>: Items Requested From Your Store</h2>
-  <%= @order.return_merchant_items(session[:merchant_id]).each do |item| %>
-    <p>Product: <%= item.product.name %></p>
-    <p>Quantity: <%= item.quantity %><p>
-  <%end%>
+  <% elsif session[:merchant_id] && @order.return_merchants.include?(session[:merchant_id]) %>
+    <h2>Order <%= order.id %>: Items Requested From Your Store</h2>
+    <%= @order.return_merchant_items(session[:merchant_id]).each do |item| %>
+      <p>Product: <%= item.product.name %></p>
+      <p>Quantity: <%= item.quantity %><p>
+    <%end%>
 
-    <h4>Customer Info</h4>
+      <h4>Customer Info</h4>
 
-    <p>Name: <%= @order.customer_name %></p>
-    <p>Email Address: <%= @order.email_address %></p>
-    <p>Mailing Address: <%= @order.mailing_address %></p>
-    <p>Credit Card: **** **** **** <%= @order.cc_number(-4...-1)%></p>
-    <p>Credit Card Expiration: <%= @order.cc_expiration %>
-    <p>Cart Status: <%= @order.cart_status %></p>
-    <p>Order placed at: <%= @order.updated_at %>
+      <p>Name: <%= @order.customer_name %></p>
+      <p>Email Address: <%= @order.email_address %></p>
+      <p>Mailing Address: <%= @order.mailing_address %></p>
+      <p>Credit Card: **** **** **** <%= @order.cc_number(-4...-1)%></p>
+      <p>Credit Card Expiration: <%= @order.cc_expiration %>
+      <p>Cart Status: <%= @order.cart_status %></p>
+      <p>Order placed at: <%= @order.updated_at %>
 
   <!-- if no logged-in user, or if logged-in user doesn't match any of @order's merchants -->
   <% else %>
-    <table class="table table-bordered table-hover cart">
+    <table class="table-sm table-bordered table-hover cart">
     <p> Order ID: <%= @order.id %>
       <thead>
         <tr>
-          <th style="width: 17%">Product</th>
+          <th style="width: 30%">Product</th>
           <th style="width: 17%">Product Description</th>
+          <th style="width: 17%">Price</th>
           <th style="width: 17%">Date and Time ordered</th>
           <th style="width: 5%">Quantity</th>
         </tr>
@@ -102,6 +100,9 @@
           <p><%= item.product.description %></p>
         </th>
         <th scope="row">
+          <p> <%= number_to_currency(item.product.price) %> </p>
+        </th>
+        <th scope="row">
           <p> <%= readable_date(item.product.updated_at) %></p>
         </th>
         <th scope="row">
@@ -111,7 +112,7 @@
     <% end %>
   </tbody>
 </table>
-    <p>Total Cost: <%= number_to_currency(@order.total_cost) %></p>
+    <p>Total Cost:<strong> <%= number_to_currency(@order.total_cost) %></strong></p>
     <p>Order Status: <%= @order.cart_status %></p>
 
 <% end %>

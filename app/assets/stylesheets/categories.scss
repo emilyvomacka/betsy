@@ -1,11 +1,12 @@
-// Place all the styles related to the Categories controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-
 .categoryform{
   margin: 1rem;
 }
 
-
+.categories-list {
+  list-style-type: none;
+}
+// # important tag: https://stackoverflow.com/questions/12810227/override-css-styles-set-for-html-tag
+.category-button a {
+  color: #fff !important;
+}
 

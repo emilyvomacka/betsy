@@ -14,6 +14,7 @@
 <!-- Main layout -->
 
 <!--Carousel Wrapper-->
+<main>
 <div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel">
     <!--Indicators-->
     <ol class="carousel-indicators">
@@ -64,35 +65,49 @@
     <!--/.Controls-->
 </div>
 <!--/.Carousel Wrapper-->
-<div style="width:100%; height:1150px;">
+<div style="width:100%; height:1350px;">
   <h1 class="h1_title">
     Some Flour and a Dream
   </h1>
-    <p class="homepage_description"> Welcome to Baguettsy. Our love for bread was too big to be contained to one bakery. We wanted to create a way to connect our users to their favorite baked goods from all over the Pacific Northwest. Our mission: bring the scent of fresh baked bread into the homes of as many people as possible. </p>
 
+  <div class="card mb-3 mx-auto" style="max-width: 80%;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="https://images.unsplash.com/photo-1534620808146-d33bb39128b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80" class="card-img" alt="img">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"></h5>
+        <p class="homepage_description">Welcome to Baguettsy. Our love for bread was too big to be contained to one bakery. We wanted to create a way to connect our users to their favorite baked goods from all over the Pacific Northwest. Our mission: bring the scent of fresh baked bread into the homes of as many people as possible.</p>
+      </div>
+    </div>
+  </div>
+</div>
     <h2 class="featured"> This month's featured items: </h2>
+
 <div class="card-deck">
   <div class="card">
     <img class="card-img-top" src="https://www.seriouseats.com/recipes/images/2011/08/20110817-166611-flour-croissants.jpg" alt="Card image cap">
     <div class="card-block">
-      <h4 class="card-title"><%= link_to("Thousand-layer croissant", "/products/3") %></h4>
+      <h4 class="link"><%= link_to("Thousand-layer croissant", "/products/3") %></h4>
       <p class="card-text">A crispy, multi-layered croissant baked to golden perfection. A buttery experience that will make you grateful for every crumb.</p>
-    </div>
-  </div>
-  <div class="card">
-    <img class="card-img-top" src="https://d1alt1wkdk73qo.cloudfront.net/images/guide/d87ca16085d2de1e264e71d8adc125a1/640x478_ac.jpg" alt="Card image cap">
-    <div class="card-block">
-      <h4 class="card-title"><%= link_to("Daily Baguette Subscription", "/products/9") %></h4>
-      <p class="card-text">Our daily subscription! Are you a true bread fan? Do you enjoy breaking into a crisp baguette as part of a daily ritual? Our subscription is for you!</p>
     </div>
   </div>
   <div class="card">
     <img class="card-img-top" src="https://www.bakefromscratch.com/wp-content/uploads/2016/08/Rye-28285-696x557.jpg" alt="Card image cap">
     <div class="card-block">
-      <h4 class="card-title"><%= link_to("Rye Bread", "/products/5") %></h4>
+      <h4 class="link"><%= link_to("Rye Bread", "/products/5") %></h4>
+      <p class="card-text">Our daily subscription! Are you a true bread fan? Do you enjoy breaking into a crisp baguette as part of a daily ritual? Our subscription is for you!</p>
+    </div>
+  </div>
+  <div class="card">
+    <img class="card-img-top" src="https://d1alt1wkdk73qo.cloudfront.net/images/guide/d87ca16085d2de1e264e71d8adc125a1/640x478_ac.jpg" alt="Card image cap">
+    <div class="card-block">
+      <h4 class="link"><%= link_to("Daily Baguette Subscription", "/products/9") %></h4>
       <p class="card-text">Is rye your go-to loaf? Enjoy the sophisticated taste that this bread has to offer. Excellent with poached eggs.</p>
     </div>
   </div>
 </div>
 
 </div>
+</main>

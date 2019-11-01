@@ -2,11 +2,15 @@
 
   <section class="pagelist">
     <h1>Categories:</h1>
+    <ul class="categories-list">
     <% @categories.each do |category| %>
       <li>
+      <button type="button" class="btn btn-light category-button">
         <%= link_to category.name, category_path(category) %>
+      </button>
       </li>
     <% end %>
+    </ul>
   </section>
 
 </body>
