@@ -15,9 +15,9 @@ class OrdersController < ApplicationController
       result.each do |entry|
         flash.now[:status] = :failure
         flash.now[:result_text] = "#{entry[0]} running low! We currently only have #{entry[1]} left. Please adjust your order."
-        render :edit, status: :bad_request 
-        return
       end 
+      render :edit, status: :bad_request 
+      return
     end
     if @order.update(order_params) 
       @order.cart_status = "paid"
