@@ -1,4 +1,4 @@
-<h3> Order Show Page </h3>
+<h1> Your order: </h1>
 
 <!-- if order requested is user's shopping cart -->
 
@@ -8,11 +8,13 @@
 
 <% if @order.id == session[:order_id] %> 
   <% if @order.order_items.count == 0 %>
+    <div style="width:100%; height:160px;">
       <p class="text-center">
         There are no items in your shopping cart. </p>
-        <div class=" btn browse-link-container">
-          <%= link_to "Browse Our Bread!", products_path %>
+         <div class="col-md-12 text-center"> 
+            <%= link_to "Browse Our Bread!", products_path, class: "btn btn-light" %>
         </div>
+    </div>
     <%else%>
 
     <h2>Your shopping carb:</h2>
