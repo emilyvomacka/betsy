@@ -1,94 +1,72 @@
 <h3> Order Show Page </h3>
 
-
-<% if @order.order_items.count == 0 %>
-    <p>Your shopping carb is empty.</p>
-<%else%>
-
 <!-- if order requested is user's shopping cart -->
 
 <!-- START OF TABLE FORMAT OF CART -->
 <section>
-    <h2>Your shopping carb:</h2>
+
+
+<% if @order.id == session[:order_id] %> 
+  <% if @order.order_items.count == 0 %>
+      <p class="text-center">
+        There are no items in your shopping cart. </p>
+        <div class=" btn browse-link-container">
+          <%= link_to "Browse Our Bread!", products_path %>
+        </div>
+      </div>
+  <%else%>
+
+  <h2>Your shopping carb:</h2>
 
     <table class="table table-bordered table-hover cart">
       <thead>
         <tr>
           <th scope="col">Product</th>
           <th scope="col">Quantity</th>
-          <th scope="col"></th>
+          <th scope="col">Price</th>
+          <th scope="col">Not this time?</th>
         </tr>
       </thead>
       <tbody>
       <% @order.order_items.each do |order_item| %>
         <tr>
-          <th scope="row"><%= link_to image_tag(order_item.product.photo_URL, width: "20%"), product_path(order_item.product) %>    <%= link_to order_item.product.name, product_path(order_item.product) %> </th>
-          <th scope="row"><%= form_tag order_order_item_path(@order, order_item.product), method: :patch do %>    
-          <%= select_tag(:new_quantity, options_for_select((1..order_item.product.stock), order_item.quantity))%>
-          <%= submit_tag "Edit Quantity", class: "btn btn-light" %>
-          <% end %></th>
-          <th scope="row"><%= form_tag order_order_item_path(@order, order_item.product), method: :delete do %>    
-          <%= submit_tag "Remove This Item",  class: "btn btn-light" %>
-          <% end %></th>
+          <th scope="row">
+            <%= link_to image_tag(order_item.product.photo_URL, width: "30%"), product_path(order_item.product) %>    
+            <%= link_to order_item.product.name, product_path(order_item.product) %> 
+          </th>
+          <th scope="row">
+            <%= form_tag order_order_item_path(@order, order_item), method: :patch do %>    
+            <%= select_tag(:new_quantity, options_for_select((1..order_item.product.stock), order_item.quantity))%>
+            <%= submit_tag "Edit Quantity", class: "btn btn-light" %>
+            <%end%>
+          </th>
+          <th scope="row">
+            <%= number_to_currency(order_item.total)%>
+          </th>
+          <th scope="row">
+            <%= form_tag order_order_item_path(@order, order_item), method: :delete do %>    
+            <%= submit_tag "Remove This Item",  class: "btn btn-light" %>
+            <%end%>
+          </th>
         </tr>
       <%end%>
       </tbody>
     </table>
+    <%end%>
   </section>
-
 <!-- END OF TABLE FORMAT OF CART -->
 
-<% if @order.id == session[:order_id] %>
-<% @order.order_items.arrange_by_created_at.each do |item| %>
-  <p>Product: <%= item.product.name %></p>
-  <p>Quantity: <%= item.quantity %><p>
-    <p><%= form_tag order_order_item_path(@order, item), method: :patch do %>    
-    <%= select_tag(:new_quantity, options_for_select((1..item.product.stock), item.quantity))%>
-    <%= submit_tag "Edit Quantity" %>
-    <% end %></p>
-  <p><%= form_tag order_order_item_path(@order, item), method: :delete do %>    
-    <%= submit_tag "Delete This Item" %>
-    <% end %></p>
-<% end %>
-
-<p>Total Cost: <%= number_to_currency(@order.total_cost) %>
+<p> <strong> Total Cost: <%= number_to_currency(@order.total_cost)%> </strong> </p>
 <br>
 <%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-light" %>
 
-<!--if one of the order's merchants is logged in and @order is paid, complete or cancelled, shows customer details and only merchant's order items-->
-<% elsif @order.cart_status != "pending" && session[:merchant_id] && @order.return_merchants.include?(session[:merchant_id]) %>
+  <!--if one of the order's merchants is logged in and @order is paid, complete or cancelled, shows customer details and only merchant's order items-->
+<% elsif session[:merchant_id] && @order.return_merchants.include?(session[:merchant_id]) %>
   <h2>Order <%= order.id %>: Items Requested From Your Store</h2>
   <%= @order.return_merchant_items(session[:merchant_id]).each do |item| %>
     <p>Product: <%= item.product.name %></p>
     <p>Quantity: <%= item.quantity %><p>
-      <p><%= form_tag order_item_path(item), method: :patch do %>    
-      <%= select_tag(:new_quantity, options_for_select((1..item.product.stock), item.quantity))%>
-      <%= submit_tag "Edit Quantity" %>
-      <% end %></p>
-    <p><%= form_tag order_item_path(item), method: :delete do %>    
-      <%= submit_tag "Delete This Item" %>
-      <% end %></p>
-  <% end %>
-
-  <p>Total Cost: <%= number_to_currency(@order.total_cost) %>
-
-  <%= link_to "Let's Get This Bread", edit_order_path(@order), class: "btn btn-light" %>
-
-    <% elsif @order.order_items.count == 0 %>
-    <p class="text-center">
-      There are no items in your shopping cart. </p>
-      <div class=" btn browse-link-container">
-        <%= link_to "Browse Our Bread!", products_path %>
-      </div>
-    </div>
-
-  <!--if one of the order's merchants is logged in and @order is paid, complete or cancelled, shows customer details and only merchant's order items-->
-  <% elsif @order.cart_status != "pending" && session[:merchant_id] && @order.return_merchants.include?(session[:merchant_id]) %>
-    <h2>Order <%= order.id %>: Items Requested From Your Store</h2>
-    <%= @order.return_merchant_items(session[:merchant_id]).each do |item| %>
-      <p>Product: <%= item.product.name %></p>
-      <p>Quantity: <%= item.quantity %><p>
-    <% end %>
+  <%end%>
 
     <h4>Customer Info</h4>
 
@@ -102,15 +80,39 @@
 
   <!-- if no logged-in user, or if logged-in user doesn't match any of @order's merchants -->
   <% else %>
-    <% @order.order_items.arrange_by_created_at.each do |item| %>
-      <p>Product: <%= item.product.name %></p>
-      <p>Product Description: <%= item.product.description %></p>
-      <p>Date and Time order was placed: <%= readable_date(item.product.updated_at) %></p>
-      <p>Quantity: <%= item.quantity %><p>
-    <% end %>
+    <table class="table table-bordered table-hover cart">
+    <p> Order ID: <%= @order.id %>
+      <thead>
+        <tr>
+          <th style="width: 17%">Product</th>
+          <th style="width: 17%">Product Description</th>
+          <th style="width: 17%">Date and Time ordered</th>
+          <th style="width: 5%">Quantity</th>
+        </tr>
+      </thead>
+      <% @order.order_items.arrange_by_created_at.each do |item| %>
 
+      <tbody>
+      <tr>
+        <th scope="row">
+          <%= link_to image_tag(item.product.photo_URL, width: "30%"), product_path(item.product) %>    
+          <%= link_to item.product.name, product_path(item.product) %> 
+        </th>
+        <th scope="row">
+          <p><%= item.product.description %></p>
+        </th>
+        <th scope="row">
+          <p> <%= readable_date(item.product.updated_at) %></p>
+        </th>
+        <th scope="row">
+          <p><%= item.quantity %><p>
+        </th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
     <p>Total Cost: <%= number_to_currency(@order.total_cost) %></p>
     <p>Order Status: <%= @order.cart_status %></p>
 
-  <% end %>
-<%end%>
+<% end %>
+

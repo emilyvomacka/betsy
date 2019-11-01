@@ -55,7 +55,7 @@
             
             <% if session[:order_id] %>	
               <li class="nav-item">
-                <button type="button" class="btn btn-light"><%= link_to "View Shopping Carb", order_path(session[:order_id]) %></button>	
+                <button type="button" class="btn btn-light nav-link"><%= link_to "View Shopping Carb", order_path(session[:order_id]) %></button>	
               </li>	
             <% end %>
             
