@@ -50,7 +50,6 @@ class OrdersController < ApplicationController
     end 
   end 
   
-  
   def order_params
     return params.require(:order).permit(:mailing_address, :email_address, :customer_name, :cc_number, :cc_expiration, :cc_security_code, :zip_code, :cart_status) 
   end

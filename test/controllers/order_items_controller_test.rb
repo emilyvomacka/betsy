@@ -54,6 +54,13 @@ describe OrderItemsController do
       post order_items_path, params: bad_params
       must_respond_with :not_found
     end 
+
+    it "will not add a product with insufficient stock" do
+      products(:seedy).stock = 0
+      products(:seedy).save
+      post order_items_path, params: @new_params
+      must_respond_with :bad_request
+    end 
   end 
   
   describe "update" do

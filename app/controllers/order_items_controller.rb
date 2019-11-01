@@ -6,7 +6,7 @@ class OrderItemsController < ApplicationController
   before_action :find_order_item, except: :create 
   before_action :are_products_active?, except: [:destroy, :create]
   before_action :find_product, only: :create
-  before_action :active_product?, only: :create
+  before_action :available_product?, only: :create
   before_action :validate_quantity, only: [:create, :update]
   
   def create 
@@ -70,10 +70,10 @@ class OrderItemsController < ApplicationController
     end 
   end
   
-  def active_product?
-    if @product.active != true
+  def available_product?
+    if @product.active != true || @product.stock < 1
       flash.now[:status] = :danger
-      flash.now[:result_text] = "Sorry, this product is inactive and cannot be added to your cart."
+      flash.now[:result_text] = "Sorry, this product is unavailable and cannot be added to your cart."
       render 'products/main', status: :bad_request
       return 
     end 
@@ -82,7 +82,7 @@ class OrderItemsController < ApplicationController
   def validate_quantity
     if params[:quantity] && params[:quantity].to_i < 1 || params[:new_quantity] && params[:new_quantity].to_i < 1
       flash.now[:status] = :danger
-      flash.now[:result_text] = "Your request is bad and you should feel bad."
+      flash.now[:result_text] = "Please add more quantity."
       render 'products/main', status: :bad_request
       return 
     end 
