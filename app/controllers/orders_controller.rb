@@ -11,12 +11,14 @@ class OrdersController < ApplicationController
   
   def update
     result = @order.check_stock
-    if result[0] == false
-      flash.now[:status] = :failure
-      flash.now[:result_text] = "#{result[1]} running low! We currently only have #{result[2]} left. Please adjust your order."
-      render :edit, status: :bad_request 
-      return
-    end 
+    if result.any?
+      result.each do |entry|
+        flash.now[:status] = :failure
+        flash.now[:result_text] = "#{entry[0]} running low! We currently only have #{entry[1]} left. Please adjust your order."
+        render :edit, status: :bad_request 
+        return
+      end 
+    end
     if @order.update(order_params) 
       @order.cart_status = "paid"
       @order.save 
@@ -41,7 +43,7 @@ class OrdersController < ApplicationController
   def does_order_have_items?
     if @order.order_items.empty?
       flash.now[:status] = :danger
-      flash.now[:result_text] = "Your order is bad and you should feel bad."
+      flash.now[:result_text] = "This order has no items to check out."
       render 'products/main', status: :bad_request
       return  
     end 

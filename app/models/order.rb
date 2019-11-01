@@ -31,12 +31,13 @@ class Order < ApplicationRecord
   end 
   
   def check_stock 
+    result = []
     self.order_items.each do |item|
       if item.quantity > item.product.stock
-        return [false, item.product.name, item.product.stock]  
+        result << [item.product.name, item.product.stock]  
       end 
     end 
-    return [true]
+    return result
   end 
   
   def return_merchant_items(current_merchant_id)
